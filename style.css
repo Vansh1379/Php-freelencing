@@ -3,7 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html {
+  padding-top: 80px;
+}
 body {
   font-family: "Arial", sans-serif;
   line-height: 1.6;
@@ -119,7 +121,7 @@ nav {
 
 .nav-links a::after {
   content: "";
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 0;
@@ -134,7 +136,7 @@ nav {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  background: linear-gradient(135deg, #c442f0, #c442f0);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -150,6 +152,7 @@ nav {
 
 /* Hero Section */
 .hero {
+  padding-top: 80px;
   background: linear-gradient(
       135deg,
       rgba(215, 214, 218, 0.7),
@@ -169,7 +172,7 @@ nav {
 
 .hero::before {
   content: "";
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -193,27 +196,26 @@ nav {
 }
 
 .hero-title {
-  color: #333;
-}
-
-.hero-text h1 {
   font-size: 3.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #8b5cf6, #7b0de1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #000; /* default black */
+  line-height: 1.2; /* reduce vertical spacing */
 }
 
-.hero-text h1 .highlight {
-  color: #333;
+.hero-title .highlight {
+  color: #c442f0; /* Playground in purple */
+}
+
+.hero-title .second-line {
+  display: block; /* pushes Equipment to next line */
+  margin-top: 0.2rem; /* smaller gap than <br> */
 }
 
 .hero-text p {
   font-size: 1.1rem;
   color: #666;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   line-height: 1.8;
 }
 
@@ -224,35 +226,42 @@ nav {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  background: linear-gradient(135deg, #c442f0, #c442f0);
   color: white;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem; /* add some vertical space */
   border: none;
-  border-radius: 30px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-weight: 500;
   text-decoration: none;
   transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(196, 66, 240, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 6px 25px rgba(196, 66, 240, 0.4);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: #8b5cf6;
-  padding: 1rem 2rem;
-  border: 2px solid #8b5cf6;
-  border-radius: 30px;
-  font-weight: 600;
+  border: 2px solid #c442f0;
+  color: white;
+  padding: 0.5rem 2rem;
+  border: 2px solid #c442f0;
+  border-radius: 8px;
+  font-weight: 500;
   text-decoration: none;
   transition: all 0.3s;
 }
 
 .btn-secondary:hover {
-  background: #8b5cf6;
+  transform: translateY(-3px);
+  box-shadow: rgb(189, 154, 201) 5px rgba(196, 66, 240, 0.4);
+  background: #c297d1;
   color: white;
 }
 
@@ -266,9 +275,9 @@ nav {
 }
 
 .stat-number {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: #8b5cf6;
+  color: #ba44e1;
   display: block;
 }
 
@@ -291,7 +300,7 @@ nav {
 }
 
 .about h2 .highlight {
-  color: #8b5cf6;
+  color: #c442f0;
 }
 
 .about-content {
@@ -321,7 +330,7 @@ nav {
 }
 
 .feature h4 {
-  color: #8b5cf6;
+  color: #c442f0;
   margin-bottom: 0.5rem;
 }
 
@@ -333,16 +342,17 @@ nav {
 .about-stat {
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #8b5cf6, #a855f7);
-  color: white;
+  background: linear-gradient(135deg, #f8e8ff, #f6dcff);
+  color: rgb(162, 159, 159);
   border-radius: 15px;
+  border: 2px solid #c442f0;
   position: relative;
   overflow: hidden;
 }
 
 .about-stat::before {
   content: "";
-  position: absolute;
+  position: relative;
   top: -50%;
   left: -50%;
   width: 200%;
@@ -425,7 +435,7 @@ nav {
 
 .product-image::before {
   content: "🏗️";
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -465,7 +475,7 @@ nav {
 .product-features li::before {
   content: "✓";
   color: #16a34a;
-  position: absolute;
+  position: relative;
   left: 0;
   font-weight: bold;
 }
