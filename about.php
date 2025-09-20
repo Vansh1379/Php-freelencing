@@ -8,18 +8,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <nav>
-        <div class="logo">Mena Play world</div>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <a href="#contact" class="cta-button">Get Quote</a>
-      </nav>
-    </header>
+    <?php include 'includes/header.php'; ?>
     <!-- About Section -->
     <section class="about-section">
       <div class="container">
@@ -132,50 +121,7 @@
         </div>
       </div>
     </section>
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>JK Enterprise</h3>
-          <p>
-            Creating safe and exciting play spaces for children across India
-            with quality playground equipment.
-          </p>
-        </div>
-
-        <div class="footer-section">
-          <h3>Useful Links</h3>
-          <a href="#home">Home</a>
-          <a href="#about">About Us</a>
-          <a href="#products">Products</a>
-          <a href="#contact">Contact</a>
-          <a href="#">Blog</a>
-        </div>
-
-        <div class="footer-section">
-          <h3>Our Products</h3>
-          <a href="#">Playground Equipment</a>
-          <a href="#">Outdoor Gym Equipment</a>
-          <a href="#">Indoor Solutions</a>
-          <a href="#">Custom Designs</a>
-          <a href="#">Installation Services</a>
-        </div>
-
-        <div class="footer-section">
-          <h3>Contact Info</h3>
-          <a href="tel:+919773698785">+91 9773698785</a>
-          <a href="mailto:contact.jkenterprise@gmail.com"
-            >contact.jkenterprise@gmail.com</a
-          >
-          <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem">
-            Shop no.68/4, Gali no.6, Ghaziabad, U.P
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2024 JK Enterprise. All rights reserved.</p>
-      </div>
-    </footer>
+    <?php include 'includes/footer.php'; ?>
 
     <script src="about.js"></script>
   </body>

@@ -398,9 +398,9 @@ nav {
 
 .products h2 {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: #333;
+  font-size: 0px;
+  margin-bottom: 0.5rem;
+  color: #585656;
 }
 
 .products p {
