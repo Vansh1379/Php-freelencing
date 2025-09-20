@@ -7,70 +7,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
-      <div class="aboveDiv">
-        <div class="mail">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="icon"
-          >
-            <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-          </svg>
-          <div>demo@gmail.com</div>
-        </div>
-        <div class="phoneDiv">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="phoneIcon"
-          >
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-            ></path>
-          </svg>
-          <div class="phone">+91 9773698785</div>
-        </div>
-      </div>
-      <nav>
-        <div class="brand">
-          <img src="assets/logo.png" alt="logo" class="logo" />
-          <div class="title">
-            <div class="main">Mena Play World</div>
-            <div class="sub">Solution Equipment</div>
-          </div>
-        </div>
-        <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-        <a href="#contact" class="cta-button">Get Quote</a>
-      </nav>
-    </header>
+    <?php include 'includes/header.php'; ?>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
-            Premium <span class="highlight">Playground</span><br />Equipment
+            Premium <span class="highlight">Playground</span>
+            <span class="second-line">Equipment</span>
           </h1>
           <p>
             We create safe, fun, and engaging play spaces for children of all
@@ -79,7 +24,31 @@
           </p>
 
           <div class="hero-buttons">
-            <a href="#products" class="btn-primary">Explore Products</a>
+            <a href="#products" class="btn-primary"
+              >Explore Products
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right h-5 w-5"
+                data-lov-id="src/components/Hero.tsx:45:14"
+                data-lov-name="ArrowRight"
+                data-component-path="src/components/Hero.tsx"
+                data-component-line="45"
+                data-component-file="Hero.tsx"
+                data-component-name="ArrowRight"
+                data-component-content="%7B%22className%22%3A%22h-5%20w-5%22%7D"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </a>
             <a href="#contact" class="btn-secondary">Watch Demo</a>
           </div>
 
@@ -103,11 +72,11 @@
 
     <!-- About Section -->
     <section class="about" id="about">
-      <h2>About <span class="highlight">JK Enterprise</span></h2>
+      <h2>About <span class="highlight">Mena Play World</span></h2>
       <div class="about-content">
         <div class="about-text">
           <p>
-            As JK Enterprise, we believe that play is an essential part of
+            As Mena Play World, we believe that play is an essential part of
             childhood development. Our mission is to design and manufacture
             playground equipment that fosters creativity, encourages physical
             activity, and provides hours of fun for children while ensuring
@@ -375,51 +344,7 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>JK Enterprise</h3>
-          <p>
-            Creating safe and exciting play spaces for children across India
-            with quality playground equipment.
-          </p>
-        </div>
-
-        <div class="footer-section">
-          <h3>Useful Links</h3>
-          <a href="#home">Home</a>
-          <a href="#about">About Us</a>
-          <a href="#products">Products</a>
-          <a href="#contact">Contact</a>
-          <a href="#">Blog</a>
-        </div>
-
-        <div class="footer-section">
-          <h3>Our Products</h3>
-          <a href="#">Playground Equipment</a>
-          <a href="#">Outdoor Gym Equipment</a>
-          <a href="#">Indoor Solutions</a>
-          <a href="#">Custom Designs</a>
-          <a href="#">Installation Services</a>
-        </div>
-
-        <div class="footer-section">
-          <h3>Contact Info</h3>
-          <a href="tel:+919773698785">+91 9773698785</a>
-          <a href="mailto:contact.jkenterprise@gmail.com"
-            >contact.jkenterprise@gmail.com</a
-          >
-          <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem">
-            Shop no.68/4, Gali no.6, Ghaziabad, U.P
-          </p>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2024 JK Enterprise. All rights reserved.</p>
-      </div>
-    </footer>
+    <?php include 'includes/footer.php'; ?>
 
     <script src="script.js"></script>
   </body>
