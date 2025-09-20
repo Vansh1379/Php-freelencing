@@ -1,11 +1,12 @@
 // Admin Panel JavaScript - Mena Play World
-// Complete functionality for content management system
+// Complete functionality for content management system with backend integration
 
 class AdminPanel {
   constructor() {
     this.currentSection = "main";
     this.products = [];
     this.currentEditingProduct = null;
+    this.apiBase = "admin-api.php";
     this.init();
   }
 
@@ -14,7 +15,7 @@ class AdminPanel {
     this.loadInitialData();
     this.initializeFileUploads();
     this.initializeContentEditor();
-    this.generateProductsGrid();
+    this.loadProductsFromBackend();
     this.showWelcomeMessage();
     this.initializePHPIntegration();
   }
@@ -119,25 +120,32 @@ class AdminPanel {
     }
   }
 
-  loadInitialData() {
-    // Load saved data from localStorage or set defaults
-    const savedData = this.getSavedData();
+  async loadInitialData() {
+    try {
+      // Load data from backend
+      await this.loadFromBackend();
 
-    if (savedData) {
-      this.populateFormsWithData(savedData);
+      // Fallback to localStorage if backend fails
+      const savedData = this.getSavedData();
+      if (savedData) {
+        this.populateFormsWithData(savedData);
+      }
+
+      // Load PHP configuration if available
+      this.loadPHPData();
+    } catch (error) {
+      console.error("Failed to load initial data:", error);
+      this.showToast(
+        "Failed to load data from server. Using local storage.",
+        "warning",
+      );
+
+      // Fallback to localStorage
+      const savedData = this.getSavedData();
+      if (savedData) {
+        this.populateFormsWithData(savedData);
+      }
     }
-
-    // Load products
-    const savedProducts = localStorage.getItem("adminProducts");
-    if (savedProducts) {
-      this.products = JSON.parse(savedProducts);
-    } else {
-      this.products = this.getDefaultProducts();
-      localStorage.setItem("adminProducts", JSON.stringify(this.products));
-    }
-
-    // Load PHP configuration if available
-    this.loadPHPData();
   }
 
   getSavedData() {
@@ -223,14 +231,23 @@ class AdminPanel {
     ];
   }
 
-  generateProductsGrid() {
+  async generateProductsGrid() {
     const grid = document.getElementById("productsGrid");
-    grid.innerHTML = "";
+    grid.innerHTML = '<div class="loading-spinner">Loading products...</div>';
 
-    this.products.forEach((product) => {
-      const productElement = this.createProductElement(product);
-      grid.appendChild(productElement);
-    });
+    try {
+      await this.loadProductsFromBackend();
+      grid.innerHTML = "";
+
+      this.products.forEach((product) => {
+        const productElement = this.createProductElement(product);
+        grid.appendChild(productElement);
+      });
+    } catch (error) {
+      grid.innerHTML =
+        '<div class="error-message">Failed to load products</div>';
+      console.error("Failed to load products:", error);
+    }
   }
 
   createProductElement(product) {
@@ -240,7 +257,7 @@ class AdminPanel {
             <div class="product-header">
                 <div class="product-title">${product.name}</div>
                 <span class="product-category">${this.getCategoryDisplay(
-                  product.category
+                  product.category,
                 )}</span>
                 ${
                   product.badge
@@ -251,7 +268,7 @@ class AdminPanel {
             <div class="product-body">
                 <p class="product-description">${product.description}</p>
                 <div class="product-price">₹${this.formatPrice(
-                  product.minPrice
+                  product.minPrice,
                 )} - ₹${this.formatPrice(product.maxPrice)}</div>
                 <div class="product-actions">
                     <button class="btn btn-sm btn-primary" onclick="adminPanel.editProduct(${
@@ -324,7 +341,7 @@ class AdminPanel {
     document.getElementById("productMaxPrice").value = product.maxPrice;
   }
 
-  handleProductSubmit(e) {
+  async handleProductSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -337,8 +354,8 @@ class AdminPanel {
         .split("\n")
         .map((f) => f.trim())
         .filter((f) => f),
-      minPrice: parseInt(formData.get("productMinPrice")) || 0,
-      maxPrice: parseInt(formData.get("productMaxPrice")) || 0,
+      min_price: parseFloat(formData.get("productMinPrice")) || 0,
+      max_price: parseFloat(formData.get("productMaxPrice")) || 0,
     };
 
     // Validation
@@ -346,31 +363,27 @@ class AdminPanel {
       return;
     }
 
-    if (this.currentEditingProduct) {
-      // Update existing product
-      productData.id = this.currentEditingProduct.id;
-      const index = this.products.findIndex(
-        (p) => p.id === this.currentEditingProduct.id
-      );
-      if (index !== -1) {
-        this.products[index] = { ...this.products[index], ...productData };
+    try {
+      if (this.currentEditingProduct) {
+        // Update existing product
+        productData.id = this.currentEditingProduct.id;
+        await this.apiRequest("update_product", productData, "POST");
+        this.showToast("Product updated successfully!", "success");
+      } else {
+        // Add new product
+        await this.apiRequest("add_product", productData, "POST");
+        this.showToast("Product added successfully!", "success");
       }
-      this.showToast("Product updated successfully!", "success");
-    } else {
-      // Add new product
-      productData.id = Date.now(); // Simple ID generation
-      this.products.push(productData);
-      this.showToast("Product added successfully!", "success");
+
+      // Refresh products grid
+      await this.generateProductsGrid();
+
+      // Hide modal
+      this.hideProductModal();
+    } catch (error) {
+      this.showToast("Failed to save product: " + error.message, "error");
+      console.error("Product save error:", error);
     }
-
-    // Save to localStorage
-    localStorage.setItem("adminProducts", JSON.stringify(this.products));
-
-    // Refresh products grid
-    this.generateProductsGrid();
-
-    // Hide modal
-    this.hideProductModal();
   }
 
   validateProductData(data) {
@@ -399,18 +412,22 @@ class AdminPanel {
     }
   }
 
-  deleteProduct(id) {
+  async deleteProduct(id) {
     const product = this.products.find((p) => p.id === id);
     if (!product) return;
 
     this.showConfirmModal(
       `Are you sure you want to delete "${product.name}"?`,
-      () => {
-        this.products = this.products.filter((p) => p.id !== id);
-        localStorage.setItem("adminProducts", JSON.stringify(this.products));
-        this.generateProductsGrid();
-        this.showToast("Product deleted successfully!", "success");
-      }
+      async () => {
+        try {
+          await this.apiRequest("delete_product", { id: id }, "POST");
+          await this.generateProductsGrid();
+          this.showToast("Product deleted successfully!", "success");
+        } catch (error) {
+          this.showToast("Failed to delete product: " + error.message, "error");
+          console.error("Product delete error:", error);
+        }
+      },
     );
   }
 
@@ -461,7 +478,7 @@ class AdminPanel {
     const reader = new FileReader();
     reader.onload = (e) => {
       const placeholder = input.parentElement.querySelector(
-        ".file-upload-placeholder"
+        ".file-upload-placeholder",
       );
       placeholder.innerHTML = `
                 <i class="fas fa-check-circle" style="color: #10b981;"></i>
@@ -494,7 +511,7 @@ class AdminPanel {
 
   setupFormValidation() {
     const requiredFields = document.querySelectorAll(
-      "input[required], textarea[required], select[required]"
+      "input[required], textarea[required], select[required]",
     );
 
     requiredFields.forEach((field) => {
@@ -515,7 +532,7 @@ class AdminPanel {
     if (field.hasAttribute("required") && !value) {
       this.showFieldError(
         field,
-        `${this.getFieldLabel(fieldName)} is required`
+        `${this.getFieldLabel(fieldName)} is required`,
       );
       return false;
     }
@@ -593,7 +610,7 @@ class AdminPanel {
           "input",
           this.debounce(() => {
             this.autoSave();
-          }, 2000)
+          }, 2000),
         );
       });
     });
@@ -661,13 +678,13 @@ class AdminPanel {
     window.open("index.php", "_blank");
   }
 
-  saveAllChanges() {
+  async saveAllChanges() {
     const data = this.collectAllFormData();
 
     // Validate all forms
     let isValid = true;
     const requiredFields = document.querySelectorAll(
-      "input[required], textarea[required], select[required]"
+      "input[required], textarea[required], select[required]",
     );
 
     requiredFields.forEach((field) => {
@@ -681,17 +698,23 @@ class AdminPanel {
       return;
     }
 
-    // Save data locally
-    localStorage.setItem("adminData", JSON.stringify(data));
-    localStorage.setItem("adminProducts", JSON.stringify(this.products));
+    try {
+      // Save to backend
+      await this.saveToBackend(data);
 
-    // Save to server (if implemented)
-    this.saveToServer({ data, products: this.products });
+      // Also save locally as backup
+      localStorage.setItem("adminData", JSON.stringify(data));
 
-    // Show success message
-    this.showToast("All changes saved successfully!", "success");
+      // Show success message
+      this.showToast("All changes saved successfully!", "success");
+    } catch (error) {
+      this.showToast("Failed to save changes: " + error.message, "error");
+      console.error("Save error:", error);
 
-    console.log("Saving data:", { data, products: this.products });
+      // Save locally as fallback
+      localStorage.setItem("adminData", JSON.stringify(data));
+      this.showToast("Data saved locally as backup", "warning");
+    }
   }
 
   handleLogout() {
@@ -704,7 +727,7 @@ class AdminPanel {
           // Redirect to home page (now PHP)
           window.location.href = "index.php";
         }, 1500);
-      }
+      },
     );
   }
 
@@ -903,37 +926,168 @@ AdminPanel.prototype.syncNavigationItems = function (navItems) {
   // This method can be expanded to sync navigation items
 };
 
-AdminPanel.prototype.saveToServer = function (data) {
-  // Placeholder for server-side save functionality
-  console.log("Saving to server:", data);
+// API Helper Methods
+AdminPanel.prototype.apiRequest = async function (
+  action,
+  data = null,
+  method = "GET",
+) {
+  const url = `${this.apiBase}?action=${action}`;
+  const options = {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
 
-  // In a real implementation, you would send data to a PHP endpoint
-  /*
-    fetch('admin-save.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
+  if (data && method !== "GET") {
+    options.body = JSON.stringify(data);
+  }
+
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "API request failed");
+    }
+
+    return result;
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
+// Backend Integration Methods
+AdminPanel.prototype.loadFromBackend = async function () {
+  try {
+    // Load hero section
+    const heroData = await this.apiRequest("get_hero");
+    if (heroData.data) {
+      document.getElementById("heroTitle").value = heroData.data.title || "";
+      document.getElementById("heroDescription").value =
+        heroData.data.description || "";
+      document.getElementById("heroButton1").value =
+        heroData.data.button1_text || "";
+      document.getElementById("heroButton2").value =
+        heroData.data.button2_text || "";
+    }
+
+    // Load company info
+    const companyData = await this.apiRequest("get_company");
+    if (companyData.data) {
+      document.getElementById("companyName").value =
+        companyData.data.company_name || "";
+      document.getElementById("certification").value =
+        companyData.data.certification || "";
+      document.getElementById("welcomeTitle").value =
+        companyData.data.welcome_title || "";
+    }
+
+    // Load site settings
+    const settingsData = await this.apiRequest("get_settings");
+    if (settingsData.data) {
+      document.getElementById("siteName").value =
+        settingsData.data.site_name?.value || "";
+      document.getElementById("contactEmail").value =
+        settingsData.data.contact_email?.value || "";
+      document.getElementById("contactPhone").value =
+        settingsData.data.contact_phone?.value || "";
+    }
+
+    // Load statistics
+    const statsData = await this.apiRequest("get_statistics");
+    if (statsData.data) {
+      // Populate statistics forms
+      const statsGrid = document.querySelector(".stats-grid");
+      if (statsGrid) {
+        statsData.data.forEach((stat, index) => {
+          const inputs = statsGrid.querySelectorAll(".stat-item");
+          if (inputs[index]) {
+            const valueInput = inputs[index].querySelector(
+              'input[name*="Value"]',
+            );
+            const labelInput = inputs[index].querySelector(
+              'input[name*="Label"]',
+            );
+            if (valueInput) valueInput.value = stat.stat_value;
+            if (labelInput) labelInput.value = stat.stat_label;
+          }
+        });
+      }
+    }
+  } catch (error) {
+    console.error("Failed to load from backend:", error);
+    throw error;
+  }
+};
+
+AdminPanel.prototype.saveToBackend = async function (data) {
+  try {
+    // Save hero section
+    if (data.hero) {
+      await this.apiRequest(
+        "save_hero",
+        {
+          title: data.hero.title,
+          description: data.hero.description,
+          button1_text: data.hero.button1,
+          button2_text: data.hero.button2,
         },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            this.showToast('Data saved to server successfully!', 'success');
-        } else {
-            this.showToast('Error saving to server: ' + result.message, 'error');
-        }
-    })
-    .catch(error => {
-        this.showToast('Network error: ' + error.message, 'error');
-    });
-    */
+        "POST",
+      );
+    }
 
-  // For now, just show a success message
-  this.showToast(
-    "Changes saved locally. Server integration coming soon!",
-    "info"
-  );
+    // Save company info
+    if (data.company) {
+      await this.apiRequest(
+        "save_company",
+        {
+          company_name: data.company.name,
+          certification: data.company.certification,
+          welcome_title: data.company.welcomeTitle,
+        },
+        "POST",
+      );
+    }
+
+    // Save site settings
+    if (data.site) {
+      await this.apiRequest(
+        "save_settings",
+        {
+          settings: {
+            site_name: { value: data.site.name, type: "text" },
+            contact_email: { value: data.site.contactEmail, type: "email" },
+            contact_phone: { value: data.site.contactPhone, type: "phone" },
+            site_description: {
+              value: data.site.description,
+              type: "textarea",
+            },
+          },
+        },
+        "POST",
+      );
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Failed to save to backend:", error);
+    throw error;
+  }
+};
+
+AdminPanel.prototype.loadProductsFromBackend = async function () {
+  try {
+    const response = await this.apiRequest("get_products");
+    if (response.data) {
+      this.products = response.data;
+    }
+  } catch (error) {
+    console.error("Failed to load products from backend:", error);
+    throw error;
+  }
 };
 
 console.log("🚀 Admin Panel initialized successfully!");

@@ -1,0 +1,57 @@
+# Security settings for uploads directory
+# Prevent execution of PHP files and other scripts
+
+# Deny access to PHP files
+<Files "*.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Deny access to other script files
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Allow only specific image file types
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|bmp|svg|ico)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent access to .htaccess itself
+<Files ".htaccess">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Set proper MIME types for images
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType image/webp .webp
+    AddType image/bmp .bmp
+    AddType image/svg+xml .svg
+    AddType image/x-icon .ico
+</IfModule>
+
+# Set cache headers for uploaded images
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+</IfModule>
+
+# Prevent hotlinking
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
+    RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [F]
+</IfModule>

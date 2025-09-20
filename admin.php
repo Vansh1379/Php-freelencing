@@ -4,8 +4,9 @@
  * Converted from HTML to PHP with proper includes and structure
  */
 
-// Include configuration
+// Include configuration and database
 require_once 'includes/config.php';
+require_once 'includes/database.php';
 
 // Simple authentication check (you can enhance this with proper session management)
 session_start();
@@ -18,6 +19,13 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 */
+
+// Initialize database if needed
+try {
+    initializeDatabase();
+} catch (Exception $e) {
+    die('Database initialization failed: ' . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -411,6 +419,9 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             companyName: '<?php echo defined('COMPANY_NAME') ? COMPANY_NAME : 'MEMA PLAY WORLD'; ?>'
         };
 
+        // API endpoints
+        const API_BASE = 'admin-api.php';
+
         // Navigation items for JavaScript
         const navigationItems = <?php echo json_encode($navigation_menu); ?>;
 
@@ -442,6 +453,102 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         function removeNavItem(button) {
             button.parentElement.remove();
         }
+
+        // API Helper Functions
+        async function apiRequest(action, data = null, method = 'GET') {
+            const url = `${API_BASE}?action=${action}`;
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+
+            if (data && method !== 'GET') {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.message || 'API request failed');
+                }
+
+                return result;
+            } catch (error) {
+                console.error('API Error:', error);
+                throw error;
+            }
+        }
+
+        // Load data from backend
+        async function loadBackendData() {
+            try {
+                // Load hero section
+                const heroData = await apiRequest('get_hero');
+                if (heroData.data) {
+                    document.getElementById('heroTitle').value = heroData.data.title || '';
+                    document.getElementById('heroDescription').value = heroData.data.description || '';
+                    document.getElementById('heroButton1').value = heroData.data.button1_text || '';
+                    document.getElementById('heroButton2').value = heroData.data.button2_text || '';
+                }
+
+                // Load company info
+                const companyData = await apiRequest('get_company');
+                if (companyData.data) {
+                    document.getElementById('companyName').value = companyData.data.company_name || '';
+                    document.getElementById('certification').value = companyData.data.certification || '';
+                    document.getElementById('welcomeTitle').value = companyData.data.welcome_title || '';
+                }
+
+                // Load site settings
+                const settingsData = await apiRequest('get_settings');
+                if (settingsData.data) {
+                    document.getElementById('siteName').value = settingsData.data.site_name?.value || '';
+                    document.getElementById('contactEmail').value = settingsData.data.contact_email?.value || '';
+                    document.getElementById('contactPhone').value = settingsData.data.contact_phone?.value || '';
+                }
+
+            } catch (error) {
+                console.error('Failed to load backend data:', error);
+            }
+        }
+
+        // Save data to backend
+        async function saveToBackend(section, data) {
+            try {
+                let action = '';
+                switch (section) {
+                    case 'hero':
+                        action = 'save_hero';
+                        break;
+                    case 'company':
+                        action = 'save_company';
+                        break;
+                    case 'settings':
+                        action = 'save_settings';
+                        break;
+                    case 'products':
+                        action = 'add_product';
+                        break;
+                    default:
+                        throw new Error('Unknown section: ' + section);
+                }
+
+                const result = await apiRequest(action, data, 'POST');
+                return result;
+            } catch (error) {
+                console.error('Failed to save to backend:', error);
+                throw error;
+            }
+        }
+
+        // Load backend data when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBackendData();
+        });
     </script>
     <script src="admin.js"></script>
 
