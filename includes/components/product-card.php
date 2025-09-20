@@ -1,0 +1,221 @@
+<?php
+/**
+ * Reusable Product Card Component
+ *
+ * Usage:
+ * include 'includes/components/product-card.php';
+ * renderProductCard([
+ *     'title' => 'Product Name',
+ *     'description' => 'Product description...',
+ *     'features' => ['Feature 1', 'Feature 2'],
+ *     'price' => '₹25,000 - ₹50,000', // optional
+ *     'badge' => 'Popular', // optional
+ *     'category' => 'playground', // optional
+ *     'image_class' => 'playground-bg', // optional
+ *     'button_text' => 'Get Quote',
+ *     'button_action' => 'quote', // 'quote', 'link', or 'view'
+ *     'button_link' => '#' // optional, for link action
+ * ]);
+ */
+
+function renderProductCard($config = []) {
+    // Default configuration
+    $defaults = [
+        'title' => 'Product Title',
+        'description' => 'Product description goes here.',
+        'features' => [],
+        'price' => null,
+        'badge' => null,
+        'category' => 'all',
+        'image_class' => '',
+        'button_text' => 'View Details',
+        'button_action' => 'view',
+        'button_link' => '#',
+        'show_price' => true
+    ];
+
+    // Merge config with defaults
+    $card = array_merge($defaults, $config);
+
+    // Generate unique ID for this card
+    $card_id = 'card_' . uniqid();
+
+    // Start output buffering
+    ob_start();
+    ?>
+
+    <div class="product-card"
+         data-category="<?php echo htmlspecialchars($card['category']); ?>"
+         id="<?php echo $card_id; ?>">
+
+        <!-- Product Image -->
+        <div class="product-image <?php echo htmlspecialchars($card['image_class']); ?>">
+            <?php if ($card['badge']): ?>
+                <div class="product-badge"><?php echo htmlspecialchars($card['badge']); ?></div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Product Content -->
+        <div class="product-content">
+            <h3><?php echo htmlspecialchars($card['title']); ?></h3>
+            <p><?php echo htmlspecialchars($card['description']); ?></p>
+
+            <?php if (!empty($card['features'])): ?>
+                <ul class="product-features">
+                    <?php foreach ($card['features'] as $feature): ?>
+                        <li><?php echo htmlspecialchars($feature); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+            <?php if ($card['price'] && $card['show_price']): ?>
+                <div class="product-price"><?php echo htmlspecialchars($card['price']); ?></div>
+            <?php endif; ?>
+
+            <!-- Product Button -->
+            <?php renderProductButton($card); ?>
+        </div>
+    </div>
+
+    <?php
+    // Return the buffered output
+    return ob_get_clean();
+}
+
+/**
+ * Render the product button based on action type
+ */
+function renderProductButton($card) {
+    $button_class = 'product-btn';
+    $button_attributes = '';
+
+    switch ($card['button_action']) {
+        case 'quote':
+            $button_attributes = 'onclick="openQuoteModal(\'' . htmlspecialchars($card['title']) . '\')"';
+            break;
+
+        case 'link':
+            $button_attributes = 'onclick="window.location.href=\'' . htmlspecialchars($card['button_link']) . '\'"';
+            break;
+
+        case 'view':
+        default:
+            $button_attributes = 'onclick="viewProduct(\'' . htmlspecialchars($card['title']) . '\')"';
+            break;
+    }
+
+    echo '<button class="' . $button_class . '" ' . $button_attributes . '>';
+    echo htmlspecialchars($card['button_text']);
+    echo '</button>';
+}
+
+/**
+ * Render multiple product cards from an array
+ */
+function renderProductCards($cards_config) {
+    $output = '';
+    foreach ($cards_config as $card_config) {
+        $output .= renderProductCard($card_config);
+    }
+    return $output;
+}
+
+/**
+ * Quick render function for simple cards (backward compatibility)
+ */
+function quickProductCard($title, $description, $features = [], $button_text = 'View Details') {
+    return renderProductCard([
+        'title' => $title,
+        'description' => $description,
+        'features' => $features,
+        'button_text' => $button_text,
+        'show_price' => false
+    ]);
+}
+
+/**
+ * Predefined product configurations for common use cases
+ */
+class ProductCardPresets {
+
+    public static function homePageCard($title, $description, $features, $image_class = '') {
+        return [
+            'title' => $title,
+            'description' => $description,
+            'features' => $features,
+            'button_text' => 'View Products',
+            'button_action' => 'link',
+            'button_link' => 'products.php',
+            'image_class' => $image_class,
+            'show_price' => false
+        ];
+    }
+
+    public static function productsPageCard($title, $description, $features, $price, $category, $badge = null) {
+        return [
+            'title' => $title,
+            'description' => $description,
+            'features' => $features,
+            'price' => $price,
+            'category' => $category,
+            'badge' => $badge,
+            'button_text' => 'Get Quote',
+            'button_action' => 'quote',
+            'image_class' => $category . '-bg',
+            'show_price' => true
+        ];
+    }
+}
+
+// JavaScript functions for button actions (to be included in pages using this component)
+?>
+<script>
+// Global functions for product card interactions
+function openQuoteModal(productName) {
+    // This function should be defined in the page using the component
+    if (typeof showQuoteModal === 'function') {
+        showQuoteModal(productName);
+    } else {
+        console.warn('showQuoteModal function not found. Please include product.js or define the function.');
+        alert('Quote request for: ' + productName);
+    }
+}
+
+function viewProduct(productName) {
+    // Default behavior - scroll to products section or redirect
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        window.location.href = 'products.php';
+    }
+}
+
+// Enhanced card interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects to all product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px)';
+            this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
+        });
+
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.1)';
+        });
+    });
+
+    // Add click animation to product buttons
+    document.querySelectorAll('.product-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+    });
+});
+</script>
+<?php
+?>

@@ -154,59 +154,16 @@
         </p>
 
         <div class="product-grid">
-          <div class="product-card">
-            <div class="product-image"></div>
-            <div class="product-content">
-              <h3>Playground Equipment</h3>
-              <p>
-                Safe, colorful, and imaginative play structures that foster
-                creativity and physical development.
-              </p>
-              <ul class="product-features">
-                <li>Multi-play structures</li>
-                <li>Climbing equipment</li>
-                <li>Slides & swings</li>
-                <li>Spring riders</li>
-              </ul>
-              <button class="product-btn">View Products</button>
-            </div>
-          </div>
+          <?php
+          // Include the product card component and configuration
+          include 'includes/components/product-card.php';
+          include 'includes/products-config.php';
 
-          <div class="product-card">
-            <div class="product-image"></div>
-            <div class="product-content">
-              <h3>Outdoor Gym Equipment</h3>
-              <p>
-                Durable fitness solutions for outdoor spaces, promoting health
-                and wellness in communities.
-              </p>
-              <ul class="product-features">
-                <li>Cardio stations</li>
-                <li>Strength training</li>
-                <li>Flexibility equipment</li>
-                <li>Weather resistant</li>
-              </ul>
-              <button class="product-btn">View Products</button>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-image"></div>
-            <div class="product-content">
-              <h3>Indoor Gym Solutions</h3>
-              <p>
-                Complete indoor fitness and play solutions designed for schools,
-                clubs, and residential complexes.
-              </p>
-              <ul class="product-features">
-                <li>Modular designs</li>
-                <li>Space-efficient</li>
-                <li>Easy installation</li>
-                <li>Low maintenance</li>
-              </ul>
-              <button class="product-btn">View Products</button>
-            </div>
-          </div>
+          // Render home page product cards from configuration
+          foreach ($homePageProducts as $product) {
+              echo renderProductCard($product);
+          }
+          ?>
         </div>
       </div>
     </section>
