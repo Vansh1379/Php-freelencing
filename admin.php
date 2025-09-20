@@ -1,9 +1,30 @@
+<?php
+/**
+ * Admin Panel - Mena Play World
+ * Converted from HTML to PHP with proper includes and structure
+ */
+
+// Include configuration
+require_once 'includes/config.php';
+
+// Simple authentication check (you can enhance this with proper session management)
+session_start();
+
+// For demo purposes, we'll allow direct access
+// In production, add proper authentication here
+/*
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header('Location: admin-login.php');
+    exit;
+}
+*/
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Mena Play World</title>
+    <title>Admin Dashboard - <?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="admin.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -13,7 +34,7 @@
         <nav class="sidebar">
             <div class="sidebar-header">
                 <h2><i class="fas fa-cog"></i> Admin Panel</h2>
-                <p>Mena Play World</p>
+                <p><?php echo SITE_NAME; ?></p>
             </div>
 
             <ul class="sidebar-menu">
@@ -32,10 +53,10 @@
             </ul>
 
             <div class="sidebar-footer">
-                <a href="index.html" class="view-site-btn" target="_blank">
+                <a href="index.php" class="view-site-btn" target="_blank">
                     <i class="fas fa-external-link-alt"></i> View Site
                 </a>
-                <button class="logout-btn">
+                <button class="logout-btn" onclick="handleLogout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
@@ -131,7 +152,7 @@
                         <div class="form-group">
                             <label for="companyName">Company Name</label>
                             <input type="text" id="companyName" name="companyName"
-                                   value="MEMA PLAY WORLD">
+                                   value="<?php echo defined('COMPANY_NAME') ? COMPANY_NAME : 'MEMA PLAY WORLD'; ?>">
                         </div>
 
                         <div class="form-group">
@@ -159,7 +180,7 @@
                         <div class="form-group">
                             <label for="welcomeTitle">Welcome Title</label>
                             <input type="text" id="welcomeTitle" name="welcomeTitle"
-                                   value="Welcome to Mema Play World">
+                                   value="Welcome to <?php echo SITE_NAME; ?>">
                         </div>
 
                         <div class="form-group">
@@ -177,8 +198,8 @@
                                     </button>
                                 </div>
                                 <div class="editor-content" contenteditable="true" id="aboutContentEditor">
-                                    <p>Welcome to Mema Play World, your premier destination for high-quality playground equipment and solutions. With a passion for creating engaging and safe play spaces, we have been serving communities and institutions for 10 years with our innovative and durable products.</p>
-                                    <p>At Mema Play World, we believe that play is an essential part of childhood development. Our mission is to design and manufacture playground equipment that not only sparks children's imaginations but also promotes physical activity, social interaction, and cognitive growth.</p>
+                                    <p>Welcome to <?php echo SITE_NAME; ?>, your premier destination for high-quality playground equipment and solutions. With a passion for creating engaging and safe play spaces, we have been serving communities and institutions for 10 years with our innovative and durable products.</p>
+                                    <p>At <?php echo SITE_NAME; ?>, we believe that play is an essential part of childhood development. Our mission is to design and manufacture playground equipment that not only sparks children's imaginations but also promotes physical activity, social interaction, and cognitive growth.</p>
                                 </div>
                             </div>
                         </div>
@@ -232,64 +253,66 @@
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
-                        <form class="admin-form" id="productForm">
-                            <div class="form-group">
-                                <label for="productName">Product Name</label>
-                                <input type="text" id="productName" name="productName"
-                                       placeholder="Enter product name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="productCategory">Category</label>
-                                <select id="productCategory" name="productCategory" required>
-                                    <option value="">Select Category</option>
-                                    <option value="playground">Playground Equipment</option>
-                                    <option value="outdoor">Outdoor Gym</option>
-                                    <option value="indoor">Indoor Solutions</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="productDescription">Description</label>
-                                <textarea id="productDescription" name="productDescription" rows="4"
-                                          placeholder="Enter product description" required></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="productFeatures">Features (one per line)</label>
-                                <textarea id="productFeatures" name="productFeatures" rows="4"
-                                          placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
-                            </div>
-
-                            <div class="form-row">
+                        <div class="modal-body">
+                            <form class="admin-form" id="productForm">
                                 <div class="form-group">
-                                    <label for="productMinPrice">Min Price (₹)</label>
-                                    <input type="number" id="productMinPrice" name="productMinPrice"
-                                           placeholder="25000">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" id="productName" name="productName"
+                                           placeholder="Enter product name" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="productMaxPrice">Max Price (₹)</label>
-                                    <input type="number" id="productMaxPrice" name="productMaxPrice"
-                                           placeholder="120000">
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="productImage">Product Image</label>
-                                <div class="file-upload-area">
-                                    <input type="file" id="productImage" name="productImage" accept="image/*">
-                                    <div class="file-upload-placeholder">
-                                        <i class="fas fa-image"></i>
-                                        <p>Upload product image</p>
+                                <div class="form-group">
+                                    <label for="productCategory">Category</label>
+                                    <select id="productCategory" name="productCategory" required>
+                                        <option value="">Select Category</option>
+                                        <option value="playground">Playground Equipment</option>
+                                        <option value="outdoor">Outdoor Gym</option>
+                                        <option value="indoor">Indoor Solutions</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productDescription">Description</label>
+                                    <textarea id="productDescription" name="productDescription" rows="4"
+                                              placeholder="Enter product description" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productFeatures">Features (one per line)</label>
+                                    <textarea id="productFeatures" name="productFeatures" rows="4"
+                                              placeholder="Feature 1&#10;Feature 2&#10;Feature 3"></textarea>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="productMinPrice">Min Price (₹)</label>
+                                        <input type="number" id="productMinPrice" name="productMinPrice"
+                                               placeholder="25000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productMaxPrice">Max Price (₹)</label>
+                                        <input type="number" id="productMaxPrice" name="productMaxPrice"
+                                               placeholder="120000">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-secondary" id="cancelProduct">Cancel</button>
-                                <button type="submit" class="btn btn-primary" id="saveProduct">Save Product</button>
-                            </div>
-                        </form>
+                                <div class="form-group">
+                                    <label for="productImage">Product Image</label>
+                                    <div class="file-upload-area">
+                                        <input type="file" id="productImage" name="productImage" accept="image/*">
+                                        <div class="file-upload-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>Upload product image</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelProduct">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveProduct">Save Product</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -302,7 +325,7 @@
                         <div class="form-group">
                             <label for="siteName">Site Name</label>
                             <input type="text" id="siteName" name="siteName"
-                                   value="Mena Play World">
+                                   value="<?php echo SITE_NAME; ?>">
                         </div>
 
                         <div class="form-group">
@@ -314,13 +337,45 @@
                         <div class="form-group">
                             <label for="contactEmail">Contact Email</label>
                             <input type="email" id="contactEmail" name="contactEmail"
-                                   value="contact.jkenterprise@gmail.com">
+                                   value="<?php echo CONTACT_EMAIL; ?>">
                         </div>
 
                         <div class="form-group">
                             <label for="contactPhone">Contact Phone</label>
                             <input type="tel" id="contactPhone" name="contactPhone"
-                                   value="+91 9773698785">
+                                   value="<?php echo CONTACT_PHONE; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="companyAddress">Company Address</label>
+                            <textarea id="companyAddress" name="companyAddress" rows="3"
+                                      placeholder="Enter company address"><?php echo defined('COMPANY_ADDRESS') ? COMPANY_ADDRESS : ''; ?></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="section-card">
+                    <h2><i class="fas fa-link"></i> Navigation Settings</h2>
+                    <form class="admin-form" id="navigationForm">
+                        <div class="form-group">
+                            <label>Navigation Menu Items</label>
+                            <div id="navigationItems">
+                                <?php
+                                global $navigation_menu;
+                                foreach ($navigation_menu as $page => $title):
+                                ?>
+                                <div class="nav-item-row">
+                                    <input type="text" placeholder="Page" value="<?php echo $page; ?>" name="nav_page[]">
+                                    <input type="text" placeholder="Title" value="<?php echo $title; ?>" name="nav_title[]">
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeNavItem(this)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="addNavItem()">
+                                <i class="fas fa-plus"></i> Add Navigation Item
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -347,6 +402,76 @@
         </div>
     </div>
 
+    <script>
+        // PHP data for JavaScript
+        const SITE_CONFIG = {
+            siteName: '<?php echo SITE_NAME; ?>',
+            contactEmail: '<?php echo CONTACT_EMAIL; ?>',
+            contactPhone: '<?php echo CONTACT_PHONE; ?>',
+            companyName: '<?php echo defined('COMPANY_NAME') ? COMPANY_NAME : 'MEMA PLAY WORLD'; ?>'
+        };
+
+        // Navigation items for JavaScript
+        const navigationItems = <?php echo json_encode($navigation_menu); ?>;
+
+        // Handle logout function
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                // In a real implementation, you would handle logout here
+                alert('Logout functionality would be implemented here.');
+                // window.location.href = 'admin-login.php';
+            }
+        }
+
+        // Add navigation item function
+        function addNavItem() {
+            const container = document.getElementById('navigationItems');
+            const navItem = document.createElement('div');
+            navItem.className = 'nav-item-row';
+            navItem.innerHTML = `
+                <input type="text" placeholder="Page" name="nav_page[]">
+                <input type="text" placeholder="Title" name="nav_title[]">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeNavItem(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            container.appendChild(navItem);
+        }
+
+        // Remove navigation item function
+        function removeNavItem(button) {
+            button.parentElement.remove();
+        }
+    </script>
     <script src="admin.js"></script>
+
+    <style>
+        /* Additional PHP-specific styles */
+        .nav-item-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .nav-item-row input {
+            flex: 1;
+        }
+
+        .nav-item-row .btn-sm {
+            padding: 8px 12px;
+            font-size: 0.8rem;
+        }
+
+        .section-card {
+            margin-bottom: 2rem;
+        }
+
+        .form-actions {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
 </body>
 </html>

@@ -72,6 +72,7 @@ $allProducts = [
         'category' => 'playground',
         'badge' => 'Popular',
         'image_class' => 'playground-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1544816155-12df9643f363?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -87,6 +88,7 @@ $allProducts = [
         'price' => '₹15,000 - ₹35,000',
         'category' => 'playground',
         'image_class' => 'playground-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -102,6 +104,7 @@ $allProducts = [
         'price' => '₹25,000 - ₹1,20,000',
         'category' => 'playground',
         'image_class' => 'playground-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -117,6 +120,7 @@ $allProducts = [
         'price' => '₹40,000 - ₹2,00,000',
         'category' => 'playground',
         'image_class' => 'playground-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1541698444083-023c97d3f4b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -132,6 +136,7 @@ $allProducts = [
         'price' => '₹30,000 - ₹85,000',
         'category' => 'playground',
         'image_class' => 'playground-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -150,6 +155,7 @@ $allProducts = [
         'category' => 'outdoor',
         'badge' => 'New',
         'image_class' => 'outdoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -165,6 +171,7 @@ $allProducts = [
         'price' => '₹35,000 - ₹1,25,000',
         'category' => 'outdoor',
         'image_class' => 'outdoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -180,6 +187,7 @@ $allProducts = [
         'price' => '₹20,000 - ₹80,000',
         'category' => 'outdoor',
         'image_class' => 'outdoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1594736797933-d0b22d3f4ee2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -195,6 +203,7 @@ $allProducts = [
         'price' => '₹3,50,000 - ₹12,00,000',
         'category' => 'outdoor',
         'image_class' => 'outdoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -210,6 +219,7 @@ $allProducts = [
         'price' => '₹25,000 - ₹75,000',
         'category' => 'outdoor',
         'image_class' => 'outdoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1594736797933-d0b22d3f4ee2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -228,6 +238,7 @@ $allProducts = [
         'category' => 'indoor',
         'badge' => 'Premium',
         'image_class' => 'indoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -243,6 +254,7 @@ $allProducts = [
         'price' => '₹2,00,000 - ₹8,00,000',
         'category' => 'indoor',
         'image_class' => 'indoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1544816155-12df9643f363?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -258,6 +270,7 @@ $allProducts = [
         'price' => '₹80,000 - ₹3,00,000',
         'category' => 'indoor',
         'image_class' => 'indoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -273,6 +286,7 @@ $allProducts = [
         'price' => '₹60,000 - ₹2,50,000',
         'category' => 'indoor',
         'image_class' => 'indoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ],
@@ -289,6 +303,7 @@ $allProducts = [
         'category' => 'indoor',
         'badge' => 'Specialized',
         'image_class' => 'indoor-bg',
+        'image_url' => 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
         'button_text' => 'Get Quote',
         'button_action' => 'quote'
     ]

@@ -28,10 +28,14 @@ function renderProductCard($config = []) {
         'badge' => null,
         'category' => 'all',
         'image_class' => '',
+        'image_url' => null,
         'button_text' => 'View Details',
         'button_action' => 'view',
         'button_link' => '#',
-        'show_price' => true
+        'show_price' => true,
+        'show_edit' => true,
+        'show_delete' => false,
+        'admin_mode' => false
     ];
 
     // Merge config with defaults
@@ -50,6 +54,13 @@ function renderProductCard($config = []) {
 
         <!-- Product Image -->
         <div class="product-image <?php echo htmlspecialchars($card['image_class']); ?>">
+            <?php if ($card['image_url']): ?>
+                <img src="<?php echo htmlspecialchars($card['image_url']); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" />
+            <?php else: ?>
+                <div class="product-placeholder">
+                    <i class="product-icon">🏗️</i>
+                </div>
+            <?php endif; ?>
             <?php if ($card['badge']): ?>
                 <div class="product-badge"><?php echo htmlspecialchars($card['badge']); ?></div>
             <?php endif; ?>
@@ -72,8 +83,18 @@ function renderProductCard($config = []) {
                 <div class="product-price"><?php echo htmlspecialchars($card['price']); ?></div>
             <?php endif; ?>
 
-            <!-- Product Button -->
-            <?php renderProductButton($card); ?>
+            <!-- Product Buttons -->
+            <div class="product-buttons">
+                <?php if ($card['admin_mode']): ?>
+                    <?php if ($card['show_delete']): ?>
+                        <button class="product-btn product-btn-delete" onclick="deleteProduct('<?php echo htmlspecialchars($card['title']); ?>')">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php renderProductButton($card); ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
@@ -96,6 +117,15 @@ function renderProductButton($card) {
 
         case 'link':
             $button_attributes = 'onclick="window.location.href=\'' . htmlspecialchars($card['button_link']) . '\'"';
+            break;
+
+        case 'edit':
+            $button_attributes = 'onclick="editProduct(\'' . htmlspecialchars($card['title']) . '\')"';
+            break;
+
+        case 'delete':
+            $button_attributes = 'onclick="deleteProduct(\'' . htmlspecialchars($card['title']) . '\')"';
+            $button_class .= ' product-btn-delete';
             break;
 
         case 'view':
@@ -165,6 +195,25 @@ class ProductCardPresets {
             'show_price' => true
         ];
     }
+
+    public static function adminPageCard($title, $description, $features, $price, $category, $badge = null, $image_url = null) {
+        return [
+            'title' => $title,
+            'description' => $description,
+            'features' => $features,
+            'price' => $price,
+            'category' => $category,
+            'badge' => $badge,
+            'image_url' => $image_url,
+            'button_text' => 'Delete',
+            'button_action' => 'delete',
+            'image_class' => $category . '-bg',
+            'show_price' => true,
+            'show_edit' => false,
+            'show_delete' => true,
+            'admin_mode' => true
+        ];
+    }
 }
 
 // JavaScript functions for button actions (to be included in pages using this component)
@@ -188,6 +237,28 @@ function viewProduct(productName) {
         productsSection.scrollIntoView({ behavior: 'smooth' });
     } else {
         window.location.href = 'products.php';
+    }
+}
+
+function editProduct(productName) {
+    // This function should be defined in admin pages
+    if (typeof adminPanel !== 'undefined' && adminPanel.editProduct) {
+        adminPanel.editProduct(productName);
+    } else {
+        console.warn('Admin panel edit function not found');
+        alert('Edit product: ' + productName);
+    }
+}
+
+function deleteProduct(productName) {
+    // This function should be defined in admin pages
+    if (typeof adminPanel !== 'undefined' && adminPanel.deleteProduct) {
+        adminPanel.deleteProduct(productName);
+    } else {
+        console.warn('Admin panel delete function not found');
+        if (confirm('Are you sure you want to delete: ' + productName + '?')) {
+            alert('Delete product: ' + productName);
+        }
     }
 }
 
