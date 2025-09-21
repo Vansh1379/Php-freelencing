@@ -40,11 +40,14 @@
         <!-- Product Grid -->
         <div class="product-grid">
           <?php
-          // Include the product card component and configuration
+          // Include the product card component and dynamic data
           include 'includes/components/product-card.php';
-          include 'includes/products-config.php';
+          include 'includes/dynamic-data.php';
 
-          // Render all product cards from centralized configuration
+          // Get products from database with fallback to static data
+          $allProducts = getProductsWithFallback();
+
+          // Render all product cards from database
           foreach ($allProducts as $product) {
               echo renderProductCard($product);
           }
