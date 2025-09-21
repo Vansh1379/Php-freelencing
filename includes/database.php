@@ -9,6 +9,7 @@ define('DB_HOST', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'mena');
+define('DB_SOCKET', '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock');
 
 // Database Connection Class
 class Database {
@@ -17,8 +18,13 @@ class Database {
 
     private function __construct() {
         try {
+            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+            if (defined('DB_SOCKET') && file_exists(DB_SOCKET)) {
+                $dsn .= ";unix_socket=" . DB_SOCKET;
+            }
+            
             $this->connection = new PDO(
-                "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
+                $dsn,
                 DB_USERNAME,
                 DB_PASSWORD,
                 [

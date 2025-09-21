@@ -137,7 +137,7 @@ class AdminPanel {
       console.error("Failed to load initial data:", error);
       this.showToast(
         "Failed to load data from server. Using local storage.",
-        "warning",
+        "warning"
       );
 
       // Fallback to localStorage
@@ -257,7 +257,7 @@ class AdminPanel {
             <div class="product-header">
                 <div class="product-title">${product.name}</div>
                 <span class="product-category">${this.getCategoryDisplay(
-                  product.category,
+                  product.category
                 )}</span>
                 ${
                   product.badge
@@ -268,7 +268,7 @@ class AdminPanel {
             <div class="product-body">
                 <p class="product-description">${product.description}</p>
                 <div class="product-price">₹${this.formatPrice(
-                  product.minPrice,
+                  product.minPrice
                 )} - ₹${this.formatPrice(product.maxPrice)}</div>
                 <div class="product-actions">
                     <button class="btn btn-sm btn-primary" onclick="adminPanel.editProduct(${
@@ -358,6 +358,18 @@ class AdminPanel {
       max_price: parseFloat(formData.get("productMaxPrice")) || 0,
     };
 
+    // Handle image upload
+    const imageFile = formData.get("productImage");
+    if (imageFile && imageFile.size > 0) {
+      try {
+        const uploadResult = await this.uploadImage(imageFile, "product");
+        productData.image_url = uploadResult.file_path;
+      } catch (error) {
+        this.showToast("Failed to upload image: " + error.message, "error");
+        return;
+      }
+    }
+
     // Validation
     if (!this.validateProductData(productData)) {
       return;
@@ -378,8 +390,9 @@ class AdminPanel {
       // Refresh products grid
       await this.generateProductsGrid();
 
-      // Hide modal
+      // Hide modal and reset form
       this.hideProductModal();
+      this.resetProductForm();
     } catch (error) {
       this.showToast("Failed to save product: " + error.message, "error");
       console.error("Product save error:", error);
@@ -392,9 +405,9 @@ class AdminPanel {
     if (!data.name) errors.push("Product name is required");
     if (!data.category) errors.push("Category is required");
     if (!data.description) errors.push("Description is required");
-    if (data.minPrice < 0) errors.push("Minimum price must be positive");
-    if (data.maxPrice < 0) errors.push("Maximum price must be positive");
-    if (data.minPrice > data.maxPrice)
+    if (data.min_price < 0) errors.push("Minimum price must be positive");
+    if (data.max_price < 0) errors.push("Maximum price must be positive");
+    if (data.min_price > data.max_price)
       errors.push("Minimum price cannot be greater than maximum price");
 
     if (errors.length > 0) {
@@ -403,6 +416,38 @@ class AdminPanel {
     }
 
     return true;
+  }
+
+  async uploadImage(file, context = "general") {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("context", context);
+
+    const response = await fetch(`${this.apiBase}?action=upload_file`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Upload failed");
+    }
+
+    return await response.json();
+  }
+
+  resetProductForm() {
+    document.getElementById("productForm").reset();
+    const placeholder = document
+      .querySelector("#productImage")
+      .parentElement.querySelector(".file-upload-placeholder");
+    if (placeholder) {
+      placeholder.innerHTML = `
+        <i class="fas fa-image"></i>
+        <p>Upload product image</p>
+      `;
+    }
+    this.currentEditingProduct = null;
   }
 
   editProduct(id) {
@@ -427,7 +472,7 @@ class AdminPanel {
           this.showToast("Failed to delete product: " + error.message, "error");
           console.error("Product delete error:", error);
         }
-      },
+      }
     );
   }
 
@@ -478,7 +523,7 @@ class AdminPanel {
     const reader = new FileReader();
     reader.onload = (e) => {
       const placeholder = input.parentElement.querySelector(
-        ".file-upload-placeholder",
+        ".file-upload-placeholder"
       );
       placeholder.innerHTML = `
                 <i class="fas fa-check-circle" style="color: #10b981;"></i>
@@ -511,7 +556,7 @@ class AdminPanel {
 
   setupFormValidation() {
     const requiredFields = document.querySelectorAll(
-      "input[required], textarea[required], select[required]",
+      "input[required], textarea[required], select[required]"
     );
 
     requiredFields.forEach((field) => {
@@ -532,7 +577,7 @@ class AdminPanel {
     if (field.hasAttribute("required") && !value) {
       this.showFieldError(
         field,
-        `${this.getFieldLabel(fieldName)} is required`,
+        `${this.getFieldLabel(fieldName)} is required`
       );
       return false;
     }
@@ -610,7 +655,7 @@ class AdminPanel {
           "input",
           this.debounce(() => {
             this.autoSave();
-          }, 2000),
+          }, 2000)
         );
       });
     });
@@ -684,7 +729,7 @@ class AdminPanel {
     // Validate all forms
     let isValid = true;
     const requiredFields = document.querySelectorAll(
-      "input[required], textarea[required], select[required]",
+      "input[required], textarea[required], select[required]"
     );
 
     requiredFields.forEach((field) => {
@@ -727,7 +772,7 @@ class AdminPanel {
           // Redirect to home page (now PHP)
           window.location.href = "index.php";
         }, 1500);
-      },
+      }
     );
   }
 
@@ -930,7 +975,7 @@ AdminPanel.prototype.syncNavigationItems = function (navItems) {
 AdminPanel.prototype.apiRequest = async function (
   action,
   data = null,
-  method = "GET",
+  method = "GET"
 ) {
   const url = `${this.apiBase}?action=${action}`;
   const options = {
@@ -1006,10 +1051,10 @@ AdminPanel.prototype.loadFromBackend = async function () {
           const inputs = statsGrid.querySelectorAll(".stat-item");
           if (inputs[index]) {
             const valueInput = inputs[index].querySelector(
-              'input[name*="Value"]',
+              'input[name*="Value"]'
             );
             const labelInput = inputs[index].querySelector(
-              'input[name*="Label"]',
+              'input[name*="Label"]'
             );
             if (valueInput) valueInput.value = stat.stat_value;
             if (labelInput) labelInput.value = stat.stat_label;
@@ -1035,7 +1080,7 @@ AdminPanel.prototype.saveToBackend = async function (data) {
           button1_text: data.hero.button1,
           button2_text: data.hero.button2,
         },
-        "POST",
+        "POST"
       );
     }
 
@@ -1048,7 +1093,7 @@ AdminPanel.prototype.saveToBackend = async function (data) {
           certification: data.company.certification,
           welcome_title: data.company.welcomeTitle,
         },
-        "POST",
+        "POST"
       );
     }
 
@@ -1067,7 +1112,7 @@ AdminPanel.prototype.saveToBackend = async function (data) {
             },
           },
         },
-        "POST",
+        "POST"
       );
     }
 

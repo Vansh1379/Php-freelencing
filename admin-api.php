@@ -497,7 +497,7 @@ function handleAddProduct() {
                 $input['badge'] ?? null,
                 $input['image_url'] ?? null,
                 $input['image_class'] ?? null,
-                $input['is_featured'] ?? false,
+                isset($input['is_featured']) ? (int)(bool)$input['is_featured'] : 0,
                 $input['sort_order'] ?? 0
             ]
         );
@@ -550,7 +550,7 @@ function handleUpdateProduct() {
                 $input['badge'] ?? null,
                 $input['image_url'] ?? null,
                 $input['image_class'] ?? null,
-                $input['is_featured'] ?? false,
+                isset($input['is_featured']) ? (int)(bool)$input['is_featured'] : 0,
                 $input['sort_order'] ?? 0,
                 $input['id']
             ]
@@ -718,10 +718,15 @@ function handleFileUpload() {
     $file = $_FILES['file'];
     $context = $_POST['context'] ?? 'general';
 
+    // Check for upload errors
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        sendError('Upload error: ' . $file['error']);
+    }
+
     // Validate file
     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!in_array($file['type'], $allowedTypes)) {
-        sendError('Invalid file type. Only images are allowed.');
+        sendError('Invalid file type. Only images are allowed. Got: ' . $file['type']);
     }
 
     $maxSize = 5 * 1024 * 1024; // 5MB
@@ -762,7 +767,7 @@ function handleFileUpload() {
                 'file_name' => $fileName
             ]);
         } else {
-            sendError('Failed to upload file', 500);
+            sendError('Failed to move uploaded file to: ' . $filePath, 500);
         }
 
     } catch (Exception $e) {

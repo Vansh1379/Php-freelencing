@@ -8,7 +8,13 @@
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <?php include 'includes/header.php'; ?>
+        <?php 
+        include 'includes/header.php';
+        include 'includes/dynamic-data.php';
+        
+        // Fetch dynamic data
+        $companyInfo = getCompanyInfo();
+        ?>
 
         <!-- Contact Hero Section -->
         <section class="contact-hero">
@@ -45,10 +51,7 @@
                                 <div class="contact-info-content">
                                     <h4>Our Address</h4>
                                     <p>
-                                        Shop no.68/4, Gali no.6, 4/6-Ambedkar<br />
-                                        Colony, Lal Bagh, Sec 7, Guj
-                                        Ghaziabad<br />
-                                        U.P - 201008, India
+                                        <?php echo nl2br(htmlspecialchars($companyInfo['address'] ?? 'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India')); ?>
                                     </p>
                                 </div>
                             </div>
@@ -60,12 +63,15 @@
                                 <div class="contact-info-content">
                                     <h4>Phone Numbers</h4>
                                     <p>
-                                        <a href="tel:+919773698785"
-                                            >+91 9773698785</a
-                                        ><br />
-                                        <a href="tel:+919560243588"
-                                            >+91 9560243588</a
-                                        >
+                                        <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['phone'] ?? '+91 9773698785'); ?>">
+                                            <?php echo htmlspecialchars($companyInfo['phone'] ?? '+91 9773698785'); ?>
+                                        </a>
+                                        <?php if (!empty($companyInfo['phone_alt'])): ?>
+                                        <br />
+                                        <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['phone_alt']); ?>">
+                                            <?php echo htmlspecialchars($companyInfo['phone_alt']); ?>
+                                        </a>
+                                        <?php endif; ?>
                                     </p>
                                 </div>
                             </div>
@@ -77,14 +83,15 @@
                                 <div class="contact-info-content">
                                     <h4>Email Address</h4>
                                     <p>
-                                        <a
-                                            href="mailto:contact.jkenterprise@gmail.com"
-                                            >contact.jkenterprise@gmail.com</a
-                                        ><br />
-                                        <a
-                                            href="mailto:jkenterprise1999@gmail.com"
-                                            >jkenterprise1999@gmail.com</a
-                                        >
+                                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>">
+                                            <?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>
+                                        </a>
+                                        <?php if (!empty($companyInfo['email_alt'])): ?>
+                                        <br />
+                                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email_alt']); ?>">
+                                            <?php echo htmlspecialchars($companyInfo['email_alt']); ?>
+                                        </a>
+                                        <?php endif; ?>
                                     </p>
                                 </div>
                             </div>
@@ -486,14 +493,12 @@
                         Contact us today for a free consultation and quote.
                     </p>
                     <div class="cta-buttons">
-                        <a href="tel:+919773698785" class="btn-primary"
-                            >Call Now</a
-                        >
-                        <a
-                            href="mailto:contact.jkenterprise@gmail.com"
-                            class="btn-secondary"
-                            >Email Us</a
-                        >
+                        <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['phone'] ?? '+91 9773698785'); ?>" class="btn-primary">
+                            Call Now
+                        </a>
+                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>" class="btn-secondary">
+                            Email Us
+                        </a>
                     </div>
                 </div>
             </div>

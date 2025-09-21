@@ -55,7 +55,18 @@ function renderProductCard($config = []) {
         <!-- Product Image -->
         <div class="product-image <?php echo htmlspecialchars($card['image_class']); ?>">
             <?php if ($card['image_url']): ?>
-                <img src="<?php echo htmlspecialchars($card['image_url']); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" />
+                <?php 
+                // Check if it's a full URL or relative path
+                $imageSrc = $card['image_url'];
+                if (!filter_var($imageSrc, FILTER_VALIDATE_URL) && !str_starts_with($imageSrc, '/')) {
+                    // It's a relative path, make sure it starts with ./
+                    $imageSrc = './' . ltrim($imageSrc, './');
+                }
+                ?>
+                <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <div class="product-placeholder" style="display: none;">
+                    <i class="product-icon">🏗️</i>
+                </div>
             <?php else: ?>
                 <div class="product-placeholder">
                     <i class="product-icon">🏗️</i>
