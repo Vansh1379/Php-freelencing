@@ -49,6 +49,7 @@
 
           // Render all product cards from database
           foreach ($allProducts as $product) {
+              $product['show_price'] = false; // Remove price display
               echo renderProductCard($product);
           }
           ?>
