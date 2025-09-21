@@ -53,7 +53,7 @@ function renderProductCard($config = []) {
          id="<?php echo $card_id; ?>">
 
         <!-- Product Image -->
-        <div class="product-image <?php echo htmlspecialchars($card['image_class']); ?>">
+        <div class="product-image <?php echo $card['image_url'] ? 'has-image' : htmlspecialchars($card['image_class']); ?>">
             <?php if ($card['image_url']): ?>
                 <?php 
                 // Check if it's a full URL or relative path
@@ -63,7 +63,7 @@ function renderProductCard($config = []) {
                     $imageSrc = './' . ltrim($imageSrc, './');
                 }
                 ?>
-                <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.parentElement.className='product-image <?php echo htmlspecialchars($card['image_class']); ?>';" />
                 <div class="product-placeholder" style="display: none;">
                     <i class="product-icon">🏗️</i>
                 </div>
