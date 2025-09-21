@@ -229,6 +229,7 @@
                   $productCard['button_text'] = 'View More Products';
                   $productCard['button_action'] = 'link';
                   $productCard['button_link'] = 'products.php';
+                  $productCard['show_price'] = false; // Remove price display
                   echo renderProductCard($productCard);
               }
           } else {
@@ -262,7 +263,7 @@
     <section class="values">
       <div class="values-grid">
         <div class="value-item">
-          <div class="value-icon">🛡️</div>
+          <div class="value-icon">☢️</div>
           <h3>Safety First</h3>
           <p>
             All equipment meets the highest safety standards with regular
