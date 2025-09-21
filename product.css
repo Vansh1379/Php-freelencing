@@ -111,7 +111,7 @@ body {
 }
 
 .product-image:not(.has-image) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #c442f0 0%, #c442f0 100%);
 }
 
 .product-image .product-img {
@@ -712,4 +712,209 @@ body {
     padding: 30px 20px;
   }
 }
+/* Modern Product Card Styles */
+.product-card-modern {
+  border-radius: 0.5rem;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: all 0.5s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-modern:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transform: translateY(-10px);
+}
+
+.product-image-modern {
+  position: relative;
+  height: 16rem;
+  overflow: hidden;
+}
+
+.product-img-modern {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card-modern:hover .product-img-modern {
+  transform: scale(1.1);
+}
+
+.product-placeholder-modern {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c442f0 0%, #c442f0 100%);
+}
+
+.product-icon-modern {
+  font-size: 3rem;
+  opacity: 0.7;
+  color: white;
+}
+
+.product-gradient-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(139, 92, 246, 0.2)
+  );
+  opacity: 0.2;
+  transition: opacity 0.5s ease;
+}
+
+.product-card-modern:hover .product-gradient-overlay {
+  opacity: 0.3;
+}
+
+.product-badge-modern {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #c442f0, #c442f0);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.product-content-modern {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title-modern {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.product-description-modern {
+  color: #64748b;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.product-features-modern {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feature-bullet {
+  width: 0.375rem;
+  height: 0.375rem;
+  background: #c442f0;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.product-price-modern {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #c442f0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.product-button-container {
+  margin-top: auto;
+}
+
+.product-btn-modern {
+  width: 100%;
+  background: linear-gradient(135deg, #c442f0, #c442f0);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+.product-btn-modern:active {
+  transform: translateY(0);
+}
+
+.btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.product-btn-modern:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.product-btn-modern.product-btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.product-btn-modern.product-btn-delete:hover {
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive adjustments for modern cards */
+@media (max-width: 768px) {
+  .product-features-modern {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image-modern {
+    height: 12rem;
+  }
+
+  .product-content-modern {
+    padding: 1rem;
+  }
+
+  .product-title-modern {
+    font-size: 1.25rem;
+  }
+}
+
 /* Cache bust: 1758469925 */

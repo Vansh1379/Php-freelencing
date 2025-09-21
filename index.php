@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JK Enterprise - Premium Playground Equipment</title>
+    <link rel="stylesheet" href="product.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -205,13 +206,15 @@
     </section>
 
     <!-- Products Section -->
-    <section class="products" id="products">
+    <section class="products-main" id="products">
       <div class="products-container">
-        <h2>Our Product Range</h2>
-        <p>
-          Discover our comprehensive range of playground and fitness equipment,
-          designed to create safe, fun, and engaging environments for all ages.
-        </p>
+        <div class="products-header">
+          <h1>Our Product Range</h1>
+          <p>
+            Discover our comprehensive range of playground and fitness equipment,
+            designed to create safe, fun, and engaging environments for all ages.
+          </p>
+        </div>
 
         <div class="product-grid">
           <?php
@@ -222,6 +225,10 @@
               // Use dynamic products from database
               foreach ($homeProducts as $product) {
                   $productCard = convertProductToCard($product);
+                  // Modify for index page - change button to redirect to products page
+                  $productCard['button_text'] = 'View More Products';
+                  $productCard['button_action'] = 'link';
+                  $productCard['button_link'] = 'products.php';
                   echo renderProductCard($productCard);
               }
           } else {
@@ -231,6 +238,10 @@
               // Check if static products exist and render them
               if (!empty($homePageProducts)) {
                   foreach (array_slice($homePageProducts, 0, 3) as $product) {
+                      // Modify for index page - change button to redirect to products page
+                      $product['button_text'] = 'View More Products';
+                      $product['button_action'] = 'link';
+                      $product['button_link'] = 'products.php';
                       echo renderProductCard($product);
                   }
               } else {

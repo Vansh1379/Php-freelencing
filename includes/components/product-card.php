@@ -48,12 +48,12 @@ function renderProductCard($config = []) {
     ob_start();
     ?>
 
-    <div class="product-card"
+    <div class="product-card-modern group"
          data-category="<?php echo htmlspecialchars($card['category']); ?>"
          id="<?php echo $card_id; ?>">
 
-        <!-- Product Image -->
-        <div class="product-image <?php echo $card['image_url'] ? 'has-image' : htmlspecialchars($card['image_class']); ?>">
+        <!-- Product Image Section -->
+        <div class="product-image-modern">
             <?php if ($card['image_url']): ?>
                 <?php 
                 // Check if it's a full URL or relative path
@@ -63,42 +63,54 @@ function renderProductCard($config = []) {
                     $imageSrc = './' . ltrim($imageSrc, './');
                 }
                 ?>
-                <img src="<?php echo htmlspecialchars($imageSrc); ?>" alt="<?php echo htmlspecialchars($card['title']); ?>" class="product-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.parentElement.className='product-image <?php echo htmlspecialchars($card['image_class']); ?>';" />
-                <div class="product-placeholder" style="display: none;">
-                    <i class="product-icon">🏗️</i>
+                <img
+                    src="<?php echo htmlspecialchars($imageSrc); ?>"
+                    alt="<?php echo htmlspecialchars($card['title']); ?>"
+                    class="product-img-modern"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                />
+                <div class="product-placeholder-modern" style="display: none;">
+                    <i class="product-icon-modern">🏗️</i>
                 </div>
             <?php else: ?>
-                <div class="product-placeholder">
-                    <i class="product-icon">🏗️</i>
+                <div class="product-placeholder-modern">
+                    <i class="product-icon-modern">🏗️</i>
                 </div>
             <?php endif; ?>
+            
+            <!-- Gradient Overlay -->
+            <div class="product-gradient-overlay"></div>
+            
             <?php if ($card['badge']): ?>
-                <div class="product-badge"><?php echo htmlspecialchars($card['badge']); ?></div>
+                <div class="product-badge-modern"><?php echo htmlspecialchars($card['badge']); ?></div>
             <?php endif; ?>
         </div>
 
         <!-- Product Content -->
-        <div class="product-content">
-            <h3><?php echo htmlspecialchars($card['title']); ?></h3>
-            <p><?php echo htmlspecialchars($card['description']); ?></p>
+        <div class="product-content-modern">
+            <h3 class="product-title-modern"><?php echo htmlspecialchars($card['title']); ?></h3>
+            <p class="product-description-modern"><?php echo htmlspecialchars($card['description']); ?></p>
 
             <?php if (!empty($card['features'])): ?>
-                <ul class="product-features">
+                <div class="product-features-modern">
                     <?php foreach ($card['features'] as $feature): ?>
-                        <li><?php echo htmlspecialchars($feature); ?></li>
+                        <div class="product-feature-item">
+                            <div class="feature-bullet"></div>
+                            <span class="feature-text"><?php echo htmlspecialchars($feature); ?></span>
+                        </div>
                     <?php endforeach; ?>
-                </ul>
+                </div>
             <?php endif; ?>
 
             <?php if ($card['price'] && $card['show_price']): ?>
-                <div class="product-price"><?php echo htmlspecialchars($card['price']); ?></div>
+                <div class="product-price-modern"><?php echo htmlspecialchars($card['price']); ?></div>
             <?php endif; ?>
 
-            <!-- Product Buttons -->
-            <div class="product-buttons">
+            <!-- Product Button -->
+            <div class="product-button-container">
                 <?php if ($card['admin_mode']): ?>
                     <?php if ($card['show_delete']): ?>
-                        <button class="product-btn product-btn-delete" onclick="deleteProduct('<?php echo htmlspecialchars($card['title']); ?>')">
+                        <button class="product-btn-modern product-btn-delete" onclick="deleteProduct('<?php echo htmlspecialchars($card['title']); ?>')">
                             <i class="fas fa-trash"></i> Delete
                         </button>
                     <?php endif; ?>
@@ -145,8 +157,9 @@ function renderProductButton($card) {
             break;
     }
 
-    echo '<button class="' . $button_class . '" ' . $button_attributes . '>';
+    echo '<button class="product-btn-modern group" ' . $button_attributes . '>';
     echo htmlspecialchars($card['button_text']);
+    echo '<svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>';
     echo '</button>';
 }
 
