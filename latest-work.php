@@ -15,22 +15,15 @@
     $companyInfo = getCompanyInfo();
     ?>
     
-    <!-- Latest Work Hero Section -->
-    <section class="hero" style="padding-top: 120px; min-height: 50vh; background: linear-gradient(135deg, rgba(179, 65, 38, 0.9), rgba(179, 65, 38, 0.8)), url('https://images.unsplash.com/photo-1544816155-12df9643f363?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; color: white; display: flex; align-items: center; text-align: center;">
-        <div class="hero-content" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">Our Latest Work</h1>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9;">
-                Showcasing our recent playground equipment installations and custom projects
-            </p>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section class="about" style="padding: 5rem 2rem; background: white;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">
-                Recent <span class="highlight" style="color: #b34126;">Projects</span>
-            </h2>
+    <!-- Main Latest Work Section -->
+    <section class="products-main" id="latest-work" style="padding-top: 120px;">
+        <div class="products-container">
+            <div class="products-header">
+                <h1 style="font-size: 3rem; color: #2c3e50; margin-bottom: 20px; font-weight: 700;">Our Latest Work</h1>
+                <p>
+                    Showcasing our recent playground equipment installations and custom projects
+                </p>
+            </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
                 <!-- Project 1 -->

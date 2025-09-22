@@ -15,26 +15,19 @@
     $companyInfo = getCompanyInfo();
     ?>
     
-    <!-- Blogs Hero Section -->
-    <section class="hero" style="padding-top: 120px; min-height: 50vh; background: linear-gradient(135deg, rgba(179, 65, 38, 0.9), rgba(179, 65, 38, 0.8)), url('https://images.unsplash.com/photo-1544816155-12df9643f363?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; color: white; display: flex; align-items: center; text-align: center;">
-        <div class="hero-content" style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <h1 style="font-size: 3rem; font-weight: bold; margin-bottom: 1rem;">Our Blog</h1>
-            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9;">
-                Latest insights on playground safety, design trends, and equipment maintenance
-            </p>
-        </div>
-    </section>
-
-    <!-- Blog Posts Section -->
-    <section class="about" style="padding: 5rem 2rem; background: white;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #333;">
-                Latest <span class="highlight" style="color: #b34126;">Articles</span>
-            </h2>
+    <!-- Main Blogs Section -->
+    <section class="products-main" id="blogs" style="padding-top: 120px;">
+        <div class="products-container">
+            <div class="products-header">
+                <h1 style="font-size: 3rem; color: #2c3e50; margin-bottom: 20px; font-weight: 700;">Our Blog</h1>
+                <p>
+                    Latest insights on playground safety, design trends, and equipment maintenance
+                </p>
+            </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
                 <!-- Blog Post 1 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="1" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         🛡️
                     </div>
@@ -46,13 +39,13 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">December 15, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Post 2 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="2" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         🎨
                     </div>
@@ -64,13 +57,13 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">December 10, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Post 3 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         🔧
                     </div>
@@ -82,13 +75,13 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">December 5, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Post 4 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         🌱
                     </div>
@@ -100,13 +93,13 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">November 28, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Post 5 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         👶
                     </div>
@@ -118,13 +111,13 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">November 20, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
 
                 <!-- Blog Post 6 -->
-                <article style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
                     <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
                         🏗️
                     </div>
@@ -136,7 +129,7 @@
                         </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="color: #666; font-size: 0.9rem;">November 15, 2024</span>
-                            <a href="#" style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</a>
+                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
                         </div>
                     </div>
                 </article>
@@ -171,7 +164,252 @@
         </div>
     </section>
 
+    <!-- Blog Modal -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-modal-content">
+            <div class="blog-modal-header">
+                <h2 id="modalTitle">Blog Title</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="blog-modal-body">
+                <div class="blog-meta">
+                    <span id="modalCategory" class="blog-category">CATEGORY</span>
+                    <span id="modalDate" class="blog-date">Date</span>
+                </div>
+                <div id="modalContent" class="blog-content">
+                    <!-- Blog content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Blog Modal Styles */
+        .blog-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .blog-modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        .blog-modal-header {
+            background: linear-gradient(135deg, #b34126, #b34126);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .blog-modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .close-modal:hover {
+            opacity: 1;
+        }
+
+        .blog-modal-body {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        .blog-category {
+            background: #b34126;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .blog-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .blog-content {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .blog-content h3 {
+            color: #b34126;
+            margin: 2rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .blog-content ul, .blog-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .blog-modal-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+            
+            .blog-modal-header {
+                padding: 1.5rem;
+            }
+            
+            .blog-modal-header h2 {
+                font-size: 1.4rem;
+            }
+            
+            .blog-modal-body {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
     <?php include 'includes/footer.php'; ?>
     <script src="script.js"></script>
+    
+    <script>
+        // Blog Modal Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('blogModal');
+            const closeBtn = document.querySelector('.close-modal');
+            const blogCards = document.querySelectorAll('.blog-card');
+
+            // Blog content data
+            const blogContent = {
+                1: {
+                    title: "Essential Playground Safety Guidelines for Parents",
+                    category: "SAFETY",
+                    date: "December 15, 2024",
+                    description: "Learn the most important safety tips every parent should know when their children are playing on playground equipment."
+                },
+                2: {
+                    title: "2024 Playground Design Trends",
+                    category: "DESIGN",
+                    date: "December 10, 2024",
+                    description: "Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment."
+                },
+                3: {
+                    title: "Playground Equipment Maintenance Checklist",
+                    category: "MAINTENANCE",
+                    date: "December 5, 2024",
+                    description: "A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures."
+                },
+                4: {
+                    title: "Eco-Friendly Playground Materials",
+                    category: "SUSTAINABILITY",
+                    date: "November 28, 2024",
+                    description: "Learn about sustainable materials used in modern playground construction and their environmental benefits."
+                },
+                5: {
+                    title: "How Playgrounds Support Child Development",
+                    category: "DEVELOPMENT",
+                    date: "November 20, 2024",
+                    description: "Understanding the role of playground equipment in physical, social, and cognitive development of children."
+                },
+                6: {
+                    title: "Playground Installation Process",
+                    category: "INSTALLATION",
+                    date: "November 15, 2024",
+                    description: "A step-by-step guide to playground installation from site preparation to final safety inspection."
+                }
+            };
+
+            // Open modal when blog card is clicked
+            blogCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const blogId = this.getAttribute('data-blog');
+                    const blog = blogContent[blogId];
+                    
+                    if (blog) {
+                        document.getElementById('modalTitle').textContent = blog.title;
+                        document.getElementById('modalCategory').textContent = blog.category;
+                        document.getElementById('modalDate').textContent = blog.date;
+                        document.getElementById('modalContent').innerHTML = `<p>${blog.description}</p>`;
+                        
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                    }
+                });
+            });
+
+            // Close modal when X is clicked
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            });
+
+            // Close modal when clicking outside the content
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                }
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                }
+            });
+        });
+    </script>
 </body>
 </html>
