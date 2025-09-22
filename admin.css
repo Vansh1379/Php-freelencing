@@ -437,21 +437,22 @@ body {
   outline: none;
 }
 
-/* Product Grid (Admin Panel) */
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
+/* Product Grid (Admin Panel) - OLD STYLE REMOVED */
 
 /* New Card Grid Layout for Admin Items */
 .product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
   margin-top: 2rem;
   padding: 1rem;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* Ensure each product card takes full height */
+.product-grid .product-card-modern {
+  min-height: 400px;
 }
 
 /* Ensure product cards in admin panel match frontend exactly */
@@ -469,6 +470,56 @@ body {
 
 .admin-container .product-description-modern {
   flex: 1;
+}
+
+/* Override colors to use purple instead of orange in admin panel */
+.admin-container .product-placeholder-modern {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+}
+
+.admin-container .product-badge-modern {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+}
+
+.admin-container .feature-bullet {
+  background: #8b5cf6 !important;
+}
+
+.admin-container .product-price-modern {
+  color: #8b5cf6 !important;
+}
+
+.admin-container .product-btn-modern {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+}
+
+.admin-container .product-btn-modern:hover {
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3) !important;
+}
+
+.admin-container .product-btn-modern.product-btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+.admin-container .product-btn-modern.product-btn-delete:hover {
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Additional purple styling for admin panel product cards */
+.admin-container .product-gradient-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1),
+    rgba(124, 58, 237, 0.2)
+  ) !important;
+}
+
+.admin-container .product-card-modern:hover .product-gradient-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.2),
+    rgba(124, 58, 237, 0.3)
+  ) !important;
 }
 
 .certifications-grid,

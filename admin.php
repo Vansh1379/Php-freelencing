@@ -258,7 +258,7 @@ try {
                     </button>
                 </div>
 
-                <div class="products-grid" id="productsGrid">
+                <div class="product-grid" id="productsGrid">
                     <!-- Product items will be dynamically generated here -->
                 </div>
 

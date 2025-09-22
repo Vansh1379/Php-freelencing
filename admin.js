@@ -266,6 +266,11 @@ class AdminPanel {
 
   async generateProductsGrid() {
     const grid = document.getElementById("productsGrid");
+    if (!grid) {
+      console.error("Products grid element not found!");
+      return;
+    }
+
     grid.innerHTML = '<div class="loading-spinner">Loading products...</div>';
 
     try {
