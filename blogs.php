@@ -257,49 +257,22 @@
             const closeBtn = document.querySelector('.close-modal');
             const blogCards = document.querySelectorAll('.blog-card');
 
-            // Blog content data
+            // Blog content data from PHP
             const blogContent = {
-                1: {
-                    title: "Essential Playground Safety Guidelines for Parents",
-                    category: "SAFETY",
-                    date: "December 15, 2024",
-                    description: "Learn the most important safety tips every parent should know when their children are playing on playground equipment."
-                },
-                2: {
-                    title: "2024 Playground Design Trends",
-                    category: "DESIGN",
-                    date: "December 10, 2024",
-                    description: "Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment."
-                },
-                3: {
-                    title: "Playground Equipment Maintenance Checklist",
-                    category: "MAINTENANCE",
-                    date: "December 5, 2024",
-                    description: "A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures."
-                },
-                4: {
-                    title: "Eco-Friendly Playground Materials",
-                    category: "SUSTAINABILITY",
-                    date: "November 28, 2024",
-                    description: "Learn about sustainable materials used in modern playground construction and their environmental benefits."
-                },
-                5: {
-                    title: "How Playgrounds Support Child Development",
-                    category: "DEVELOPMENT",
-                    date: "November 20, 2024",
-                    description: "Understanding the role of playground equipment in physical, social, and cognitive development of children."
-                },
-                6: {
-                    title: "Playground Installation Process",
-                    category: "INSTALLATION",
-                    date: "November 15, 2024",
-                    description: "A step-by-step guide to playground installation from site preparation to final safety inspection."
-                }
+                <?php foreach ($blogs as $index => $blog): ?>
+                <?php echo $blog['id']; ?>: {
+                    title: "<?php echo addslashes($blog['title']); ?>",
+                    category: "<?php echo addslashes($blog['category']); ?>",
+                    date: "<?php echo date('F j, Y', strtotime($blog['publish_date'])); ?>",
+                    description: "<?php echo addslashes($blog['description']); ?>"
+                }<?php echo ($index < count($blogs) - 1) ? ',' : ''; ?>
+                <?php endforeach; ?>
             };
 
             // Open modal when blog card is clicked
             blogCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
                     const blogId = this.getAttribute('data-blog');
                     const blog = blogContent[blogId];
                     

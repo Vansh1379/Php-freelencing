@@ -309,6 +309,13 @@ function initializeDatabase() {
 function insertDefaultData() {
     $db = getDB();
 
+    // Check if data already exists to prevent re-insertion
+    $existingData = $db->query("SELECT COUNT(*) as count FROM site_settings")->fetch();
+    if ($existingData['count'] > 0) {
+        // Data already exists, skip insertion
+        return;
+    }
+
     // Default site settings
     $defaultSettings = [
         ['site_name', 'Mena Play World', 'text'],
@@ -387,46 +394,55 @@ function insertDefaultData() {
         ")->execute($stat);
     }
 
-    // Default certifications
-    $defaultCertifications = [
-        ['ISO 9001:2015', 'International standard for quality management systems ensuring consistent quality in our manufacturing processes.', 'cert_iso.jpg', 1],
-        ['Safety Standards', 'All equipment meets international safety standards including ASTM and EN standards for playground safety.', 'cert_safety.jpg', 2],
-        ['Environmental', 'Eco-friendly manufacturing processes and sustainable materials used in our playground equipment.', 'cert_env.jpg', 3]
-    ];
+    // Default certifications (only if table is empty)
+    $existingCerts = $db->query("SELECT COUNT(*) as count FROM certifications")->fetch();
+    if ($existingCerts['count'] == 0) {
+        $defaultCertifications = [
+            ['ISO 9001:2015', 'International standard for quality management systems ensuring consistent quality in our manufacturing processes.', 'cert_iso.jpg', 1],
+            ['Safety Standards', 'All equipment meets international safety standards including ASTM and EN standards for playground safety.', 'cert_safety.jpg', 2],
+            ['Environmental', 'Eco-friendly manufacturing processes and sustainable materials used in our playground equipment.', 'cert_env.jpg', 3]
+        ];
 
-    foreach ($defaultCertifications as $cert) {
-        $db->prepare("
-            INSERT IGNORE INTO certifications (title, description, image_path, sort_order)
-            VALUES (?, ?, ?, ?)
-        ")->execute($cert);
+        foreach ($defaultCertifications as $cert) {
+            $db->prepare("
+                INSERT INTO certifications (title, description, image_path, sort_order)
+                VALUES (?, ?, ?, ?)
+            ")->execute($cert);
+        }
     }
 
-    // Default latest work
-    $defaultLatestWork = [
-        ['Modern Playground Installation', 'Complete playground setup with climbing structures, slides, and safety surfacing.', 'Playground', 'work_playground1.jpg', '2024-12-01', 'Delhi Public School', 1],
-        ['Outdoor Fitness Equipment', 'Installation of outdoor fitness equipment for community park.', 'Fitness', 'work_fitness1.jpg', '2024-11-15', 'Central Park', 2],
-        ['School Playground Renovation', 'Renovation of existing playground with new equipment and safety upgrades.', 'School', 'work_school1.jpg', '2024-11-01', 'Green Valley School', 3]
-    ];
+    // Default latest work (only if table is empty)
+    $existingWork = $db->query("SELECT COUNT(*) as count FROM latest_work")->fetch();
+    if ($existingWork['count'] == 0) {
+        $defaultLatestWork = [
+            ['Modern Playground Installation', 'Complete playground setup with climbing structures, slides, and safety surfacing.', 'Playground', 'work_playground1.jpg', '2024-12-01', 'Delhi Public School', 1],
+            ['Outdoor Fitness Equipment', 'Installation of outdoor fitness equipment for community park.', 'Fitness', 'work_fitness1.jpg', '2024-11-15', 'Central Park', 2],
+            ['School Playground Renovation', 'Renovation of existing playground with new equipment and safety upgrades.', 'School', 'work_school1.jpg', '2024-11-01', 'Green Valley School', 3]
+        ];
 
-    foreach ($defaultLatestWork as $work) {
-        $db->prepare("
-            INSERT IGNORE INTO latest_work (title, description, category, image_path, project_date, location, sort_order)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ")->execute($work);
+        foreach ($defaultLatestWork as $work) {
+            $db->prepare("
+                INSERT INTO latest_work (title, description, category, image_path, project_date, location, sort_order)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ")->execute($work);
+        }
     }
 
-    // Default blogs
-    $defaultBlogs = [
-        ['Essential Playground Safety Guidelines for Parents', 'Learn the most important safety tips every parent should know when their children are playing on playground equipment.', 'SAFETY', 'Learn the most important safety tips every parent should know when their children are playing on playground equipment. This comprehensive guide covers pre-play safety checks, age-appropriate supervision, proper clothing and equipment, and teaching safe play habits.', 'blog_safety.jpg', '2024-12-15', 'Admin', 1],
-        ['2024 Playground Design Trends', 'Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment.', 'DESIGN', 'Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment. Learn about sustainable materials, universal design principles, and innovative play experiences.', 'blog_design.jpg', '2024-12-10', 'Admin', 2],
-        ['Playground Equipment Maintenance Checklist', 'A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures.', 'MAINTENANCE', 'A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures. Includes daily inspections, weekly maintenance, monthly deep cleaning, and seasonal maintenance tasks.', 'blog_maintenance.jpg', '2024-12-05', 'Admin', 3]
-    ];
+    // Default blogs (only if table is empty)
+    $existingBlogs = $db->query("SELECT COUNT(*) as count FROM blogs")->fetch();
+    if ($existingBlogs['count'] == 0) {
+        $defaultBlogs = [
+            ['Essential Playground Safety Guidelines for Parents', 'Learn the most important safety tips every parent should know when their children are playing on playground equipment.', 'SAFETY', 'Learn the most important safety tips every parent should know when their children are playing on playground equipment. This comprehensive guide covers pre-play safety checks, age-appropriate supervision, proper clothing and equipment, and teaching safe play habits.', 'blog_safety.jpg', '2024-12-15', 'Admin', 1],
+            ['2024 Playground Design Trends', 'Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment.', 'DESIGN', 'Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment. Learn about sustainable materials, universal design principles, and innovative play experiences.', 'blog_design.jpg', '2024-12-10', 'Admin', 2],
+            ['Playground Equipment Maintenance Checklist', 'A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures.', 'MAINTENANCE', 'A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures. Includes daily inspections, weekly maintenance, monthly deep cleaning, and seasonal maintenance tasks.', 'blog_maintenance.jpg', '2024-12-05', 'Admin', 3]
+        ];
 
-    foreach ($defaultBlogs as $blog) {
-        $db->prepare("
-            INSERT IGNORE INTO blogs (title, description, category, content, image_path, publish_date, author, sort_order)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ")->execute($blog);
+        foreach ($defaultBlogs as $blog) {
+            $db->prepare("
+                INSERT INTO blogs (title, description, category, content, image_path, publish_date, author, sort_order)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ")->execute($blog);
+        }
     }
 }
 

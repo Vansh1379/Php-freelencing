@@ -460,6 +460,16 @@ body {
   min-height: 400px;
 }
 
+/* Ensure each latest work card takes full height */
+.latest-work-grid .product-card-modern {
+  min-height: 400px;
+}
+
+/* Ensure each blog card takes full height */
+.blogs-grid .product-card-modern {
+  min-height: 400px;
+}
+
 /* Ensure product cards in admin panel match frontend exactly */
 .admin-container .product-card-modern {
   height: 100%;
@@ -535,15 +545,120 @@ body {
   padding: 1rem;
   width: 100%;
   min-height: 400px;
+  box-sizing: border-box;
 }
 
-.latest-work-grid,
-.blogs-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+/* Force grid layout for certifications */
+#certificationsGrid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  width: 100% !important;
+  margin-top: 2rem !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Ensure certifications grid is properly displayed */
+#certificationsGrid {
+  /* Remove any conflicting styles */
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 2rem !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  align-items: start !important;
+  justify-content: start !important;
+  overflow: visible !important;
+}
+
+/* Ensure parent container allows full width */
+#certifications-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+/* Force grid layout for latest work */
+#latestWorkGrid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 2rem !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  align-items: start !important;
+  justify-content: start !important;
+  overflow: visible !important;
+}
+
+/* Ensure parent container allows full width for latest work */
+#latest-work-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+/* Force grid layout for blogs */
+#blogsGrid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 2rem !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  align-items: start !important;
+  justify-content: start !important;
+  overflow: visible !important;
+}
+
+/* Ensure parent container allows full width for blogs */
+#blogs-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+/* Ensure main content area allows full width for grids */
+.main-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.content-section {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+.latest-work-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
   margin-top: 2rem;
   padding: 1rem;
+  width: 100%;
+  min-height: 400px;
+  box-sizing: border-box;
+}
+
+.blogs-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  margin-top: 2rem;
+  padding: 1rem;
+  width: 100%;
+  min-height: 400px;
+  box-sizing: border-box;
 }
 
 .admin-card {
@@ -1094,9 +1209,13 @@ body {
     gap: 1.5rem;
   }
 
-  .latest-work-grid,
+  .latest-work-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem;
+  }
+
   .blogs-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 1.5rem;
   }
 }
@@ -1126,9 +1245,13 @@ body {
     gap: 1rem;
   }
 
-  .latest-work-grid,
+  .latest-work-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
   .blogs-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 1rem;
   }
 

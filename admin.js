@@ -1251,17 +1251,39 @@ AdminPanel.prototype.loadBlogsFromBackend = async function () {
 
 AdminPanel.prototype.generateCertificationsGrid = async function () {
   const grid = document.getElementById("certificationsGrid");
-  if (!grid) return;
+  if (!grid) {
+    console.error("Certifications grid element not found!");
+    return;
+  }
 
   try {
     await this.loadCertificationsFromBackend();
     grid.innerHTML = "";
+
+    console.log(
+      `Loading ${this.certifications.length} certifications into grid`
+    );
 
     this.certifications.forEach((certification) => {
       const certificationElement =
         this.createCertificationElement(certification);
       grid.appendChild(certificationElement);
     });
+
+    // Force grid layout
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+    grid.style.gap = "2rem";
+    grid.style.width = "100%";
+    grid.style.maxWidth = "100%";
+
+    console.log("Certifications grid generated successfully");
+    console.log("Grid element:", grid);
+    console.log("Grid computed style:", window.getComputedStyle(grid).display);
+    console.log(
+      "Grid template columns:",
+      window.getComputedStyle(grid).gridTemplateColumns
+    );
   } catch (error) {
     grid.innerHTML =
       '<div class="error-message">Failed to load certifications</div>';
@@ -1372,6 +1394,13 @@ AdminPanel.prototype.generateLatestWorkGrid = async function () {
       const workElement = this.createLatestWorkElement(work);
       grid.appendChild(workElement);
     });
+
+    // Force grid layout
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+    grid.style.gap = "2rem";
+    grid.style.width = "100%";
+    grid.style.maxWidth = "100%";
   } catch (error) {
     grid.innerHTML =
       '<div class="error-message">Failed to load latest work</div>';
@@ -1381,37 +1410,62 @@ AdminPanel.prototype.generateLatestWorkGrid = async function () {
 
 AdminPanel.prototype.createLatestWorkElement = function (work) {
   const div = document.createElement("div");
-  div.className = "admin-card";
+  div.className = "product-card-modern group";
+  div.setAttribute("data-category", "latest-work");
+
   div.innerHTML = `
-    <div class="admin-card-image">
+    <!-- Latest Work Image Section -->
+    <div class="product-image-modern">
       ${
         work.image_path
-          ? `<img src="${work.image_path}" alt="${work.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">🏗️</div>'">`
-          : `<div class="placeholder">🏗️</div>`
+          ? `<img src="${work.image_path}" alt="${work.title}" class="product-img-modern" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
+          : ""
       }
+      <div class="product-placeholder-modern" style="${
+        work.image_path ? "display: none;" : ""
+      }">
+        <i class="product-icon-modern">🏗️</i>
+      </div>
+      
+      <!-- Gradient Overlay -->
+      <div class="product-gradient-overlay"></div>
+      
+      ${work.is_active ? `<div class="product-badge-modern">Active</div>` : ""}
     </div>
-    <div class="admin-card-content">
-      <h3 class="admin-card-title">${work.title}</h3>
-      <p class="admin-card-description">${
+
+    <!-- Latest Work Content -->
+    <div class="product-content-modern">
+      <h3 class="product-title-modern">${work.title}</h3>
+      <p class="product-description-modern">${
         work.description || "No description available"
       }</p>
-      <div class="admin-card-meta">
-        <span class="meta-item">${work.category || "Project"}</span>
-        <span class="meta-item">${work.location || "Location"}</span>
-        <span class="meta-item">${work.project_date || "Date"}</span>
-        <span class="meta-item status ${
-          work.is_active ? "active" : "inactive"
-        }">
-          ${work.is_active ? "Active" : "Inactive"}
-        </span>
+
+      <div class="product-features-modern">
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Category: ${
+            work.category || "Project"
+          }</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Location: ${work.location || "N/A"}</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Date: ${work.project_date || "N/A"}</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Status: ${
+            work.is_active ? "Active" : "Inactive"
+          }</span>
+        </div>
       </div>
-      <div class="admin-card-actions">
-        <button class="btn btn-primary" onclick="adminPanel.editLatestWork(${
-          work.id
-        })">
-          <i class="fas fa-edit"></i> Edit
-        </button>
-        <button class="btn btn-danger" onclick="adminPanel.deleteLatestWork(${
+
+      <!-- Delete Button Only -->
+      <div class="product-button-container">
+        <button class="product-btn-modern product-btn-delete" onclick="adminPanel.deleteLatestWork(${
           work.id
         })">
           <i class="fas fa-trash"></i> Delete
@@ -1461,6 +1515,13 @@ AdminPanel.prototype.generateBlogsGrid = async function () {
       const blogElement = this.createBlogElement(blog);
       grid.appendChild(blogElement);
     });
+
+    // Force grid layout
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+    grid.style.gap = "2rem";
+    grid.style.width = "100%";
+    grid.style.maxWidth = "100%";
   } catch (error) {
     grid.innerHTML = '<div class="error-message">Failed to load blogs</div>';
     console.error("Failed to load blogs:", error);
@@ -1469,37 +1530,60 @@ AdminPanel.prototype.generateBlogsGrid = async function () {
 
 AdminPanel.prototype.createBlogElement = function (blog) {
   const div = document.createElement("div");
-  div.className = "admin-card";
+  div.className = "product-card-modern group";
+  div.setAttribute("data-category", "blog");
+
   div.innerHTML = `
-    <div class="admin-card-image">
+    <!-- Blog Image Section -->
+    <div class="product-image-modern">
       ${
         blog.image_path
-          ? `<img src="${blog.image_path}" alt="${blog.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">📝</div>'">`
-          : `<div class="placeholder">📝</div>`
+          ? `<img src="${blog.image_path}" alt="${blog.title}" class="product-img-modern" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
+          : ""
       }
+      <div class="product-placeholder-modern" style="${
+        blog.image_path ? "display: none;" : ""
+      }">
+        <i class="product-icon-modern">📝</i>
+      </div>
+      
+      <!-- Gradient Overlay -->
+      <div class="product-gradient-overlay"></div>
+      
+      ${blog.is_active ? `<div class="product-badge-modern">Active</div>` : ""}
     </div>
-    <div class="admin-card-content">
-      <h3 class="admin-card-title">${blog.title}</h3>
-      <p class="admin-card-description">${
+
+    <!-- Blog Content -->
+    <div class="product-content-modern">
+      <h3 class="product-title-modern">${blog.title}</h3>
+      <p class="product-description-modern">${
         blog.description || "No description available"
       }</p>
-      <div class="admin-card-meta">
-        <span class="meta-item">${blog.category || "Blog"}</span>
-        <span class="meta-item">${blog.author || "Author"}</span>
-        <span class="meta-item">${blog.publish_date || "Date"}</span>
-        <span class="meta-item status ${
-          blog.is_active ? "active" : "inactive"
-        }">
-          ${blog.is_active ? "Active" : "Inactive"}
-        </span>
+
+      <div class="product-features-modern">
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Category: ${blog.category || "Blog"}</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Author: ${blog.author || "N/A"}</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Date: ${blog.publish_date || "N/A"}</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Status: ${
+            blog.is_active ? "Active" : "Inactive"
+          }</span>
+        </div>
       </div>
-      <div class="admin-card-actions">
-        <button class="btn btn-primary" onclick="adminPanel.editBlog(${
-          blog.id
-        })">
-          <i class="fas fa-edit"></i> Edit
-        </button>
-        <button class="btn btn-danger" onclick="adminPanel.deleteBlog(${
+
+      <!-- Delete Button Only -->
+      <div class="product-button-container">
+        <button class="product-btn-modern product-btn-delete" onclick="adminPanel.deleteBlog(${
           blog.id
         })">
           <i class="fas fa-trash"></i> Delete
