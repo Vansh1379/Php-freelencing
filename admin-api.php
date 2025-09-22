@@ -315,23 +315,49 @@ function handleSaveHero() {
     }
 
     try {
-        // Deactivate old entries
-        executeQuery("UPDATE hero_section SET is_active = 0");
-
-        // Insert new entry
-        executeQuery(
-            "INSERT INTO hero_section (title, description, button1_text, button1_link, button2_text, button2_link, background_image, is_active)
-             VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
-            [
-                $input['title'],
-                $input['description'],
-                $input['button1_text'] ?? '',
-                $input['button1_link'] ?? '',
-                $input['button2_text'] ?? '',
-                $input['button2_link'] ?? '',
-                $input['background_image'] ?? ''
-            ]
-        );
+        // Get the current active hero section
+        $existing = fetchOne("SELECT id FROM hero_section WHERE is_active = 1 ORDER BY id DESC LIMIT 1");
+        
+        if ($existing) {
+            // Update the existing active row
+            executeQuery(
+                "UPDATE hero_section SET 
+                    title = ?, 
+                    description = ?, 
+                    button1_text = ?, 
+                    button1_link = ?, 
+                    button2_text = ?, 
+                    button2_link = ?, 
+                    background_image = ?,
+                    updated_at = CURRENT_TIMESTAMP
+                 WHERE id = ?",
+                [
+                    $input['title'],
+                    $input['description'],
+                    $input['button1_text'] ?? '',
+                    $input['button1_link'] ?? '',
+                    $input['button2_text'] ?? '',
+                    $input['button2_link'] ?? '',
+                    $input['background_image'] ?? '',
+                    $existing['id']
+                ]
+            );
+        } else {
+            // Insert new entry only if none exists
+            executeQuery(
+                "INSERT INTO hero_section (title, description, button1_text, button1_link, button2_text, button2_link, background_image, is_active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
+                [
+                    $input['title'],
+                    $input['description'],
+                    $input['button1_text'] ?? '',
+                    $input['button1_link'] ?? '',
+                    $input['button2_text'] ?? '',
+                    $input['button2_link'] ?? '',
+                    $input['background_image'] ?? ''
+                ]
+            );
+        }
 
         sendResponse(['message' => 'Hero section saved successfully']);
 

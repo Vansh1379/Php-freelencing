@@ -306,12 +306,10 @@
               <div class="contact-icon">📍</div>
               <div>
                 <strong>Address</strong><br />
-                <?php echo nl2br(
-                    htmlspecialchars(
-                        $companyInfo["address"] ??
-                            "Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad U.P - 201008, India",
-                    ),
-                ); ?>
+                <?php 
+                $address = !empty($companyInfo["address"]) ? $companyInfo["address"] : "Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad U.P - 201008, India";
+                echo nl2br(htmlspecialchars($address));
+                ?>
               </div>
             </div>
 
@@ -319,12 +317,14 @@
               <div class="contact-icon">📞</div>
               <div>
                 <strong>Phone</strong><br />
-                <?php echo htmlspecialchars(
-                    $companyInfo["phone"] ?? "+91 9773698785",
-                ); ?><br />
-                <?php if (!empty($companyInfo["phone_alt"])): ?>
-                <?php echo htmlspecialchars($companyInfo["phone_alt"]); ?>
-                <?php endif; ?>
+                <?php 
+                $phone = !empty($companyInfo["phone"]) ? $companyInfo["phone"] : "+91 9773698785";
+                echo htmlspecialchars($phone);
+                ?><br />
+                <?php 
+                $phoneAlt = !empty($companyInfo["phone_alt"]) ? $companyInfo["phone_alt"] : "+91 9560243588";
+                echo htmlspecialchars($phoneAlt);
+                ?>
               </div>
             </div>
 
@@ -332,12 +332,16 @@
               <div class="contact-icon">✉️</div>
               <div>
                 <strong>Email</strong><br />
-                <?php echo htmlspecialchars(
-                    $companyInfo["email"] ?? "Contact.jkenterprise@gmail.com",
-                ); ?><br />
-                <?php if (!empty($companyInfo["email_alt"])): ?>
-                <?php echo htmlspecialchars($companyInfo["email_alt"]); ?>
-                <?php endif; ?>
+                <?php 
+                $email = !empty($companyInfo["email"]) ? $companyInfo["email"] : "contact.jkenterprise@gmail.com";
+                echo htmlspecialchars($email);
+                ?><br />
+                <?php 
+                $emailAlt = !empty($companyInfo["email_alt"]) ? $companyInfo["email_alt"] : "";
+                if (!empty($emailAlt)) {
+                    echo htmlspecialchars($emailAlt);
+                }
+                ?>
               </div>
             </div>
 

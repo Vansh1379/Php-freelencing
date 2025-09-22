@@ -18,11 +18,15 @@ class AdminPanel {
 
   init() {
     this.initializeEventListeners();
-    this.loadInitialData();
     this.initializeFileUploads();
     this.initializeContentEditor();
     this.showWelcomeMessage();
     this.initializePHPIntegration();
+
+    // Load data after DOM is ready
+    setTimeout(() => {
+      this.loadInitialData();
+    }, 100);
   }
 
   initializeEventListeners() {
@@ -36,10 +40,6 @@ class AdminPanel {
     });
 
     // Header actions
-    document.getElementById("previewBtn").addEventListener("click", () => {
-      this.previewChanges();
-    });
-
     document.getElementById("saveAllBtn").addEventListener("click", () => {
       this.saveAllChanges();
     });
@@ -53,24 +53,34 @@ class AdminPanel {
       this.hideProductModal();
     });
 
-    // Certification management
+    // Certification management - will be set up when section is switched to
+
     document
-      .getElementById("addCertificationBtn")
+      .getElementById("closeCertificationModal")
       .addEventListener("click", () => {
-        this.showCertificationModal();
+        this.hideCertificationModal();
       });
 
-    // Latest work management
     document
-      .getElementById("addLatestWorkBtn")
+      .getElementById("cancelCertification")
       .addEventListener("click", () => {
-        this.showLatestWorkModal();
+        this.hideCertificationModal();
       });
 
-    // Blog management
-    document.getElementById("addBlogBtn").addEventListener("click", () => {
-      this.showBlogModal();
-    });
+    // Certification form event listener will be set up when section is switched to
+
+    // Modal backdrop click
+    document
+      .getElementById("certificationModal")
+      .addEventListener("click", (e) => {
+        if (e.target.id === "certificationModal") {
+          this.hideCertificationModal();
+        }
+      });
+
+    // Latest work management - event listeners will be set up when section is switched to
+
+    // Blog management - event listeners will be set up when section is switched to
 
     document.getElementById("cancelProduct").addEventListener("click", () => {
       this.hideProductModal();
@@ -146,10 +156,135 @@ class AdminPanel {
       this.generateProductsGrid();
     } else if (section === "certifications") {
       this.generateCertificationsGrid();
+      this.setupCertificationEventListeners();
     } else if (section === "latest-work") {
       this.generateLatestWorkGrid();
+      this.setupLatestWorkEventListeners(); // New: Setup listeners here
     } else if (section === "blogs") {
       this.generateBlogsGrid();
+      this.setupBlogEventListeners(); // New: Setup listeners here
+    }
+  }
+
+  setupCertificationEventListeners() {
+    // Only set up if not already set up
+    const addCertBtn = document.getElementById("addCertificationBtn");
+    if (addCertBtn && !addCertBtn.hasAttribute("data-listener-setup")) {
+      addCertBtn.setAttribute("data-listener-setup", "true");
+      addCertBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.showCertificationModal();
+      });
+    }
+
+    // Set up form event listener
+    const form = document.getElementById("certificationForm");
+    if (form && !form.hasAttribute("data-listener-setup")) {
+      form.setAttribute("data-listener-setup", "true");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.saveCertification();
+      });
+    }
+  }
+
+  setupLatestWorkEventListeners() {
+    // Only set up if not already set up
+    const addWorkBtn = document.getElementById("addLatestWorkBtn");
+    if (addWorkBtn && !addWorkBtn.hasAttribute("data-listener-setup")) {
+      addWorkBtn.setAttribute("data-listener-setup", "true");
+      addWorkBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.showLatestWorkModal();
+      });
+    }
+
+    // Set up form event listener
+    const form = document.getElementById("latestWorkForm");
+    if (form && !form.hasAttribute("data-listener-setup")) {
+      form.setAttribute("data-listener-setup", "true");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.saveLatestWork();
+      });
+    }
+
+    // Set up modal close event listeners
+    const closeBtn = document.getElementById("closeLatestWorkModal");
+    if (closeBtn && !closeBtn.hasAttribute("data-listener-setup")) {
+      closeBtn.setAttribute("data-listener-setup", "true");
+      closeBtn.addEventListener("click", () => {
+        this.hideLatestWorkModal();
+      });
+    }
+
+    const cancelBtn = document.getElementById("cancelLatestWork");
+    if (cancelBtn && !cancelBtn.hasAttribute("data-listener-setup")) {
+      cancelBtn.setAttribute("data-listener-setup", "true");
+      cancelBtn.addEventListener("click", () => {
+        this.hideLatestWorkModal();
+      });
+    }
+
+    // Modal backdrop click
+    const modal = document.getElementById("latestWorkModal");
+    if (modal && !modal.hasAttribute("data-listener-setup")) {
+      modal.setAttribute("data-listener-setup", "true");
+      modal.addEventListener("click", (e) => {
+        if (e.target.id === "latestWorkModal") {
+          this.hideLatestWorkModal();
+        }
+      });
+    }
+  }
+
+  setupBlogEventListeners() {
+    // Only set up if not already set up
+    const addBlogBtn = document.getElementById("addBlogBtn");
+    if (addBlogBtn && !addBlogBtn.hasAttribute("data-listener-setup")) {
+      addBlogBtn.setAttribute("data-listener-setup", "true");
+      addBlogBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.showBlogModal();
+      });
+    }
+
+    // Set up form event listener
+    const form = document.getElementById("blogForm");
+    if (form && !form.hasAttribute("data-listener-setup")) {
+      form.setAttribute("data-listener-setup", "true");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        this.saveBlog();
+      });
+    }
+
+    // Set up modal close event listeners
+    const closeBtn = document.getElementById("closeBlogModal");
+    if (closeBtn && !closeBtn.hasAttribute("data-listener-setup")) {
+      closeBtn.setAttribute("data-listener-setup", "true");
+      closeBtn.addEventListener("click", () => {
+        this.hideBlogModal();
+      });
+    }
+
+    const cancelBtn = document.getElementById("cancelBlog");
+    if (cancelBtn && !cancelBtn.hasAttribute("data-listener-setup")) {
+      cancelBtn.setAttribute("data-listener-setup", "true");
+      cancelBtn.addEventListener("click", () => {
+        this.hideBlogModal();
+      });
+    }
+
+    // Modal backdrop click
+    const modal = document.getElementById("blogModal");
+    if (modal && !modal.hasAttribute("data-listener-setup")) {
+      modal.setAttribute("data-listener-setup", "true");
+      modal.addEventListener("click", (e) => {
+        if (e.target.id === "blogModal") {
+          this.hideBlogModal();
+        }
+      });
     }
   }
 
@@ -610,6 +745,36 @@ class AdminPanel {
     reader.readAsDataURL(file);
   }
 
+  async uploadFileToServer(file) {
+    if (!file.type.startsWith("image/")) {
+      throw new Error("Please select a valid image file");
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      throw new Error("File size must be less than 5MB");
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("action", "upload_file");
+
+    const response = await fetch(this.apiBase, {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      return {
+        success: true,
+        file_path: result.file_path,
+      };
+    } else {
+      throw new Error(result.message || "Upload failed");
+    }
+  }
+
   initializeContentEditor() {
     const toolbarButtons = document.querySelectorAll(".toolbar-btn");
     const editor = document.getElementById("aboutContentEditor");
@@ -793,33 +958,27 @@ class AdminPanel {
     };
   }
 
-  previewChanges() {
-    this.showToast("Opening preview in new tab...", "info");
-    // Open the PHP version for preview
-    window.open("index.php", "_blank");
-  }
-
   async saveAllChanges() {
-    const data = this.collectAllFormData();
-
-    // Validate all forms
-    let isValid = true;
-    const requiredFields = document.querySelectorAll(
-      "input[required], textarea[required], select[required]"
-    );
-
-    requiredFields.forEach((field) => {
-      if (!this.validateField(field)) {
-        isValid = false;
-      }
-    });
-
-    if (!isValid) {
-      this.showToast("Please fix the errors before saving", "error");
-      return;
-    }
-
     try {
+      const data = this.collectAllFormData();
+
+      // Validate all forms
+      let isValid = true;
+      const requiredFields = document.querySelectorAll(
+        "input[required], textarea[required], select[required]"
+      );
+
+      requiredFields.forEach((field) => {
+        if (!this.validateField(field)) {
+          isValid = false;
+        }
+      });
+
+      if (!isValid) {
+        this.showToast("Please fix the errors before saving", "error");
+        return;
+      }
+
       // Save to backend
       await this.saveToBackend(data);
 
@@ -831,10 +990,6 @@ class AdminPanel {
     } catch (error) {
       this.showToast("Failed to save changes: " + error.message, "error");
       console.error("Save error:", error);
-
-      // Save locally as fallback
-      localStorage.setItem("adminData", JSON.stringify(data));
-      this.showToast("Data saved locally as backup", "warning");
     }
   }
 
@@ -1085,14 +1240,17 @@ AdminPanel.prototype.loadFromBackend = async function () {
   try {
     // Load hero section
     const heroData = await this.apiRequest("get_hero");
-    if (heroData.data) {
-      document.getElementById("heroTitle").value = heroData.data.title || "";
-      document.getElementById("heroDescription").value =
-        heroData.data.description || "";
-      document.getElementById("heroButton1").value =
-        heroData.data.button1_text || "";
-      document.getElementById("heroButton2").value =
-        heroData.data.button2_text || "";
+    if (heroData && heroData.data) {
+      const heroTitle = document.getElementById("heroTitle");
+      const heroDescription = document.getElementById("heroDescription");
+      const heroButton1 = document.getElementById("heroButton1");
+      const heroButton2 = document.getElementById("heroButton2");
+
+      if (heroTitle) heroTitle.value = heroData.data.title || "";
+      if (heroDescription)
+        heroDescription.value = heroData.data.description || "";
+      if (heroButton1) heroButton1.value = heroData.data.button1_text || "";
+      if (heroButton2) heroButton2.value = heroData.data.button2_text || "";
     }
 
     // Load company info
@@ -1357,14 +1515,90 @@ AdminPanel.prototype.createCertificationElement = function (certification) {
 
 AdminPanel.prototype.showCertificationModal = function (certification = null) {
   this.currentEditingCertification = certification;
-  // Create and show modal (similar to product modal)
-  this.showModal("certification", certification);
+  const modal = document.getElementById("certificationModal");
+  const modalTitle = document.getElementById("certificationModalTitle");
+  const form = document.getElementById("certificationForm");
+
+  if (!modal) {
+    console.error("Certification modal not found!");
+    return;
+  }
+
+  if (certification) {
+    // Edit mode
+    modalTitle.textContent = "Edit Certification";
+    document.getElementById("certificationTitle").value = certification.title;
+    document.getElementById("certificationDescription").value =
+      certification.description;
+  } else {
+    // Add mode
+    modalTitle.textContent = "Add New Certification";
+    form.reset();
+  }
+
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+};
+
+AdminPanel.prototype.hideCertificationModal = function () {
+  const modal = document.getElementById("certificationModal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "auto";
 };
 
 AdminPanel.prototype.editCertification = function (id) {
   const certification = this.certifications.find((c) => c.id === id);
   if (certification) {
     this.showCertificationModal(certification);
+  }
+};
+
+AdminPanel.prototype.saveCertification = async function () {
+  const form = document.getElementById("certificationForm");
+  const formData = new FormData(form);
+
+  const certificationData = {
+    title: formData.get("certificationTitle").trim(),
+    description: formData.get("certificationDescription").trim(),
+  };
+
+  // Handle image upload
+  const imageFile = formData.get("certificationImage");
+  if (imageFile && imageFile.size > 0) {
+    try {
+      const uploadResponse = await this.uploadFileToServer(imageFile);
+      if (uploadResponse.success) {
+        certificationData.image_path = uploadResponse.file_path;
+      } else {
+        this.showNotification("Failed to upload image", "error");
+        return;
+      }
+    } catch (error) {
+      this.showNotification(
+        "Failed to upload image: " + error.message,
+        "error"
+      );
+      return;
+    }
+  }
+
+  try {
+    if (this.currentEditingCertification) {
+      // Update existing certification
+      certificationData.id = this.currentEditingCertification.id;
+      await this.apiRequest("update_certification", certificationData);
+      this.showNotification("Certification updated successfully", "success");
+    } else {
+      // Add new certification
+      await this.apiRequest("add_certification", certificationData);
+      this.showNotification("Certification added successfully", "success");
+    }
+
+    this.hideCertificationModal();
+    this.generateCertificationsGrid();
+  } catch (error) {
+    this.showNotification("Failed to save certification", "error");
+    console.error("Error saving certification:", error);
   }
 };
 
@@ -1478,8 +1712,89 @@ AdminPanel.prototype.createLatestWorkElement = function (work) {
 
 AdminPanel.prototype.showLatestWorkModal = function (work = null) {
   this.currentEditingLatestWork = work;
-  // Create and show modal (similar to product modal)
-  this.showModal("latest-work", work);
+  const modal = document.getElementById("latestWorkModal");
+  const modalTitle = document.getElementById("latestWorkModalTitle");
+  const form = document.getElementById("latestWorkForm");
+
+  if (!modal) {
+    console.error("Latest work modal not found!");
+    return;
+  }
+
+  if (work) {
+    // Edit mode
+    modalTitle.textContent = "Edit Project";
+    document.getElementById("latestWorkTitle").value = work.title;
+    document.getElementById("latestWorkDescription").value = work.description;
+    document.getElementById("latestWorkCategory").value = work.category || "";
+    document.getElementById("latestWorkLocation").value = work.location || "";
+    document.getElementById("latestWorkDate").value = work.project_date || "";
+  } else {
+    // Add mode
+    modalTitle.textContent = "Add New Project";
+    form.reset();
+  }
+
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+};
+
+AdminPanel.prototype.hideLatestWorkModal = function () {
+  const modal = document.getElementById("latestWorkModal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "auto";
+};
+
+AdminPanel.prototype.saveLatestWork = async function () {
+  const form = document.getElementById("latestWorkForm");
+  const formData = new FormData(form);
+
+  const workData = {
+    title: formData.get("latestWorkTitle").trim(),
+    description: formData.get("latestWorkDescription").trim(),
+    category: formData.get("latestWorkCategory").trim(),
+    location: formData.get("latestWorkLocation").trim(),
+    project_date: formData.get("latestWorkDate"),
+  };
+
+  // Handle image upload
+  const imageFile = formData.get("latestWorkImage");
+  if (imageFile && imageFile.size > 0) {
+    try {
+      const uploadResponse = await this.uploadFileToServer(imageFile);
+      if (uploadResponse.success) {
+        workData.image_path = uploadResponse.file_path;
+      } else {
+        this.showNotification("Failed to upload image", "error");
+        return;
+      }
+    } catch (error) {
+      this.showNotification(
+        "Failed to upload image: " + error.message,
+        "error"
+      );
+      return;
+    }
+  }
+
+  try {
+    if (this.currentEditingLatestWork) {
+      // Update existing work
+      workData.id = this.currentEditingLatestWork.id;
+      await this.apiRequest("update_latest_work", workData);
+      this.showNotification("Project updated successfully", "success");
+    } else {
+      // Add new work
+      await this.apiRequest("add_latest_work", workData);
+      this.showNotification("Project added successfully", "success");
+    }
+
+    this.hideLatestWorkModal();
+    this.generateLatestWorkGrid();
+  } catch (error) {
+    this.showNotification("Failed to save project", "error");
+    console.error("Error saving project:", error);
+  }
 };
 
 AdminPanel.prototype.editLatestWork = function (id) {
@@ -1596,8 +1911,91 @@ AdminPanel.prototype.createBlogElement = function (blog) {
 
 AdminPanel.prototype.showBlogModal = function (blog = null) {
   this.currentEditingBlog = blog;
-  // Create and show modal (similar to product modal)
-  this.showModal("blog", blog);
+  const modal = document.getElementById("blogModal");
+  const modalTitle = document.getElementById("blogModalTitle");
+  const form = document.getElementById("blogForm");
+
+  if (!modal) {
+    console.error("Blog modal not found!");
+    return;
+  }
+
+  if (blog) {
+    // Edit mode
+    modalTitle.textContent = "Edit Blog";
+    document.getElementById("blogTitle").value = blog.title;
+    document.getElementById("blogDescription").value = blog.description;
+    document.getElementById("blogCategory").value = blog.category || "";
+    document.getElementById("blogAuthor").value = blog.author || "";
+    document.getElementById("blogPublishDate").value = blog.publish_date || "";
+    document.getElementById("blogContent").value = blog.content || "";
+  } else {
+    // Add mode
+    modalTitle.textContent = "Add New Blog";
+    form.reset();
+  }
+
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+};
+
+AdminPanel.prototype.hideBlogModal = function () {
+  const modal = document.getElementById("blogModal");
+  modal.classList.remove("show");
+  document.body.style.overflow = "auto";
+};
+
+AdminPanel.prototype.saveBlog = async function () {
+  const form = document.getElementById("blogForm");
+  const formData = new FormData(form);
+
+  const blogData = {
+    title: formData.get("blogTitle").trim(),
+    description: formData.get("blogDescription").trim(),
+    category: formData.get("blogCategory").trim(),
+    author: formData.get("blogAuthor").trim(),
+    publish_date: formData.get("blogPublishDate"),
+    content: formData.get("blogContent").trim(),
+  };
+
+  // Handle image upload
+  const imageFile = formData.get("blogImage");
+  if (imageFile && imageFile.size > 0) {
+    try {
+      const uploadResponse = await this.uploadFileToServer(imageFile);
+      if (uploadResponse.success) {
+        blogData.image_path = uploadResponse.file_path;
+      } else {
+        this.showNotification("Failed to upload image", "error");
+        return;
+      }
+    } catch (error) {
+      this.showNotification(
+        "Failed to upload image: " + error.message,
+        "error"
+      );
+      return;
+    }
+  }
+
+  try {
+    if (this.currentEditingBlog) {
+      // Update existing blog
+      blogData.id = this.currentEditingBlog.id;
+      await this.apiRequest("update_blog", blogData);
+      this.showNotification("Blog updated successfully", "success");
+    } else {
+      // Add new blog
+      await this.apiRequest("add_blog", blogData);
+      this.showNotification("Blog added successfully", "success");
+    }
+
+    this.hideBlogModal();
+    this.generateBlogsGrid();
+  } catch (error) {
+    this.showNotification("Failed to save blog", "error");
+    console.error("Error saving blog:", error);
+  }
 };
 
 AdminPanel.prototype.editBlog = function (id) {
