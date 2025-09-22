@@ -15,8 +15,8 @@ body {
 
 /* Color variables matching Tailwind classes */
 :root {
-  --primary: #c442f0;
-  --accent: #c442f0;
+  --primary: #b34126;
+  --accent: #b34126;
   --background: #ffffff;
   --foreground: #0f172a;
   --muted-foreground: #64748b;

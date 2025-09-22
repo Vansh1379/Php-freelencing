@@ -116,7 +116,7 @@ nav {
 }
 
 .nav-links a:hover {
-  color: #c442f0;
+  color: #b34126;
 }
 
 .nav-links a::after {
@@ -136,7 +136,7 @@ nav {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -204,7 +204,7 @@ nav {
 }
 
 .hero-title .highlight {
-  color: #c442f0; /* Playground in purple */
+  color: #b34126; /* Playground in purple */
 }
 
 .hero-title .second-line {
@@ -226,7 +226,7 @@ nav {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 0.5rem 1rem; /* add some vertical space */
   border: none;
@@ -248,10 +248,10 @@ nav {
 }
 
 .btn-secondary {
-  border: 2px solid #c442f0;
+  border: 2px solid #b34126;
   color: white;
   padding: 0.5rem 2rem;
-  border: 2px solid #c442f0;
+  border: 2px solid #b34126;
   border-radius: 8px;
   font-weight: 500;
   text-decoration: none;
@@ -277,7 +277,7 @@ nav {
 .stat-number {
   font-size: 2rem;
   font-weight: bold;
-  color: #ba44e1;
+  color: #b34126;
   display: block;
 }
 
@@ -303,7 +303,7 @@ nav {
 }
 
 .about h2 .highlight {
-  color: #c442f0;
+  color: #b34126;
 }
 
 .about-content {
@@ -333,7 +333,7 @@ nav {
 }
 
 .feature h4 {
-  color: #c442f0;
+  color: #b34126;
   margin-bottom: 0.5rem;
 }
 
@@ -345,10 +345,10 @@ nav {
 .about-stat {
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #f8e8ff, #f6dcff);
+  background: linear-gradient(135deg, #f4e6e2, #f0d9d4);
   color: rgb(162, 159, 159);
   border-radius: 15px;
-  border: 2px solid #c442f0;
+  border: 2px solid #b34126;
   position: relative;
   overflow: hidden;
 }
@@ -457,7 +457,7 @@ nav {
 
 .product-image {
   height: 250px;
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   position: relative;
   overflow: hidden;
 }
@@ -522,14 +522,14 @@ nav {
 
 .product-features li::before {
   content: "✓";
-  color: #16a34a;
+  color: #b34126;
   position: absolute; /* CHANGED from relative to absolute */
   left: 0;
   font-weight: bold;
 }
 
 .product-btn {
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -546,7 +546,7 @@ nav {
 
 .product-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 6px 20px rgba(179, 65, 38, 0.3);
 }
 
 .product-btn-delete {
@@ -590,7 +590,7 @@ nav {
 .value-icon {
   width: 60px;
   height: 60px;
-  background: #c442f0;
+  background: #b34126;
   border-radius: 12px;
   margin: 0 auto 1.5rem;
   display: flex;
@@ -666,7 +666,7 @@ nav {
 .contact-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -706,7 +706,7 @@ nav {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #c442f0;
+  border-color: #b34126;
 }
 
 .form-group textarea {
@@ -715,11 +715,11 @@ nav {
 }
 
 .form-submit {
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 1rem 2rem;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
@@ -733,7 +733,7 @@ nav {
 
 /* Footer */
 footer {
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 3rem 2rem 1rem;
   position: relative; /* ADDED: Ensures proper stacking */
@@ -752,6 +752,30 @@ footer {
 .footer-section h3 {
   margin-bottom: 1rem;
   color: white;
+}
+
+.footer-section .brand {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+.footer-section .brand .logo {
+  height: 3rem;
+  width: 3rem;
+}
+
+.footer-section .brand .title .main {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.footer-section .brand .title .sub {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .footer-section a {
