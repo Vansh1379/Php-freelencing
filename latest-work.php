@@ -13,6 +13,9 @@
     
     // Fetch dynamic data
     $companyInfo = getCompanyInfo();
+    
+    // Fetch latest work from database
+    $latestWork = fetchAll("SELECT * FROM latest_work WHERE is_active = 1 ORDER BY sort_order ASC, project_date DESC");
     ?>
     
     <!-- Main Latest Work Section -->
@@ -26,107 +29,44 @@
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-                <!-- Project 1 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🎠
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">City Park Playground</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Complete playground renovation for a major city park featuring modern climbing structures, swings, and interactive play panels.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Delhi, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2024</span>
+                <?php if (!empty($latestWork)): ?>
+                    <?php foreach ($latestWork as $project): ?>
+                        <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
+                            <?php if (!empty($project['image_path'])): ?>
+                                <div style="height: 250px; overflow: hidden;">
+                                    <img src="<?php echo htmlspecialchars($project['image_path']); ?>" 
+                                         alt="<?php echo htmlspecialchars($project['title']); ?>" 
+                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            <?php else: ?>
+                                <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                                    🎠
+                                </div>
+                            <?php endif; ?>
+                            <div style="padding: 2rem;">
+                                <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;"><?php echo htmlspecialchars($project['title']); ?></h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    <?php echo htmlspecialchars($project['description']); ?>
+                                </p>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: #b34126; font-weight: 600;"><?php echo htmlspecialchars($project['location']); ?></span>
+                                    <span style="color: #666; font-size: 0.9rem;"><?php echo date('Y', strtotime($project['project_date'])); ?></span>
+                                </div>
+                                <?php if (!empty($project['category'])): ?>
+                                    <div style="margin-top: 0.5rem;">
+                                        <span style="background: #b34126; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem;">
+                                            <?php echo htmlspecialchars($project['category']); ?>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                        <p>No projects available at the moment.</p>
                     </div>
-                </div>
-
-                <!-- Project 2 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🏫
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">International School</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Custom-designed playground equipment for an international school with age-appropriate play zones and educational elements.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Mumbai, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2024</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🏢
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">Corporate Campus</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Employee recreation area with outdoor gym equipment and children's play zone for a leading corporate campus.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Bangalore, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2023</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🏘️
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">Residential Complex</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Multi-level playground installation for a premium residential complex with safety-first design approach.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Pune, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2023</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🎯
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">Community Center</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Inclusive playground design for a community center with accessibility features and multi-generational play equipment.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Chennai, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2023</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
-                    <div style="height: 250px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                        🏥
-                    </div>
-                    <div style="padding: 2rem;">
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem;">Hospital Playground</h3>
-                        <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                            Therapeutic play area for children's hospital with calming colors and sensory play elements designed for healing.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #b34126; font-weight: 600;">Kolkata, India</span>
-                            <span style="color: #666; font-size: 0.9rem;">2023</span>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
 
             <!-- Project Stats -->

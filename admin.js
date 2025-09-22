@@ -5,7 +5,13 @@ class AdminPanel {
   constructor() {
     this.currentSection = "main";
     this.products = [];
+    this.certifications = [];
+    this.latestWork = [];
+    this.blogs = [];
     this.currentEditingProduct = null;
+    this.currentEditingCertification = null;
+    this.currentEditingLatestWork = null;
+    this.currentEditingBlog = null;
     this.apiBase = "admin-api.php";
     this.init();
   }
@@ -15,7 +21,6 @@ class AdminPanel {
     this.loadInitialData();
     this.initializeFileUploads();
     this.initializeContentEditor();
-    this.loadProductsFromBackend();
     this.showWelcomeMessage();
     this.initializePHPIntegration();
   }
@@ -46,6 +51,25 @@ class AdminPanel {
 
     document.getElementById("closeModal").addEventListener("click", () => {
       this.hideProductModal();
+    });
+
+    // Certification management
+    document
+      .getElementById("addCertificationBtn")
+      .addEventListener("click", () => {
+        this.showCertificationModal();
+      });
+
+    // Latest work management
+    document
+      .getElementById("addLatestWorkBtn")
+      .addEventListener("click", () => {
+        this.showLatestWorkModal();
+      });
+
+    // Blog management
+    document.getElementById("addBlogBtn").addEventListener("click", () => {
+      this.showBlogModal();
     });
 
     document.getElementById("cancelProduct").addEventListener("click", () => {
@@ -108,6 +132,9 @@ class AdminPanel {
       main: "Main Page Management",
       about: "About Page Management",
       products: "Products Management",
+      certifications: "Certifications Management",
+      "latest-work": "Latest Work Management",
+      blogs: "Blogs Management",
       settings: "Site Settings",
     };
     document.getElementById("page-title").textContent = titles[section];
@@ -117,6 +144,12 @@ class AdminPanel {
     // Section-specific initialization
     if (section === "products") {
       this.generateProductsGrid();
+    } else if (section === "certifications") {
+      this.generateCertificationsGrid();
+    } else if (section === "latest-work") {
+      this.generateLatestWorkGrid();
+    } else if (section === "blogs") {
+      this.generateBlogsGrid();
     }
   }
 
@@ -252,38 +285,76 @@ class AdminPanel {
 
   createProductElement(product) {
     const div = document.createElement("div");
-    div.className = "product-item fade-in";
+    div.className = "product-card-modern group";
+    div.setAttribute("data-category", product.category);
+
+    // Format features array
+    const features = Array.isArray(product.features) ? product.features : [];
+    const featuresHtml = features
+      .map(
+        (feature) =>
+          `<div class="product-feature-item">
+        <div class="feature-bullet"></div>
+        <span class="feature-text">${feature}</span>
+      </div>`
+      )
+      .join("");
+
     div.innerHTML = `
-            <div class="product-header">
-                <div class="product-title">${product.name}</div>
-                <span class="product-category">${this.getCategoryDisplay(
-                  product.category
-                )}</span>
-                ${
-                  product.badge
-                    ? `<span class="product-badge">${product.badge}</span>`
-                    : ""
-                }
-            </div>
-            <div class="product-body">
-                <p class="product-description">${product.description}</p>
-                <div class="product-price">₹${this.formatPrice(
-                  product.minPrice
-                )} - ₹${this.formatPrice(product.maxPrice)}</div>
-                <div class="product-actions">
-                    <button class="btn btn-sm btn-primary" onclick="adminPanel.editProduct(${
-                      product.id
-                    })">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-sm btn-danger" onclick="adminPanel.deleteProduct(${
-                      product.id
-                    })">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-            </div>
-        `;
+      <!-- Product Image Section -->
+      <div class="product-image-modern">
+        ${
+          product.image_url
+            ? `<img src="${product.image_url}" alt="${product.name}" class="product-img-modern" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
+            : ""
+        }
+        <div class="product-placeholder-modern" style="${
+          product.image_url ? "display: none;" : ""
+        }">
+          <i class="product-icon-modern">🏗️</i>
+        </div>
+        
+        <!-- Gradient Overlay -->
+        <div class="product-gradient-overlay"></div>
+        
+        ${
+          product.badge
+            ? `<div class="product-badge-modern">${product.badge}</div>`
+            : ""
+        }
+      </div>
+
+      <!-- Product Content -->
+      <div class="product-content-modern">
+        <h3 class="product-title-modern">${product.name}</h3>
+        <p class="product-description-modern">${
+          product.description || "No description available"
+        }</p>
+
+        ${
+          featuresHtml
+            ? `
+          <div class="product-features-modern">
+            ${featuresHtml}
+          </div>
+        `
+            : ""
+        }
+
+        <div class="product-price-modern">₹${this.formatPrice(
+          product.min_price
+        )} - ₹${this.formatPrice(product.max_price)}</div>
+
+        <!-- Delete Button -->
+        <div class="product-button-container">
+          <button class="product-btn-modern product-btn-delete" onclick="adminPanel.deleteProduct(${
+            product.id
+          })">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    `;
     return div;
   }
 
@@ -1132,6 +1203,307 @@ AdminPanel.prototype.loadProductsFromBackend = async function () {
   } catch (error) {
     console.error("Failed to load products from backend:", error);
     throw error;
+  }
+};
+
+AdminPanel.prototype.loadCertificationsFromBackend = async function () {
+  try {
+    const response = await this.apiRequest("get_certifications");
+    if (response.data) {
+      this.certifications = response.data;
+    }
+  } catch (error) {
+    console.error("Failed to load certifications from backend:", error);
+    throw error;
+  }
+};
+
+AdminPanel.prototype.loadLatestWorkFromBackend = async function () {
+  try {
+    const response = await this.apiRequest("get_latest_work");
+    if (response.data) {
+      this.latestWork = response.data;
+    }
+  } catch (error) {
+    console.error("Failed to load latest work from backend:", error);
+    throw error;
+  }
+};
+
+AdminPanel.prototype.loadBlogsFromBackend = async function () {
+  try {
+    const response = await this.apiRequest("get_blogs");
+    if (response.data) {
+      this.blogs = response.data;
+    }
+  } catch (error) {
+    console.error("Failed to load blogs from backend:", error);
+    throw error;
+  }
+};
+
+// ===== CERTIFICATIONS MANAGEMENT =====
+
+AdminPanel.prototype.generateCertificationsGrid = async function () {
+  const grid = document.getElementById("certificationsGrid");
+  if (!grid) return;
+
+  try {
+    await this.loadCertificationsFromBackend();
+    grid.innerHTML = "";
+
+    this.certifications.forEach((certification) => {
+      const certificationElement =
+        this.createCertificationElement(certification);
+      grid.appendChild(certificationElement);
+    });
+  } catch (error) {
+    grid.innerHTML =
+      '<div class="error-message">Failed to load certifications</div>';
+    console.error("Failed to load certifications:", error);
+  }
+};
+
+AdminPanel.prototype.createCertificationElement = function (certification) {
+  const div = document.createElement("div");
+  div.className = "admin-card";
+  div.innerHTML = `
+    <div class="admin-card-image">
+      ${
+        certification.image_path
+          ? `<img src="${certification.image_path}" alt="${certification.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">🏆</div>'">`
+          : `<div class="placeholder">🏆</div>`
+      }
+    </div>
+    <div class="admin-card-content">
+      <h3 class="admin-card-title">${certification.title}</h3>
+      <p class="admin-card-description">${
+        certification.description || "No description available"
+      }</p>
+      <div class="admin-card-meta">
+        <span class="meta-item status ${
+          certification.is_active ? "active" : "inactive"
+        }">
+          ${certification.is_active ? "Active" : "Inactive"}
+        </span>
+        <span class="meta-item">Order: ${certification.sort_order || 0}</span>
+      </div>
+      <div class="admin-card-actions">
+        <button class="btn btn-primary" onclick="adminPanel.editCertification(${
+          certification.id
+        })">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-danger" onclick="adminPanel.deleteCertification(${
+          certification.id
+        })">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  `;
+  return div;
+};
+
+AdminPanel.prototype.showCertificationModal = function (certification = null) {
+  this.currentEditingCertification = certification;
+  // Create and show modal (similar to product modal)
+  this.showModal("certification", certification);
+};
+
+AdminPanel.prototype.editCertification = function (id) {
+  const certification = this.certifications.find((c) => c.id === id);
+  if (certification) {
+    this.showCertificationModal(certification);
+  }
+};
+
+AdminPanel.prototype.deleteCertification = async function (id) {
+  if (confirm("Are you sure you want to delete this certification?")) {
+    try {
+      await this.apiRequest(`delete_certification&id=${id}`);
+      this.generateCertificationsGrid();
+      this.showNotification("Certification deleted successfully", "success");
+    } catch (error) {
+      this.showNotification("Failed to delete certification", "error");
+    }
+  }
+};
+
+// ===== LATEST WORK MANAGEMENT =====
+
+AdminPanel.prototype.generateLatestWorkGrid = async function () {
+  const grid = document.getElementById("latestWorkGrid");
+  if (!grid) return;
+
+  try {
+    await this.loadLatestWorkFromBackend();
+    grid.innerHTML = "";
+
+    this.latestWork.forEach((work) => {
+      const workElement = this.createLatestWorkElement(work);
+      grid.appendChild(workElement);
+    });
+  } catch (error) {
+    grid.innerHTML =
+      '<div class="error-message">Failed to load latest work</div>';
+    console.error("Failed to load latest work:", error);
+  }
+};
+
+AdminPanel.prototype.createLatestWorkElement = function (work) {
+  const div = document.createElement("div");
+  div.className = "admin-card";
+  div.innerHTML = `
+    <div class="admin-card-image">
+      ${
+        work.image_path
+          ? `<img src="${work.image_path}" alt="${work.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">🏗️</div>'">`
+          : `<div class="placeholder">🏗️</div>`
+      }
+    </div>
+    <div class="admin-card-content">
+      <h3 class="admin-card-title">${work.title}</h3>
+      <p class="admin-card-description">${
+        work.description || "No description available"
+      }</p>
+      <div class="admin-card-meta">
+        <span class="meta-item">${work.category || "Project"}</span>
+        <span class="meta-item">${work.location || "Location"}</span>
+        <span class="meta-item">${work.project_date || "Date"}</span>
+        <span class="meta-item status ${
+          work.is_active ? "active" : "inactive"
+        }">
+          ${work.is_active ? "Active" : "Inactive"}
+        </span>
+      </div>
+      <div class="admin-card-actions">
+        <button class="btn btn-primary" onclick="adminPanel.editLatestWork(${
+          work.id
+        })">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-danger" onclick="adminPanel.deleteLatestWork(${
+          work.id
+        })">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  `;
+  return div;
+};
+
+AdminPanel.prototype.showLatestWorkModal = function (work = null) {
+  this.currentEditingLatestWork = work;
+  // Create and show modal (similar to product modal)
+  this.showModal("latest-work", work);
+};
+
+AdminPanel.prototype.editLatestWork = function (id) {
+  const work = this.latestWork.find((w) => w.id === id);
+  if (work) {
+    this.showLatestWorkModal(work);
+  }
+};
+
+AdminPanel.prototype.deleteLatestWork = async function (id) {
+  if (confirm("Are you sure you want to delete this project?")) {
+    try {
+      await this.apiRequest(`delete_latest_work&id=${id}`);
+      this.generateLatestWorkGrid();
+      this.showNotification("Project deleted successfully", "success");
+    } catch (error) {
+      this.showNotification("Failed to delete project", "error");
+    }
+  }
+};
+
+// ===== BLOGS MANAGEMENT =====
+
+AdminPanel.prototype.generateBlogsGrid = async function () {
+  const grid = document.getElementById("blogsGrid");
+  if (!grid) return;
+
+  try {
+    await this.loadBlogsFromBackend();
+    grid.innerHTML = "";
+
+    this.blogs.forEach((blog) => {
+      const blogElement = this.createBlogElement(blog);
+      grid.appendChild(blogElement);
+    });
+  } catch (error) {
+    grid.innerHTML = '<div class="error-message">Failed to load blogs</div>';
+    console.error("Failed to load blogs:", error);
+  }
+};
+
+AdminPanel.prototype.createBlogElement = function (blog) {
+  const div = document.createElement("div");
+  div.className = "admin-card";
+  div.innerHTML = `
+    <div class="admin-card-image">
+      ${
+        blog.image_path
+          ? `<img src="${blog.image_path}" alt="${blog.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">📝</div>'">`
+          : `<div class="placeholder">📝</div>`
+      }
+    </div>
+    <div class="admin-card-content">
+      <h3 class="admin-card-title">${blog.title}</h3>
+      <p class="admin-card-description">${
+        blog.description || "No description available"
+      }</p>
+      <div class="admin-card-meta">
+        <span class="meta-item">${blog.category || "Blog"}</span>
+        <span class="meta-item">${blog.author || "Author"}</span>
+        <span class="meta-item">${blog.publish_date || "Date"}</span>
+        <span class="meta-item status ${
+          blog.is_active ? "active" : "inactive"
+        }">
+          ${blog.is_active ? "Active" : "Inactive"}
+        </span>
+      </div>
+      <div class="admin-card-actions">
+        <button class="btn btn-primary" onclick="adminPanel.editBlog(${
+          blog.id
+        })">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-danger" onclick="adminPanel.deleteBlog(${
+          blog.id
+        })">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  `;
+  return div;
+};
+
+AdminPanel.prototype.showBlogModal = function (blog = null) {
+  this.currentEditingBlog = blog;
+  // Create and show modal (similar to product modal)
+  this.showModal("blog", blog);
+};
+
+AdminPanel.prototype.editBlog = function (id) {
+  const blog = this.blogs.find((b) => b.id === id);
+  if (blog) {
+    this.showBlogModal(blog);
+  }
+};
+
+AdminPanel.prototype.deleteBlog = async function (id) {
+  if (confirm("Are you sure you want to delete this blog?")) {
+    try {
+      await this.apiRequest(`delete_blog&id=${id}`);
+      this.generateBlogsGrid();
+      this.showNotification("Blog deleted successfully", "success");
+    } catch (error) {
+      this.showNotification("Failed to delete blog", "error");
+    }
   }
 };
 

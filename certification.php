@@ -13,6 +13,9 @@
     
     // Fetch dynamic data
     $companyInfo = getCompanyInfo();
+    
+    // Fetch certifications from database
+    $certifications = fetchAll("SELECT * FROM certifications WHERE is_active = 1 ORDER BY sort_order ASC, created_at DESC");
     ?>
     
     <!-- Main Certification Section -->
@@ -27,26 +30,31 @@
             
             <!-- Certification Images -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-                <!-- Certification Image 1 -->
-                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
-                    <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
-                        <span style="color: #999; font-size: 1.1rem;">Certification Image 1</span>
+                <?php if (!empty($certifications)): ?>
+                    <?php foreach ($certifications as $certification): ?>
+                        <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
+                            <?php if (!empty($certification['image_path'])): ?>
+                                <div style="width: 100%; height: 200px; border-radius: 10px; margin-bottom: 1rem; overflow: hidden;">
+                                    <img src="<?php echo htmlspecialchars($certification['image_path']); ?>" 
+                                         alt="<?php echo htmlspecialchars($certification['title']); ?>" 
+                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            <?php else: ?>
+                                <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
+                                    <span style="color: #999; font-size: 1.1rem;"><?php echo htmlspecialchars($certification['title']); ?></span>
+                                </div>
+                            <?php endif; ?>
+                            <h3 style="color: #b34126; margin-bottom: 0.5rem; font-size: 1.2rem;"><?php echo htmlspecialchars($certification['title']); ?></h3>
+                            <?php if (!empty($certification['description'])): ?>
+                                <p style="color: #666; font-size: 0.9rem; line-height: 1.4;"><?php echo htmlspecialchars($certification['description']); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                        <p>No certifications available at the moment.</p>
                     </div>
-                </div>
-
-                <!-- Certification Image 2 -->
-                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
-                    <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
-                        <span style="color: #999; font-size: 1.1rem;">Certification Image 2</span>
-                    </div>
-                </div>
-
-                <!-- Certification Image 3 -->
-                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
-                    <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
-                        <span style="color: #999; font-size: 1.1rem;">Certification Image 3</span>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>

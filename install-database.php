@@ -139,7 +139,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['install'])) {
             'products',
             'navigation_menu',
             'statistics',
-            'file_uploads'
+            'file_uploads',
+            'certifications',
+            'latest_work',
+            'blogs'
         ];
 
         $verified = true;

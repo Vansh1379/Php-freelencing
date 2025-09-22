@@ -13,6 +13,9 @@
     
     // Fetch dynamic data
     $companyInfo = getCompanyInfo();
+    
+    // Fetch blogs from database
+    $blogs = fetchAll("SELECT * FROM blogs WHERE is_active = 1 ORDER BY sort_order ASC, publish_date DESC");
     ?>
     
     <!-- Main Blogs Section -->
@@ -26,114 +29,38 @@
             </div>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
-                <!-- Blog Post 1 -->
-                <article class="blog-card" data-blog="1" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        🛡️
+                <?php if (!empty($blogs)): ?>
+                    <?php foreach ($blogs as $index => $blog): ?>
+                        <article class="blog-card" data-blog="<?php echo $blog['id']; ?>" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
+                            <?php if (!empty($blog['image_path'])): ?>
+                                <div style="height: 200px; overflow: hidden;">
+                                    <img src="<?php echo htmlspecialchars($blog['image_path']); ?>" 
+                                         alt="<?php echo htmlspecialchars($blog['title']); ?>" 
+                                         style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            <?php else: ?>
+                                <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
+                                    🛡️
+                                </div>
+                            <?php endif; ?>
+                            <div style="padding: 2rem;">
+                                <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;"><?php echo htmlspecialchars($blog['category']); ?></div>
+                                <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;"><?php echo htmlspecialchars($blog['title']); ?></h3>
+                                <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                                    <?php echo htmlspecialchars($blog['description']); ?>
+                                </p>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: #666; font-size: 0.9rem;"><?php echo date('F j, Y', strtotime($blog['publish_date'])); ?></span>
+                                    <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
+                                </div>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #666;">
+                        <p>No blog posts available at the moment.</p>
                     </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">SAFETY</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">Essential Playground Safety Guidelines for Parents</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            Learn the most important safety tips every parent should know when their children are playing on playground equipment.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">December 15, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 2 -->
-                <article class="blog-card" data-blog="2" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        🎨
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">DESIGN</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">2024 Playground Design Trends</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            Discover the latest trends in playground design including inclusive play, nature integration, and technology-enhanced equipment.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">December 10, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 3 -->
-                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        🔧
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">MAINTENANCE</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">Playground Equipment Maintenance Checklist</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            A comprehensive guide to maintaining playground equipment to ensure safety and longevity of your play structures.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">December 5, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 4 -->
-                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        🌱
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">SUSTAINABILITY</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">Eco-Friendly Playground Materials</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            Learn about sustainable materials used in modern playground construction and their environmental benefits.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">November 28, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 5 -->
-                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        👶
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">DEVELOPMENT</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">How Playgrounds Support Child Development</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            Understanding the role of playground equipment in physical, social, and cognitive development of children.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">November 20, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Blog Post 6 -->
-                <article class="blog-card" data-blog="3" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s; cursor: pointer;">
-                    <div style="height: 200px; background: linear-gradient(135deg, #b34126, #b34126); display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem;">
-                        🏗️
-                    </div>
-                    <div style="padding: 2rem;">
-                        <div style="color: #b34126; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">INSTALLATION</div>
-                        <h3 style="color: #333; margin-bottom: 1rem; font-size: 1.3rem; line-height: 1.4;">Playground Installation Process</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
-                            A step-by-step guide to playground installation from site preparation to final safety inspection.
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #666; font-size: 0.9rem;">November 15, 2024</span>
-                            <span style="color: #b34126; text-decoration: none; font-weight: 600;">Read More →</span>
-                        </div>
-                    </div>
-                </article>
-            </div>
+                <?php endif; ?>
 
             <!-- Newsletter Signup -->
             <div style="background: #f8f9fa; padding: 3rem; border-radius: 15px; margin-bottom: 3rem; text-align: center;">
