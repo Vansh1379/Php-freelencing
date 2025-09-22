@@ -25,6 +25,9 @@ $navigation_menu = [
     'index' => 'Home',
     'about' => 'About',
     'products' => 'Products',
+    'certification' => 'Certification',
+    'latest-work' => 'Our Latest Work',
+    'blogs' => 'Blogs',
     'contact' => 'Contact'
 ];
 
@@ -44,6 +47,21 @@ $page_settings = [
         'show_header_top' => true,
         'page_title' => 'Products - JK Enterprise',
         'meta_description' => 'Discover our comprehensive range of playground and fitness equipment designed for all ages.'
+    ],
+    'certification' => [
+        'show_header_top' => true,
+        'page_title' => 'Certification - Mena Play World',
+        'meta_description' => 'View our certifications and quality standards for playground equipment manufacturing.'
+    ],
+    'latest-work' => [
+        'show_header_top' => true,
+        'page_title' => 'Our Latest Work - Mena Play World',
+        'meta_description' => 'Explore our recent playground equipment projects and installations.'
+    ],
+    'blogs' => [
+        'show_header_top' => true,
+        'page_title' => 'Blogs - Mena Play World',
+        'meta_description' => 'Read our latest articles about playground safety, design trends, and equipment maintenance.'
     ],
     'contact' => [
         'show_header_top' => true,
@@ -66,8 +84,10 @@ $footer_links = [
         'Home' => 'index.php',
         'About Us' => 'about.php',
         'Products' => 'products.php',
-        'Contact' => 'contact.php',
-        'Blog' => '#'
+        'Certification' => 'certification.php',
+        'Our Latest Work' => 'latest-work.php',
+        'Blogs' => 'blogs.php',
+        'Contact' => 'contact.php'
     ],
     'products_links' => [
         'Playground Equipment' => 'products.php',

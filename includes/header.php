@@ -69,6 +69,5 @@ $show_header_top = shouldShowHeaderTop();
             <li><a href="<?php echo $page; ?>.php" <?php echo $active_class; ?>><?php echo $title; ?></a></li>
             <?php endforeach; ?>
         </ul>
-        <a href="contact.php#contact" class="cta-button">Get Quote</a>
     </nav>
 </header>

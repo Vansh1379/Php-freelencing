@@ -138,202 +138,46 @@
                             </p>
 
                             <form class="contact-form" id="contactForm">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="firstName"
-                                            >First Name *</label
-                                        >
-                                        <input
-                                            type="text"
-                                            id="firstName"
-                                            name="firstName"
-                                            placeholder="Enter your first name"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lastName"
-                                            >Last Name *</label
-                                        >
-                                        <input
-                                            type="text"
-                                            id="lastName"
-                                            name="lastName"
-                                            placeholder="Enter your last name"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="email"
-                                            >Email Address *</label
-                                        >
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            name="email"
-                                            placeholder="your.email@example.com"
-                                            required
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone"
-                                            >Phone Number *</label
-                                        >
-                                        <input
-                                            type="tel"
-                                            id="phone"
-                                            name="phone"
-                                            placeholder="+91 9876543210"
-                                            required
-                                        />
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="company"
-                                            >Company / Organization</label
-                                        >
-                                        <input
-                                            type="text"
-                                            id="company"
-                                            name="company"
-                                            placeholder="Your company name"
-                                        />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="location">Location</label>
-                                        <input
-                                            type="text"
-                                            id="location"
-                                            name="location"
-                                            placeholder="City, State"
-                                        />
-                                    </div>
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter your name"
+                                        required
+                                    />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="projectType"
-                                        >Project Type</label
-                                    >
-                                    <select id="projectType" name="projectType">
-                                        <option value="">
-                                            Select project type
-                                        </option>
-                                        <option value="playground">
-                                            Playground Equipment
-                                        </option>
-                                        <option value="outdoor-gym">
-                                            Outdoor Gym Equipment
-                                        </option>
-                                        <option value="indoor-solutions">
-                                            Indoor Solutions
-                                        </option>
-                                        <option value="custom-design">
-                                            Custom Design
-                                        </option>
-                                        <option value="consultation">
-                                            Consultation Only
-                                        </option>
-                                        <option value="other">Other</option>
-                                    </select>
+                                    <label for="email">Email Address</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter your email"
+                                        required
+                                    />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="budget">Estimated Budget</label>
-                                    <select id="budget" name="budget">
-                                        <option value="">
-                                            Select budget range
-                                        </option>
-                                        <option value="under-1lakh">
-                                            Under ₹1 Lakh
-                                        </option>
-                                        <option value="1-5lakh">
-                                            ₹1 - 5 Lakhs
-                                        </option>
-                                        <option value="5-10lakh">
-                                            ₹5 - 10 Lakhs
-                                        </option>
-                                        <option value="10-25lakh">
-                                            ₹10 - 25 Lakhs
-                                        </option>
-                                        <option value="above-25lakh">
-                                            Above ₹25 Lakhs
-                                        </option>
-                                    </select>
+                                    <label for="phone">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        placeholder="Enter phone number"
+                                    />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="timeline"
-                                        >Project Timeline</label
-                                    >
-                                    <select id="timeline" name="timeline">
-                                        <option value="">
-                                            Select timeline
-                                        </option>
-                                        <option value="urgent">
-                                            Urgent (Within 1 month)
-                                        </option>
-                                        <option value="2-3months">
-                                            2-3 Months
-                                        </option>
-                                        <option value="3-6months">
-                                            3-6 Months
-                                        </option>
-                                        <option value="6months+">
-                                            6+ Months
-                                        </option>
-                                        <option value="flexible">
-                                            Flexible
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="message"
-                                        >Project Details *</label
-                                    >
+                                    <label for="message">Message</label>
                                     <textarea
                                         id="message"
                                         name="message"
-                                        rows="5"
-                                        placeholder="Please describe your project requirements, space dimensions, age group, specific equipment needs, or any other details that would help us provide a better quote..."
+                                        placeholder="Tell us about your project..."
                                         required
                                     ></textarea>
-                                </div>
-
-                                <div class="form-group checkbox-group">
-                                    <label class="checkbox-label">
-                                        <input
-                                            type="checkbox"
-                                            id="newsletter"
-                                            name="newsletter"
-                                            value="yes"
-                                        />
-                                        <span class="checkbox-text">
-                                            Subscribe to our newsletter for
-                                            updates and special offers
-                                        </span>
-                                    </label>
-                                </div>
-
-                                <div class="form-group checkbox-group">
-                                    <label class="checkbox-label">
-                                        <input
-                                            type="checkbox"
-                                            id="terms"
-                                            name="terms"
-                                            value="yes"
-                                            required
-                                        />
-                                        <span class="checkbox-text">
-                                            I agree to the terms and conditions
-                                            *
-                                        </span>
-                                    </label>
                                 </div>
 
                                 <button
@@ -341,14 +185,7 @@
                                     class="submit-btn"
                                     id="submitBtn"
                                 >
-                                    <span class="btn-text">Send Message</span>
-                                    <span
-                                        class="btn-loading"
-                                        style="display: none"
-                                    >
-                                        <span class="spinner"></span>
-                                        Sending...
-                                    </span>
+                                    Send Message
                                 </button>
                             </form>
                         </div>

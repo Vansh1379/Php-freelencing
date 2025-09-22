@@ -34,6 +34,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - <?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="product.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -54,6 +55,15 @@ try {
                 </li>
                 <li class="menu-item" data-section="products">
                     <a href="#"><i class="fas fa-box"></i> Products</a>
+                </li>
+                <li class="menu-item" data-section="certifications">
+                    <a href="#"><i class="fas fa-certificate"></i> Certifications</a>
+                </li>
+                <li class="menu-item" data-section="latest-work">
+                    <a href="#"><i class="fas fa-hammer"></i> Latest Work</a>
+                </li>
+                <li class="menu-item" data-section="blogs">
+                    <a href="#"><i class="fas fa-blog"></i> Blogs</a>
                 </li>
                 <li class="menu-item" data-section="settings">
                     <a href="#"><i class="fas fa-sliders-h"></i> Settings</a>
@@ -248,7 +258,7 @@ try {
                     </button>
                 </div>
 
-                <div class="products-grid" id="productsGrid">
+                <div class="product-grid" id="productsGrid">
                     <!-- Product items will be dynamically generated here -->
                 </div>
 
@@ -322,6 +332,48 @@ try {
                             </form>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="content-section" id="certifications-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-certificate"></i> Manage Certifications</h2>
+                    <button class="btn btn-primary" id="addCertificationBtn">
+                        <i class="fas fa-plus"></i> Add New Certification
+                    </button>
+                </div>
+
+                <div class="certifications-grid" id="certificationsGrid">
+                    <!-- Certification items will be dynamically generated here -->
+                </div>
+            </section>
+
+            <!-- Latest Work Section -->
+            <section class="content-section" id="latest-work-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-hammer"></i> Manage Latest Work</h2>
+                    <button class="btn btn-primary" id="addLatestWorkBtn">
+                        <i class="fas fa-plus"></i> Add New Project
+                    </button>
+                </div>
+
+                <div class="latest-work-grid" id="latestWorkGrid">
+                    <!-- Latest work items will be dynamically generated here -->
+                </div>
+            </section>
+
+            <!-- Blogs Section -->
+            <section class="content-section" id="blogs-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-blog"></i> Manage Blogs</h2>
+                    <button class="btn btn-primary" id="addBlogBtn">
+                        <i class="fas fa-plus"></i> Add New Blog
+                    </button>
+                </div>
+
+                <div class="blogs-grid" id="blogsGrid">
+                    <!-- Blog items will be dynamically generated here -->
                 </div>
             </section>
 

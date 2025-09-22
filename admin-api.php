@@ -164,6 +164,48 @@ switch ($action) {
         handleGetDashboard();
         break;
 
+    // ===== CERTIFICATIONS =====
+    case 'get_certifications':
+        handleGetCertifications();
+        break;
+    case 'add_certification':
+        handleAddCertification();
+        break;
+    case 'update_certification':
+        handleUpdateCertification();
+        break;
+    case 'delete_certification':
+        handleDeleteCertification();
+        break;
+
+    // ===== LATEST WORK =====
+    case 'get_latest_work':
+        handleGetLatestWork();
+        break;
+    case 'add_latest_work':
+        handleAddLatestWork();
+        break;
+    case 'update_latest_work':
+        handleUpdateLatestWork();
+        break;
+    case 'delete_latest_work':
+        handleDeleteLatestWork();
+        break;
+
+    // ===== BLOGS =====
+    case 'get_blogs':
+        handleGetBlogs();
+        break;
+    case 'add_blog':
+        handleAddBlog();
+        break;
+    case 'update_blog':
+        handleUpdateBlog();
+        break;
+    case 'delete_blog':
+        handleDeleteBlog();
+        break;
+
     default:
         sendError('Invalid action', 400);
 }
@@ -805,6 +847,263 @@ function handleGetDashboard() {
 
     } catch (Exception $e) {
         sendError('Failed to fetch dashboard data: ' . $e->getMessage(), 500);
+    }
+}
+
+// ===== CERTIFICATIONS HANDLERS =====
+
+function handleGetCertifications() {
+    try {
+        $certifications = fetchAll("SELECT * FROM certifications ORDER BY sort_order ASC, created_at DESC");
+        sendResponse($certifications);
+    } catch (Exception $e) {
+        sendError('Failed to fetch certifications: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleAddCertification() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $result = executeQuery("
+            INSERT INTO certifications (title, description, image_path, sort_order, is_active)
+            VALUES (?, ?, ?, ?, ?)
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['image_path'] ?? null,
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1
+        ]);
+
+        if ($result) {
+            $id = getLastInsertId();
+            sendResponse(['id' => $id, 'message' => 'Certification added successfully']);
+        } else {
+            sendError('Failed to add certification', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to add certification: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleUpdateCertification() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
+        
+        $result = executeQuery("
+            UPDATE certifications 
+            SET title = ?, description = ?, image_path = ?, sort_order = ?, is_active = ?
+            WHERE id = ?
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['image_path'] ?? null,
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1,
+            $id
+        ]);
+
+        if ($result) {
+            sendResponse(['message' => 'Certification updated successfully']);
+        } else {
+            sendError('Failed to update certification', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to update certification: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleDeleteCertification() {
+    try {
+        $id = $_GET['id'];
+        
+        $result = executeQuery("DELETE FROM certifications WHERE id = ?", [$id]);
+        
+        if ($result) {
+            sendResponse(['message' => 'Certification deleted successfully']);
+        } else {
+            sendError('Failed to delete certification', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to delete certification: ' . $e->getMessage(), 500);
+    }
+}
+
+// ===== LATEST WORK HANDLERS =====
+
+function handleGetLatestWork() {
+    try {
+        $latestWork = fetchAll("SELECT * FROM latest_work ORDER BY sort_order ASC, project_date DESC");
+        sendResponse($latestWork);
+    } catch (Exception $e) {
+        sendError('Failed to fetch latest work: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleAddLatestWork() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $result = executeQuery("
+            INSERT INTO latest_work (title, description, category, image_path, project_date, location, sort_order, is_active)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['category'],
+            $data['image_path'] ?? null,
+            $data['project_date'],
+            $data['location'],
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1
+        ]);
+
+        if ($result) {
+            $id = getLastInsertId();
+            sendResponse(['id' => $id, 'message' => 'Latest work added successfully']);
+        } else {
+            sendError('Failed to add latest work', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to add latest work: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleUpdateLatestWork() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
+        
+        $result = executeQuery("
+            UPDATE latest_work 
+            SET title = ?, description = ?, category = ?, image_path = ?, project_date = ?, location = ?, sort_order = ?, is_active = ?
+            WHERE id = ?
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['category'],
+            $data['image_path'] ?? null,
+            $data['project_date'],
+            $data['location'],
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1,
+            $id
+        ]);
+
+        if ($result) {
+            sendResponse(['message' => 'Latest work updated successfully']);
+        } else {
+            sendError('Failed to update latest work', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to update latest work: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleDeleteLatestWork() {
+    try {
+        $id = $_GET['id'];
+        
+        $result = executeQuery("DELETE FROM latest_work WHERE id = ?", [$id]);
+        
+        if ($result) {
+            sendResponse(['message' => 'Latest work deleted successfully']);
+        } else {
+            sendError('Failed to delete latest work', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to delete latest work: ' . $e->getMessage(), 500);
+    }
+}
+
+// ===== BLOGS HANDLERS =====
+
+function handleGetBlogs() {
+    try {
+        $blogs = fetchAll("SELECT * FROM blogs ORDER BY sort_order ASC, publish_date DESC");
+        sendResponse($blogs);
+    } catch (Exception $e) {
+        sendError('Failed to fetch blogs: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleAddBlog() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        $result = executeQuery("
+            INSERT INTO blogs (title, description, category, content, image_path, publish_date, author, sort_order, is_active)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['category'],
+            $data['content'],
+            $data['image_path'] ?? null,
+            $data['publish_date'],
+            $data['author'],
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1
+        ]);
+
+        if ($result) {
+            $id = getLastInsertId();
+            sendResponse(['id' => $id, 'message' => 'Blog added successfully']);
+        } else {
+            sendError('Failed to add blog', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to add blog: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleUpdateBlog() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $id = $data['id'];
+        
+        $result = executeQuery("
+            UPDATE blogs 
+            SET title = ?, description = ?, category = ?, content = ?, image_path = ?, publish_date = ?, author = ?, sort_order = ?, is_active = ?
+            WHERE id = ?
+        ", [
+            $data['title'],
+            $data['description'],
+            $data['category'],
+            $data['content'],
+            $data['image_path'] ?? null,
+            $data['publish_date'],
+            $data['author'],
+            $data['sort_order'] ?? 0,
+            $data['is_active'] ?? 1,
+            $id
+        ]);
+
+        if ($result) {
+            sendResponse(['message' => 'Blog updated successfully']);
+        } else {
+            sendError('Failed to update blog', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to update blog: ' . $e->getMessage(), 500);
+    }
+}
+
+function handleDeleteBlog() {
+    try {
+        $id = $_GET['id'];
+        
+        $result = executeQuery("DELETE FROM blogs WHERE id = ?", [$id]);
+        
+        if ($result) {
+            sendResponse(['message' => 'Blog deleted successfully']);
+        } else {
+            sendError('Failed to delete blog', 500);
+        }
+    } catch (Exception $e) {
+        sendError('Failed to delete blog: ' . $e->getMessage(), 500);
     }
 }
 

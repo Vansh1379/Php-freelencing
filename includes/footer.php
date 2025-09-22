@@ -8,7 +8,13 @@ if (!defined('COMPANY_NAME')) {
 <footer>
     <div class="footer-content">
         <div class="footer-section">
-            <h3><?php echo COMPANY_NAME; ?></h3>
+            <div class="brand">
+                <img src="<?php echo LOGO_PATH; ?>" alt="logo" class="logo" />
+                <div class="title">
+                    <div class="main"><?php echo SITE_NAME; ?></div>
+                    <div class="sub"><?php echo SITE_TAGLINE; ?></div>
+                </div>
+            </div>
             <p>
                 Creating safe and exciting play spaces for children across India
                 with quality playground equipment.

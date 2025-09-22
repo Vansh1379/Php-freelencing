@@ -61,9 +61,9 @@ body {
 
 .filter-btn {
   padding: 12px 24px;
-  border: 2px solid #8e44ad;
+  border: 2px solid #b34126;
   background: transparent;
-  color: #8e44ad;
+  color: #b34126;
   font-size: 1rem;
   font-weight: 600;
   border-radius: 50px;
@@ -74,10 +74,10 @@ body {
 
 .filter-btn:hover,
 .filter-btn.active {
-  background: #8e44ad;
+  background: #b34126;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
+  box-shadow: 0 5px 15px rgba(179, 65, 38, 0.3);
 }
 
 /* Product Grid */
@@ -111,7 +111,7 @@ body {
 }
 
 .product-image:not(.has-image) {
-  background: linear-gradient(135deg, #c442f0 0%, #c442f0 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
 }
 
 .product-image .product-img {
@@ -152,7 +152,7 @@ body {
 }
 
 .indoor-bg {
-  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
 }
 
 .product-badge {
@@ -209,14 +209,14 @@ body {
 .product-price {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #8e44ad;
+  color: #b34126;
   margin-bottom: 20px;
 }
 
 .product-btn {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -228,7 +228,7 @@ body {
 
 .product-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+  box-shadow: 0 8px 20px rgba(179, 65, 38, 0.3);
 }
 
 /* Load More Button */
@@ -240,8 +240,8 @@ body {
 .load-more-btn {
   padding: 15px 40px;
   background: transparent;
-  border: 2px solid #8e44ad;
-  color: #8e44ad;
+  border: 2px solid #b34126;
+  color: #b34126;
   font-size: 1.1rem;
   font-weight: 600;
   border-radius: 50px;
@@ -250,10 +250,10 @@ body {
 }
 
 .load-more-btn:hover {
-  background: #8e44ad;
+  background: #b34126;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+  box-shadow: 0 8px 20px rgba(179, 65, 38, 0.3);
 }
 
 /* Why Choose Us Section */
@@ -309,7 +309,7 @@ body {
 /* CTA Section */
 .cta-section {
   padding: 80px 0;
-  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
   color: white;
   text-align: center;
 }
@@ -351,7 +351,7 @@ body {
 
 .btn-primary {
   background: white;
-  color: #8e44ad;
+  color: #b34126;
 }
 
 .btn-primary:hover {
@@ -368,7 +368,7 @@ body {
 
 .btn-secondary:hover {
   background: white;
-  color: #8e44ad;
+  color: #b34126;
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
@@ -503,7 +503,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
   color: white;
   border-radius: 15px 15px 0 0;
 }
@@ -566,8 +566,8 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #8e44ad;
-  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+  border-color: #b34126;
+  box-shadow: 0 0 0 3px rgba(179, 65, 38, 0.1);
 }
 
 .form-group textarea {
@@ -603,13 +603,13 @@ body {
 }
 
 .btn-submit {
-  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
   color: white;
 }
 
 .btn-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
+  box-shadow: 0 8px 20px rgba(179, 65, 38, 0.3);
 }
 
 .btn-submit:disabled {
@@ -754,7 +754,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #c442f0 0%, #c442f0 100%);
+  background: linear-gradient(135deg, #b34126 0%, #b34126 100%);
 }
 
 .product-icon-modern {
@@ -783,7 +783,7 @@ body {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
@@ -831,7 +831,7 @@ body {
 .feature-bullet {
   width: 0.375rem;
   height: 0.375rem;
-  background: #c442f0;
+  background: #b34126;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -845,7 +845,7 @@ body {
 .product-price-modern {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #c442f0;
+  color: #b34126;
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -856,7 +856,7 @@ body {
 
 .product-btn-modern {
   width: 100%;
-  background: linear-gradient(135deg, #c442f0, #c442f0);
+  background: linear-gradient(135deg, #b34126, #b34126);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
