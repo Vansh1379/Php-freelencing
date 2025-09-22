@@ -455,6 +455,11 @@ body {
   min-height: 400px;
 }
 
+/* Ensure each certification card takes full height */
+.certifications-grid .product-card-modern {
+  min-height: 400px;
+}
+
 /* Ensure product cards in admin panel match frontend exactly */
 .admin-container .product-card-modern {
   height: 100%;
@@ -522,7 +527,16 @@ body {
   ) !important;
 }
 
-.certifications-grid,
+.certifications-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  margin-top: 2rem;
+  padding: 1rem;
+  width: 100%;
+  min-height: 400px;
+}
+
 .latest-work-grid,
 .blogs-grid {
   display: grid;
@@ -1075,7 +1089,11 @@ body {
     gap: 1.5rem;
   }
 
-  .certifications-grid,
+  .certifications-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem;
+  }
+
   .latest-work-grid,
   .blogs-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1103,7 +1121,11 @@ body {
     gap: 1rem;
   }
 
-  .certifications-grid,
+  .certifications-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
   .latest-work-grid,
   .blogs-grid {
     grid-template-columns: 1fr;

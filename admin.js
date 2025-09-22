@@ -1271,35 +1271,58 @@ AdminPanel.prototype.generateCertificationsGrid = async function () {
 
 AdminPanel.prototype.createCertificationElement = function (certification) {
   const div = document.createElement("div");
-  div.className = "admin-card";
+  div.className = "product-card-modern group";
+  div.setAttribute("data-category", "certification");
+
   div.innerHTML = `
-    <div class="admin-card-image">
+    <!-- Certification Image Section -->
+    <div class="product-image-modern">
       ${
         certification.image_path
-          ? `<img src="${certification.image_path}" alt="${certification.title}" onerror="this.parentElement.innerHTML='<div class=\\"placeholder\\">🏆</div>'">`
-          : `<div class="placeholder">🏆</div>`
+          ? `<img src="${certification.image_path}" alt="${certification.title}" class="product-img-modern" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />`
+          : ""
+      }
+      <div class="product-placeholder-modern" style="${
+        certification.image_path ? "display: none;" : ""
+      }">
+        <i class="product-icon-modern">🏆</i>
+      </div>
+      
+      <!-- Gradient Overlay -->
+      <div class="product-gradient-overlay"></div>
+      
+      ${
+        certification.is_active
+          ? `<div class="product-badge-modern">Active</div>`
+          : ""
       }
     </div>
-    <div class="admin-card-content">
-      <h3 class="admin-card-title">${certification.title}</h3>
-      <p class="admin-card-description">${
+
+    <!-- Certification Content -->
+    <div class="product-content-modern">
+      <h3 class="product-title-modern">${certification.title}</h3>
+      <p class="product-description-modern">${
         certification.description || "No description available"
       }</p>
-      <div class="admin-card-meta">
-        <span class="meta-item status ${
-          certification.is_active ? "active" : "inactive"
-        }">
-          ${certification.is_active ? "Active" : "Inactive"}
-        </span>
-        <span class="meta-item">Order: ${certification.sort_order || 0}</span>
+
+      <div class="product-features-modern">
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Sort Order: ${
+            certification.sort_order || 0
+          }</span>
+        </div>
+        <div class="product-feature-item">
+          <div class="feature-bullet"></div>
+          <span class="feature-text">Status: ${
+            certification.is_active ? "Active" : "Inactive"
+          }</span>
+        </div>
       </div>
-      <div class="admin-card-actions">
-        <button class="btn btn-primary" onclick="adminPanel.editCertification(${
-          certification.id
-        })">
-          <i class="fas fa-edit"></i> Edit
-        </button>
-        <button class="btn btn-danger" onclick="adminPanel.deleteCertification(${
+
+      <!-- Delete Button Only -->
+      <div class="product-button-container">
+        <button class="product-btn-modern product-btn-delete" onclick="adminPanel.deleteCertification(${
           certification.id
         })">
           <i class="fas fa-trash"></i> Delete
