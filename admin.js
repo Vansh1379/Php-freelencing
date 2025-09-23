@@ -573,8 +573,14 @@ class AdminPanel {
     const imageFile = formData.get("productImage");
     if (imageFile && imageFile.size > 0) {
       try {
-        const uploadResult = await this.uploadImage(imageFile, "product");
-        productData.image_url = uploadResult.file_path;
+        const uploadResult = await this.uploadFileToServer(imageFile);
+        if (uploadResult.success) {
+          productData.image_url = uploadResult.file_path;
+          productData.image_class = `${productData.category}-bg`; // Set image class based on category
+        } else {
+          this.showToast("Failed to upload image", "error");
+          return;
+        }
       } catch (error) {
         this.showToast("Failed to upload image: " + error.message, "error");
         return;
@@ -587,6 +593,9 @@ class AdminPanel {
     }
 
     try {
+      // Debug: Log the product data being sent
+      console.log("Product data being sent:", productData);
+
       if (this.currentEditingProduct) {
         // Update existing product
         productData.id = this.currentEditingProduct.id;
@@ -627,24 +636,6 @@ class AdminPanel {
     }
 
     return true;
-  }
-
-  async uploadImage(file, context = "general") {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("context", context);
-
-    const response = await fetch(`${this.apiBase}?action=upload_file`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Upload failed");
-    }
-
-    return await response.json();
   }
 
   resetProductForm() {
@@ -757,18 +748,39 @@ class AdminPanel {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("action", "upload_file");
+    formData.append("context", "product"); // Add context for file categorization
+
+    console.log(
+      "Uploading file:",
+      file.name,
+      "Size:",
+      file.size,
+      "Type:",
+      file.type
+    );
 
     const response = await fetch(this.apiBase, {
       method: "POST",
       body: formData,
     });
 
-    const result = await response.json();
+    console.log("Upload response status:", response.status);
 
-    if (result.success) {
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Upload error response:", errorText);
+      throw new Error(
+        `Upload failed with status ${response.status}: ${errorText}`
+      );
+    }
+
+    const result = await response.json();
+    console.log("Upload response:", result);
+
+    if (result.status === 200 && result.data) {
       return {
         success: true,
-        file_path: result.file_path,
+        file_path: result.data.file_path,
       };
     } else {
       throw new Error(result.message || "Upload failed");

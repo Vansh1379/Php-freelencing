@@ -34,9 +34,12 @@ $request = $_SERVER['REQUEST_URI'];
 $path = parse_url($request, PHP_URL_PATH);
 $pathParts = explode('/', trim($path, '/'));
 
-// Get the action from query parameters
-$action = $_GET['action'] ?? '';
+// Get the action from query parameters or POST data
+$action = $_GET['action'] ?? $_POST['action'] ?? '';
 $id = $_GET['id'] ?? null;
+
+// Debug logging for action
+error_log("API Action received: " . $action);
 
 // Response helper function
 function sendResponse($data, $status = 200, $message = 'Success') {
@@ -207,7 +210,8 @@ switch ($action) {
         break;
 
     default:
-        sendError('Invalid action', 400);
+        error_log("No handler found for action: " . $action);
+        sendError('Invalid action: ' . $action, 400);
 }
 
 // ===== HANDLER FUNCTIONS =====
@@ -775,6 +779,11 @@ function handleSaveStatistics() {
  * Handle file upload
  */
 function handleFileUpload() {
+    // Debug logging
+    error_log("File upload request received. Method: " . $_SERVER['REQUEST_METHOD']);
+    error_log("FILES array: " . print_r($_FILES, true));
+    error_log("POST array: " . print_r($_POST, true));
+    
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         sendError('Method not allowed', 405);
     }
