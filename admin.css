@@ -343,7 +343,7 @@ body {
 
 .btn-primary:hover {
   background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
-  color: white;
+  color: black;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
 }
@@ -1066,7 +1066,7 @@ body {
 
 .modal-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid #7095ba;
   display: flex;
   justify-content: space-between;
   align-items: center;

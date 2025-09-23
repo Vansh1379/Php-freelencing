@@ -53,29 +53,39 @@ function renderProductCard($config = []) {
          id="<?php echo $card_id; ?>">
 
         <!-- Product Image Section -->
-        <div class="product-image-modern">
-            <?php if ($card['image_url']): ?>
-                <?php 
-                // Check if it's a full URL or relative path
+        <div class="product-image-modern <?php echo htmlspecialchars($card['image_class']); ?>" style="position: relative; height: 16rem; overflow: hidden;">
+            <?php 
+            // Always show placeholder first, then try to load image
+            $imageSrc = '';
+            if (!empty($card['image_url'])) {
                 $imageSrc = $card['image_url'];
-                if (!filter_var($imageSrc, FILTER_VALIDATE_URL) && !str_starts_with($imageSrc, '/')) {
-                    // It's a relative path, make sure it starts with ./
-                    $imageSrc = './' . ltrim($imageSrc, './');
+                // Always prefix with a forward slash if it's not a full URL
+                if (!filter_var($imageSrc, FILTER_VALIDATE_URL)) {
+                    // Ensure a single leading slash
+                    if ($imageSrc[0] !== '/') {
+                        $imageSrc = '/' . ltrim($imageSrc, './');
+                    }
                 }
-                ?>
+            }            
+            ?>
+            
+            <div class="product-placeholder-modern" <?php echo !empty($imageSrc) ? 'style="display: none;"' : ''; ?>>
+                <i class="product-icon-modern">🏗️</i>
+            </div>
+            
+            <?php if (!empty($imageSrc)): ?>
+                <!-- Debug: Show image URL -->
+                <div style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; font-size: 10px; z-index: 10;">
+                    <?php echo htmlspecialchars($imageSrc); ?>
+                </div>
                 <img
                     src="<?php echo htmlspecialchars($imageSrc); ?>"
                     alt="<?php echo htmlspecialchars($card['title']); ?>"
                     class="product-img-modern"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; display: block; background: red;"
+                    onerror="console.log('Image failed to load:', '<?php echo htmlspecialchars($imageSrc); ?>'); this.style.display='none'; this.parentElement.querySelector('.product-placeholder-modern').style.display='flex';"
+                    onload="console.log('Image loaded successfully:', '<?php echo htmlspecialchars($imageSrc); ?>'); this.style.display='block'; this.parentElement.querySelector('.product-placeholder-modern').style.display='none';"
                 />
-                <div class="product-placeholder-modern" style="display: none;">
-                    <i class="product-icon-modern">🏗️</i>
-                </div>
-            <?php else: ?>
-                <div class="product-placeholder-modern">
-                    <i class="product-icon-modern">🏗️</i>
-                </div>
             <?php endif; ?>
             
             <!-- Gradient Overlay -->
