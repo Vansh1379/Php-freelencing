@@ -307,7 +307,7 @@
               <div>
                 <strong>Address</strong><br />
                 <?php 
-                $address = !empty($companyInfo["address"]) ? $companyInfo["address"] : "Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad U.P - 201008, India";
+                $address = !empty($companyInfo["address"]) ? $companyInfo["address"] : "Shop no.68/4, Gali no.6, Sec 7, Guj Ghaziabad U.P - 201008, India";
                 echo nl2br(htmlspecialchars($address));
                 ?>
               </div>
