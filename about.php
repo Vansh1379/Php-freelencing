@@ -1,3 +1,7 @@
+<?php
+// Include configuration
+require_once 'includes/config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,7 +35,7 @@
                     <div class="logo-container">
                         <div class="logo-wrapper">
                             <img
-                                src="<?php echo htmlspecialchars($companyInfo['logo_path'] ?? 'assets/logo.png'); ?>"
+                                src="<?php echo LOGO_PATH; ?>"
                                 alt="<?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Mema Play World'); ?> Logo"
                                 class="logo-image"
                             />
