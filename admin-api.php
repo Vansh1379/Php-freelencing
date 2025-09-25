@@ -34,9 +34,12 @@ $request = $_SERVER['REQUEST_URI'];
 $path = parse_url($request, PHP_URL_PATH);
 $pathParts = explode('/', trim($path, '/'));
 
-// Get the action from query parameters
-$action = $_GET['action'] ?? '';
+// Get the action from query parameters or POST data
+$action = $_GET['action'] ?? $_POST['action'] ?? '';
 $id = $_GET['id'] ?? null;
+
+// Debug logging for action
+error_log("API Action received: " . $action);
 
 // Response helper function
 function sendResponse($data, $status = 200, $message = 'Success') {
@@ -207,7 +210,8 @@ switch ($action) {
         break;
 
     default:
-        sendError('Invalid action', 400);
+        error_log("No handler found for action: " . $action);
+        sendError('Invalid action: ' . $action, 400);
 }
 
 // ===== HANDLER FUNCTIONS =====
@@ -315,23 +319,49 @@ function handleSaveHero() {
     }
 
     try {
-        // Deactivate old entries
-        executeQuery("UPDATE hero_section SET is_active = 0");
-
-        // Insert new entry
-        executeQuery(
-            "INSERT INTO hero_section (title, description, button1_text, button1_link, button2_text, button2_link, background_image, is_active)
-             VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
-            [
-                $input['title'],
-                $input['description'],
-                $input['button1_text'] ?? '',
-                $input['button1_link'] ?? '',
-                $input['button2_text'] ?? '',
-                $input['button2_link'] ?? '',
-                $input['background_image'] ?? ''
-            ]
-        );
+        // Get the current active hero section
+        $existing = fetchOne("SELECT id FROM hero_section WHERE is_active = 1 ORDER BY id DESC LIMIT 1");
+        
+        if ($existing) {
+            // Update the existing active row
+            executeQuery(
+                "UPDATE hero_section SET 
+                    title = ?, 
+                    description = ?, 
+                    button1_text = ?, 
+                    button1_link = ?, 
+                    button2_text = ?, 
+                    button2_link = ?, 
+                    background_image = ?,
+                    updated_at = CURRENT_TIMESTAMP
+                 WHERE id = ?",
+                [
+                    $input['title'],
+                    $input['description'],
+                    $input['button1_text'] ?? '',
+                    $input['button1_link'] ?? '',
+                    $input['button2_text'] ?? '',
+                    $input['button2_link'] ?? '',
+                    $input['background_image'] ?? '',
+                    $existing['id']
+                ]
+            );
+        } else {
+            // Insert new entry only if none exists
+            executeQuery(
+                "INSERT INTO hero_section (title, description, button1_text, button1_link, button2_text, button2_link, background_image, is_active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
+                [
+                    $input['title'],
+                    $input['description'],
+                    $input['button1_text'] ?? '',
+                    $input['button1_link'] ?? '',
+                    $input['button2_text'] ?? '',
+                    $input['button2_link'] ?? '',
+                    $input['background_image'] ?? ''
+                ]
+            );
+        }
 
         sendResponse(['message' => 'Hero section saved successfully']);
 
@@ -749,6 +779,11 @@ function handleSaveStatistics() {
  * Handle file upload
  */
 function handleFileUpload() {
+    // Debug logging
+    error_log("File upload request received. Method: " . $_SERVER['REQUEST_METHOD']);
+    error_log("FILES array: " . print_r($_FILES, true));
+    error_log("POST array: " . print_r($_POST, true));
+    
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         sendError('Method not allowed', 405);
     }
@@ -863,7 +898,16 @@ function handleGetCertifications() {
 
 function handleAddCertification() {
     try {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $rawInput = file_get_contents('php://input');
+        error_log("Raw input received: " . $rawInput);
+        
+        $data = json_decode($rawInput, true);
+        error_log("Decoded data: " . json_encode($data));
+        
+        // Debug each field
+        error_log("Title: " . ($data['title'] ?? 'NULL'));
+        error_log("Description: " . ($data['description'] ?? 'NULL'));
+        error_log("Image path: " . ($data['image_path'] ?? 'NULL'));
         
         $result = executeQuery("
             INSERT INTO certifications (title, description, image_path, sort_order, is_active)

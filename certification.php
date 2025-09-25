@@ -39,10 +39,7 @@
                                          alt="<?php echo htmlspecialchars($certification['title']); ?>" 
                                          style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
-                            <?php else: ?>
-                                <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
-                                    <span style="color: #999; font-size: 1.1rem;"><?php echo htmlspecialchars($certification['title']); ?></span>
-                                </div>
+                           
                             <?php endif; ?>
                             <h3 style="color: #b34126; margin-bottom: 0.5rem; font-size: 1.2rem;"><?php echo htmlspecialchars($certification['title']); ?></h3>
                             <?php if (!empty($certification['description'])): ?>

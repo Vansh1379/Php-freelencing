@@ -84,14 +84,6 @@ try {
         <main class="main-content">
             <div class="content-header">
                 <h1 id="page-title">Main Page Management</h1>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="previewBtn">
-                        <i class="fas fa-eye"></i> Preview Changes
-                    </button>
-                    <button class="btn btn-success" id="saveAllBtn">
-                        <i class="fas fa-save"></i> Save All
-                    </button>
-                </div>
             </div>
 
             <!-- Main Page Section -->
@@ -102,26 +94,25 @@ try {
                         <div class="form-group">
                             <label for="heroTitle">Main Title</label>
                             <input type="text" id="heroTitle" name="heroTitle"
-                                   value="Premium Playground Equipment"
                                    placeholder="Enter main title">
                         </div>
 
                         <div class="form-group">
                             <label for="heroDescription">Description</label>
                             <textarea id="heroDescription" name="heroDescription" rows="4"
-                                      placeholder="Enter hero description">We create safe, fun, and engaging play spaces for children of all ages. With 30+ years of experience, we deliver quality equipment that sparks imagination and provides healthy development.</textarea>
+                                      placeholder="Enter hero description"></textarea>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="heroButton1">Primary Button Text</label>
                                 <input type="text" id="heroButton1" name="heroButton1"
-                                       value="Explore Products">
+                                       placeholder="Primary button text">
                             </div>
                             <div class="form-group">
                                 <label for="heroButton2">Secondary Button Text</label>
                                 <input type="text" id="heroButton2" name="heroButton2"
-                                       value="Watch Demo">
+                                       placeholder="Secondary button text">
                             </div>
                         </div>
 
@@ -159,6 +150,15 @@ try {
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <!-- Save All Button for Main Section -->
+                <div class="section-card">
+                    <div class="form-actions" style="justify-content: center; margin-top: 2rem;">
+                        <button class="btn btn-success" id="saveAllBtn">
+                            <i class="fas fa-save"></i> Save All Changes
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -247,6 +247,15 @@ try {
                         </div>
                     </form>
                 </div>
+
+                <!-- Save All Button for About Section -->
+                <div class="section-card">
+                    <div class="form-actions" style="justify-content: center; margin-top: 2rem;">
+                        <button class="btn btn-success" id="saveAllBtn">
+                            <i class="fas fa-save"></i> Save All Changes
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <!-- Products Section -->
@@ -328,6 +337,175 @@ try {
                                 <div class="form-actions">
                                     <button type="button" class="btn btn-secondary" id="cancelProduct">Cancel</button>
                                     <button type="submit" class="btn btn-primary" id="saveProduct">Save Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Certification Modal -->
+                <div class="modal" id="certificationModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="certificationModalTitle">Add New Certification</h3>
+                            <button class="close-modal" id="closeCertificationModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="admin-form" id="certificationForm">
+                                <div class="form-group">
+                                    <label for="certificationTitle">Certification Title</label>
+                                    <input type="text" id="certificationTitle" name="certificationTitle"
+                                           placeholder="Enter certification title" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="certificationDescription">Description</label>
+                                    <textarea id="certificationDescription" name="certificationDescription" rows="4"
+                                              placeholder="Enter certification description" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="certificationImage">Certification Image</label>
+                                    <div class="file-upload-container">
+                                        <input type="file" id="certificationImage" name="certificationImage" accept="image/*">
+                                        <div class="file-upload-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>Upload certification image</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelCertification">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveCertification">Save Certification</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Latest Work Modal -->
+                <div class="modal" id="latestWorkModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="latestWorkModalTitle">Add New Project</h3>
+                            <button class="close-modal" id="closeLatestWorkModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="admin-form" id="latestWorkForm">
+                                <div class="form-group">
+                                    <label for="latestWorkTitle">Project Title</label>
+                                    <input type="text" id="latestWorkTitle" name="latestWorkTitle"
+                                           placeholder="Enter project title" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="latestWorkDescription">Description</label>
+                                    <textarea id="latestWorkDescription" name="latestWorkDescription" rows="4"
+                                              placeholder="Enter project description" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="latestWorkCategory">Category</label>
+                                    <input type="text" id="latestWorkCategory" name="latestWorkCategory"
+                                           placeholder="e.g., Playground, Fitness, School">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="latestWorkLocation">Location</label>
+                                    <input type="text" id="latestWorkLocation" name="latestWorkLocation"
+                                           placeholder="Enter project location">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="latestWorkDate">Project Date</label>
+                                    <input type="date" id="latestWorkDate" name="latestWorkDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="latestWorkImage">Project Image</label>
+                                    <div class="file-upload-container">
+                                        <input type="file" id="latestWorkImage" name="latestWorkImage" accept="image/*">
+                                        <div class="file-upload-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>Upload project image</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelLatestWork">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveLatestWork">Save Project</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add/Edit Blog Modal -->
+                <div class="modal" id="blogModal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="blogModalTitle">Add New Blog</h3>
+                            <button class="close-modal" id="closeBlogModal">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="admin-form" id="blogForm">
+                                <div class="form-group">
+                                    <label for="blogTitle">Blog Title</label>
+                                    <input type="text" id="blogTitle" name="blogTitle"
+                                           placeholder="Enter blog title" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogDescription">Description</label>
+                                    <textarea id="blogDescription" name="blogDescription" rows="3"
+                                              placeholder="Enter blog description" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogCategory">Category</label>
+                                    <input type="text" id="blogCategory" name="blogCategory"
+                                           placeholder="e.g., SAFETY, DESIGN, MAINTENANCE">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogAuthor">Author</label>
+                                    <input type="text" id="blogAuthor" name="blogAuthor"
+                                           placeholder="Enter author name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogPublishDate">Publish Date</label>
+                                    <input type="date" id="blogPublishDate" name="blogPublishDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogContent">Blog Content</label>
+                                    <textarea id="blogContent" name="blogContent" rows="8"
+                                              placeholder="Enter the full blog content" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="blogImage">Blog Image</label>
+                                    <div class="file-upload-container">
+                                        <input type="file" id="blogImage" name="blogImage" accept="image/*">
+                                        <div class="file-upload-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <p>Upload blog image</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelBlog">Cancel</button>
+                                    <button type="submit" class="btn btn-primary" id="saveBlog">Save Blog</button>
                                 </div>
                             </form>
                         </div>

@@ -341,6 +341,19 @@ body {
   color: white;
 }
 
+.btn-primary:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:active {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c2d12 100%);
+  color: white;
+  transform: translateY(0);
+}
+
 .btn-secondary {
   background: #6c757d;
   color: white;
@@ -513,11 +526,205 @@ body {
 }
 
 .admin-container .product-btn-modern.product-btn-delete {
-  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
 }
 
 .admin-container .product-btn-modern.product-btn-delete:hover {
-  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3) !important;
+  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Add New Product Button Styling */
+#addProductBtn {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#addProductBtn:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+#addProductBtn:active {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+  transform: translateY(0) !important;
+}
+
+/* Product Modal Button Styling */
+#cancelProduct {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#cancelProduct:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+#saveProduct {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#saveProduct:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Add New Certification Button Styling */
+#addCertificationBtn {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#addCertificationBtn:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Certification Modal Button Styling */
+#cancelCertification {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#cancelCertification:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+#saveCertification {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#saveCertification:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Add New Project Button Styling */
+#addLatestWorkBtn {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#addLatestWorkBtn:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Latest Work Modal Button Styling */
+#cancelLatestWork {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#cancelLatestWork:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+#saveLatestWork {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#saveLatestWork:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Add New Blog Button Styling */
+#addBlogBtn {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#addBlogBtn:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+/* Blog Modal Button Styling */
+#cancelBlog {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#cancelBlog:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
+}
+
+#saveBlog {
+  background: transparent !important;
+  color: #8b5cf6 !important;
+  border: 1px solid #8b5cf6 !important;
+  font-weight: 500 !important;
+}
+
+#saveBlog:hover {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important;
+  color: white !important;
+  border-color: #8b5cf6 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3) !important;
 }
 
 /* Additional purple styling for admin panel product cards */
@@ -1053,7 +1260,7 @@ body {
 
 .modal-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid #7095ba;
   display: flex;
   justify-content: space-between;
   align-items: center;
