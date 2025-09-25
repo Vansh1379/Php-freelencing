@@ -35,14 +35,11 @@
                         <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
                             <?php if (!empty($certification['image_path'])): ?>
                                 <div style="width: 100%; height: 200px; border-radius: 10px; margin-bottom: 1rem; overflow: hidden;">
-                                    <img src="uploads/<?php echo htmlspecialchars($certification['image_path']); ?>" 
+                                    <img src="<?php echo htmlspecialchars($certification['image_path']); ?>" 
                                          alt="<?php echo htmlspecialchars($certification['title']); ?>" 
                                          style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
-                            <?php else: ?>
-                                <div style="width: 100%; height: 200px; background: #f8f9fa; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; border: 2px dashed #ddd;">
-                                    <span style="color: #999; font-size: 1.1rem;"><?php echo htmlspecialchars($certification['title']); ?></span>
-                                </div>
+                           
                             <?php endif; ?>
                             <h3 style="color: #b34126; margin-bottom: 0.5rem; font-size: 1.2rem;"><?php echo htmlspecialchars($certification['title']); ?></h3>
                             <?php if (!empty($certification['description'])): ?>

@@ -1287,6 +1287,12 @@ AdminPanel.prototype.apiRequest = async function (
 
   if (data && method !== "GET") {
     options.body = JSON.stringify(data);
+    console.log("=== API REQUEST DEBUG ===");
+    console.log("URL:", url);
+    console.log("Method:", method);
+    console.log("Data being sent:", data);
+    console.log("JSON body:", options.body);
+    console.log("=== END API REQUEST DEBUG ===");
   }
 
   try {
@@ -1607,13 +1613,27 @@ AdminPanel.prototype.showCertificationModal = function (certification = null) {
   } else {
     // Add mode
     modalTitle.textContent = "Add New Certification";
-    form.reset();
+    // Clear form fields manually instead of reset()
+    if (document.getElementById("certificationTitle")) {
+      document.getElementById("certificationTitle").value = "";
+    }
+    if (document.getElementById("certificationDescription")) {
+      document.getElementById("certificationDescription").value = "";
+    }
+    if (document.getElementById("certificationImage")) {
+      document.getElementById("certificationImage").value = "";
+    }
   }
 
   console.log("Adding show class to modal");
   modal.classList.add("show");
   document.body.style.overflow = "hidden";
   console.log("Modal should now be visible");
+
+  // Ensure form is properly initialized after modal is shown
+  setTimeout(() => {
+    console.log("Form initialization complete");
+  }, 100);
 };
 
 AdminPanel.prototype.hideCertificationModal = function () {
@@ -1630,51 +1650,104 @@ AdminPanel.prototype.editCertification = function (id) {
 };
 
 AdminPanel.prototype.saveCertification = async function () {
-  const form = document.getElementById("certificationForm");
-  const formData = new FormData(form);
+  console.log("=== SAVE CERTIFICATION CALLED ===");
+
+  // Get form elements directly
+  const titleInput = document.getElementById("certificationTitle");
+  const descriptionInput = document.getElementById("certificationDescription");
+  const imageInput = document.getElementById("certificationImage");
+
+  console.log("Form elements found:");
+  console.log("Title input:", titleInput);
+  console.log("Description input:", descriptionInput);
+  console.log("Image input:", imageInput);
+
+  if (!titleInput || !descriptionInput) {
+    console.error("Form elements not found");
+    alert("Form elements not found");
+    return;
+  }
+
+  // Get values directly from inputs
+  const title = titleInput.value;
+  const description = descriptionInput.value;
+
+  console.log("=== FORM VALUES DEBUG ===");
+  console.log("Raw title value:", title);
+  console.log("Raw description value:", description);
+  console.log("Title type:", typeof title);
+  console.log("Description type:", typeof description);
+  console.log("Title length:", title ? title.length : 0);
+  console.log("Description length:", description ? description.length : 0);
+  console.log("=== END FORM VALUES DEBUG ===");
+
+  if (!title || title.trim() === "") {
+    console.error("Certification title is required");
+    alert("Certification title is required");
+    return;
+  }
+
+  if (!description || description.trim() === "") {
+    console.error("Certification description is required");
+    alert("Certification description is required");
+    return;
+  }
 
   const certificationData = {
-    title: formData.get("certificationTitle").trim(),
-    description: formData.get("certificationDescription").trim(),
+    title: title.trim(),
+    description: description.trim(),
   };
 
+  console.log("=== FINAL CERTIFICATION DATA ===");
+  console.log("Final data object:", certificationData);
+  console.log("Data keys:", Object.keys(certificationData));
+  console.log("Title in final data:", certificationData.title);
+  console.log("Description in final data:", certificationData.description);
+  console.log("=== END FINAL DATA ===");
+
   // Handle image upload
-  const imageFile = formData.get("certificationImage");
+  const imageFile = imageInput ? imageInput.files[0] : null;
   if (imageFile && imageFile.size > 0) {
     try {
       const uploadResponse = await this.uploadFileToServer(imageFile);
       if (uploadResponse.success) {
         certificationData.image_path = uploadResponse.file_path;
       } else {
-        this.showNotification("Failed to upload image", "error");
+        console.error("Failed to upload image");
+        alert("Failed to upload image");
         return;
       }
     } catch (error) {
-      this.showNotification(
-        "Failed to upload image: " + error.message,
-        "error"
-      );
+      console.error("Failed to upload image: " + error.message);
+      alert("Failed to upload image: " + error.message);
       return;
     }
   }
 
   try {
+    console.log("=== API CALL DEBUG ===");
+    console.log("About to call API with data:", certificationData);
+    console.log("API endpoint: add_certification");
+    console.log("=== END API DEBUG ===");
+
     if (this.currentEditingCertification) {
       // Update existing certification
       certificationData.id = this.currentEditingCertification.id;
-      await this.apiRequest("update_certification", certificationData);
-      this.showNotification("Certification updated successfully", "success");
+      await this.apiRequest("update_certification", certificationData, "POST");
+      console.log("Certification updated successfully");
+      alert("Certification updated successfully");
     } else {
       // Add new certification
-      await this.apiRequest("add_certification", certificationData);
-      this.showNotification("Certification added successfully", "success");
+      await this.apiRequest("add_certification", certificationData, "POST");
+      console.log("Certification added successfully");
+      alert("Certification added successfully");
     }
 
     this.hideCertificationModal();
     this.generateCertificationsGrid();
   } catch (error) {
-    this.showNotification("Failed to save certification", "error");
-    console.error("Error saving certification:", error);
+    console.error("Failed to save certification:", error);
+    alert("Failed to save certification: " + error.message);
   }
 };
 

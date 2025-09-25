@@ -898,7 +898,16 @@ function handleGetCertifications() {
 
 function handleAddCertification() {
     try {
-        $data = json_decode(file_get_contents('php://input'), true);
+        $rawInput = file_get_contents('php://input');
+        error_log("Raw input received: " . $rawInput);
+        
+        $data = json_decode($rawInput, true);
+        error_log("Decoded data: " . json_encode($data));
+        
+        // Debug each field
+        error_log("Title: " . ($data['title'] ?? 'NULL'));
+        error_log("Description: " . ($data['description'] ?? 'NULL'));
+        error_log("Image path: " . ($data['image_path'] ?? 'NULL'));
         
         $result = executeQuery("
             INSERT INTO certifications (title, description, image_path, sort_order, is_active)
