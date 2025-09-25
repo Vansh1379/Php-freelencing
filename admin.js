@@ -53,7 +53,29 @@ class AdminPanel {
       this.hideProductModal();
     });
 
-    // Certification management - will be set up when section is switched to
+    // Certification management
+    const addCertBtn = document.getElementById("addCertificationBtn");
+    if (addCertBtn) {
+      addCertBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("Add Certification button clicked");
+        this.showCertificationModal();
+      });
+    } else {
+      console.error("Add Certification button not found!");
+    }
+
+    // Latest Work management
+    document
+      .getElementById("addLatestWorkBtn")
+      .addEventListener("click", () => {
+        this.showLatestWorkModal();
+      });
+
+    // Blog management
+    document.getElementById("addBlogBtn").addEventListener("click", () => {
+      this.showBlogModal();
+    });
 
     document
       .getElementById("closeCertificationModal")
@@ -154,15 +176,53 @@ class AdminPanel {
     // Section-specific initialization
     if (section === "products") {
       this.generateProductsGrid();
+      // Hide Save All button in products section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "none";
+      }
     } else if (section === "certifications") {
       this.generateCertificationsGrid();
       this.setupCertificationEventListeners();
+      // Hide Save All button in certifications section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "none";
+      }
     } else if (section === "latest-work") {
       this.generateLatestWorkGrid();
       this.setupLatestWorkEventListeners(); // New: Setup listeners here
+      // Hide Save All button in latest work section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "none";
+      }
     } else if (section === "blogs") {
       this.generateBlogsGrid();
       this.setupBlogEventListeners(); // New: Setup listeners here
+      // Hide Save All button in blogs section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "none";
+      }
+    } else if (section === "main") {
+      // Show Save All button in main section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "inline-flex";
+      }
+    } else if (section === "about") {
+      // Show Save All button in about section
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "inline-flex";
+      }
+    } else {
+      // Hide Save All button in other sections (settings)
+      const saveAllBtn = document.getElementById("saveAllBtn");
+      if (saveAllBtn) {
+        saveAllBtn.style.display = "none";
+      }
     }
   }
 
@@ -481,9 +541,6 @@ class AdminPanel {
             : ""
         }
 
-        <div class="product-price-modern">₹${this.formatPrice(
-          product.min_price
-        )} - ₹${this.formatPrice(product.max_price)}</div>
 
         <!-- Delete Button -->
         <div class="product-button-container">
@@ -1526,10 +1583,15 @@ AdminPanel.prototype.createCertificationElement = function (certification) {
 };
 
 AdminPanel.prototype.showCertificationModal = function (certification = null) {
+  console.log("showCertificationModal called");
   this.currentEditingCertification = certification;
   const modal = document.getElementById("certificationModal");
   const modalTitle = document.getElementById("certificationModalTitle");
   const form = document.getElementById("certificationForm");
+
+  console.log("Modal element:", modal);
+  console.log("Modal title element:", modalTitle);
+  console.log("Form element:", form);
 
   if (!modal) {
     console.error("Certification modal not found!");
@@ -1548,8 +1610,10 @@ AdminPanel.prototype.showCertificationModal = function (certification = null) {
     form.reset();
   }
 
+  console.log("Adding show class to modal");
   modal.classList.add("show");
   document.body.style.overflow = "hidden";
+  console.log("Modal should now be visible");
 };
 
 AdminPanel.prototype.hideCertificationModal = function () {

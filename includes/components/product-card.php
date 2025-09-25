@@ -58,14 +58,14 @@ function renderProductCard($config = []) {
             // Always show placeholder first, then try to load image
             $imageSrc = '';
             if (!empty($card['image_url'])) {
-                $imageSrc = $card['image_url'];
+                $imageSrc = (string) $card['image_url'];
                 // Always prefix with a forward slash if it's not a full URL
-                if (!filter_var($imageSrc, FILTER_VALIDATE_URL)) {
+                /*if (!filter_var($imageSrc, FILTER_VALIDATE_URL)) {
                     // Ensure a single leading slash
-                    if ($imageSrc[0] !== '/') {
+                    if (strlen($imageSrc) > 0 && $imageSrc[0] !== '/') {
                         $imageSrc = '/' . ltrim($imageSrc, './');
                     }
-                }
+                }*/
             }            
             ?>
             
@@ -82,9 +82,7 @@ function renderProductCard($config = []) {
                     src="<?php echo htmlspecialchars($imageSrc); ?>"
                     alt="<?php echo htmlspecialchars($card['title']); ?>"
                     class="product-img-modern"
-                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; display: block; background: red;"
-                    onerror="console.log('Image failed to load:', '<?php echo htmlspecialchars($imageSrc); ?>'); this.style.display='none'; this.parentElement.querySelector('.product-placeholder-modern').style.display='flex';"
-                    onload="console.log('Image loaded successfully:', '<?php echo htmlspecialchars($imageSrc); ?>'); this.style.display='block'; this.parentElement.querySelector('.product-placeholder-modern').style.display='none';"
+                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; display: block; background: red;"                    
                 />
             <?php endif; ?>
             
@@ -242,7 +240,7 @@ class ProductCardPresets {
             'button_text' => 'Delete',
             'button_action' => 'delete',
             'image_class' => $category . '-bg',
-            'show_price' => true,
+            'show_price' => false,
             'show_edit' => false,
             'show_delete' => true,
             'admin_mode' => true

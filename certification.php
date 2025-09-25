@@ -35,7 +35,7 @@
                         <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
                             <?php if (!empty($certification['image_path'])): ?>
                                 <div style="width: 100%; height: 200px; border-radius: 10px; margin-bottom: 1rem; overflow: hidden;">
-                                    <img src="<?php echo htmlspecialchars($certification['image_path']); ?>" 
+                                    <img src="uploads/<?php echo htmlspecialchars($certification['image_path']); ?>" 
                                          alt="<?php echo htmlspecialchars($certification['title']); ?>" 
                                          style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>

@@ -84,11 +84,6 @@ try {
         <main class="main-content">
             <div class="content-header">
                 <h1 id="page-title">Main Page Management</h1>
-                <div class="header-actions">
-                    <button class="btn btn-success" id="saveAllBtn">
-                        <i class="fas fa-save"></i> Save All
-                    </button>
-                </div>
             </div>
 
             <!-- Main Page Section -->
@@ -155,6 +150,15 @@ try {
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <!-- Save All Button for Main Section -->
+                <div class="section-card">
+                    <div class="form-actions" style="justify-content: center; margin-top: 2rem;">
+                        <button class="btn btn-success" id="saveAllBtn">
+                            <i class="fas fa-save"></i> Save All Changes
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -242,6 +246,15 @@ try {
                             </div>
                         </div>
                     </form>
+                </div>
+
+                <!-- Save All Button for About Section -->
+                <div class="section-card">
+                    <div class="form-actions" style="justify-content: center; margin-top: 2rem;">
+                        <button class="btn btn-success" id="saveAllBtn">
+                            <i class="fas fa-save"></i> Save All Changes
+                        </button>
+                    </div>
                 </div>
             </section>
 

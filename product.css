@@ -1006,11 +1006,12 @@ body {
 }
 
 .product-btn-modern.product-btn-delete {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
 }
 
 .product-btn-modern.product-btn-delete:hover {
-  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
 }
 
 /* Responsive adjustments for modern cards */
