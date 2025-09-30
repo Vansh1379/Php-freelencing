@@ -82,7 +82,7 @@ function renderProductCard($config = []) {
                     src="<?php echo htmlspecialchars($imageSrc); ?>"
                     alt="<?php echo htmlspecialchars($card['title']); ?>"
                     class="product-img-modern"
-                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; display: block; background: red;"                    
+                    style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 2; display: block; ;"                    
                 />
             <?php endif; ?>
             

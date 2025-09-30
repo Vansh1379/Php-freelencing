@@ -1895,16 +1895,70 @@ AdminPanel.prototype.hideLatestWorkModal = function () {
 };
 
 AdminPanel.prototype.saveLatestWork = async function () {
+  console.log("=== SAVE LATEST WORK CALLED ===");
+
   const form = document.getElementById("latestWorkForm");
+  if (!form) {
+    console.error("Latest work form not found");
+    alert("Latest work form not found");
+    return;
+  }
+
   const formData = new FormData(form);
 
+  // Get form values directly from inputs as fallback
+  const titleInput = document.getElementById("latestWorkTitle");
+  const descriptionInput = document.getElementById("latestWorkDescription");
+  const categoryInput = document.getElementById("latestWorkCategory");
+  const locationInput = document.getElementById("latestWorkLocation");
+  const dateInput = document.getElementById("latestWorkDate");
+
+  const title =
+    formData.get("latestWorkTitle") || (titleInput ? titleInput.value : "");
+  const description =
+    formData.get("latestWorkDescription") ||
+    (descriptionInput ? descriptionInput.value : "");
+  const category =
+    formData.get("latestWorkCategory") ||
+    (categoryInput ? categoryInput.value : "");
+  const location =
+    formData.get("latestWorkLocation") ||
+    (locationInput ? locationInput.value : "");
+  const projectDate =
+    formData.get("latestWorkDate") || (dateInput ? dateInput.value : "");
+
+  console.log("=== FORM VALUES DEBUG ===");
+  console.log("Title:", title);
+  console.log("Description:", description);
+  console.log("Category:", category);
+  console.log("Location:", location);
+  console.log("Date:", projectDate);
+  console.log("=== END FORM VALUES DEBUG ===");
+
+  // Validate required fields
+  if (!title || title.trim() === "") {
+    console.error("Project title is required");
+    alert("Project title is required");
+    return;
+  }
+
+  if (!description || description.trim() === "") {
+    console.error("Project description is required");
+    alert("Project description is required");
+    return;
+  }
+
   const workData = {
-    title: formData.get("latestWorkTitle").trim(),
-    description: formData.get("latestWorkDescription").trim(),
-    category: formData.get("latestWorkCategory").trim(),
-    location: formData.get("latestWorkLocation").trim(),
-    project_date: formData.get("latestWorkDate"),
+    title: title.trim(),
+    description: description.trim(),
+    category: category.trim(),
+    location: location.trim(),
+    project_date: projectDate,
   };
+
+  console.log("=== FINAL WORK DATA ===");
+  console.log("Final data object:", workData);
+  console.log("=== END FINAL DATA ===");
 
   // Handle image upload
   const imageFile = formData.get("latestWorkImage");
@@ -1914,14 +1968,13 @@ AdminPanel.prototype.saveLatestWork = async function () {
       if (uploadResponse.success) {
         workData.image_path = uploadResponse.file_path;
       } else {
-        this.showNotification("Failed to upload image", "error");
+        console.error("Failed to upload image");
+        alert("Failed to upload image");
         return;
       }
     } catch (error) {
-      this.showNotification(
-        "Failed to upload image: " + error.message,
-        "error"
-      );
+      console.error("Failed to upload image: " + error.message);
+      alert("Failed to upload image: " + error.message);
       return;
     }
   }
@@ -1930,19 +1983,21 @@ AdminPanel.prototype.saveLatestWork = async function () {
     if (this.currentEditingLatestWork) {
       // Update existing work
       workData.id = this.currentEditingLatestWork.id;
-      await this.apiRequest("update_latest_work", workData);
-      this.showNotification("Project updated successfully", "success");
+      await this.apiRequest("update_latest_work", workData, "POST");
+      console.log("Project updated successfully");
+      alert("Project updated successfully");
     } else {
       // Add new work
-      await this.apiRequest("add_latest_work", workData);
-      this.showNotification("Project added successfully", "success");
+      await this.apiRequest("add_latest_work", workData, "POST");
+      console.log("Project added successfully");
+      alert("Project added successfully");
     }
 
     this.hideLatestWorkModal();
     this.generateLatestWorkGrid();
   } catch (error) {
-    this.showNotification("Failed to save project", "error");
-    console.error("Error saving project:", error);
+    console.error("Failed to save project:", error);
+    alert("Failed to save project: " + error.message);
   }
 };
 
@@ -2095,17 +2150,79 @@ AdminPanel.prototype.hideBlogModal = function () {
 };
 
 AdminPanel.prototype.saveBlog = async function () {
+  console.log("=== SAVE BLOG CALLED ===");
+
   const form = document.getElementById("blogForm");
+  if (!form) {
+    console.error("Blog form not found");
+    alert("Blog form not found");
+    return;
+  }
+
   const formData = new FormData(form);
 
+  // Get form values directly from inputs as fallback
+  const titleInput = document.getElementById("blogTitle");
+  const descriptionInput = document.getElementById("blogDescription");
+  const categoryInput = document.getElementById("blogCategory");
+  const authorInput = document.getElementById("blogAuthor");
+  const dateInput = document.getElementById("blogPublishDate");
+  const contentInput = document.getElementById("blogContent");
+
+  const title =
+    formData.get("blogTitle") || (titleInput ? titleInput.value : "");
+  const description =
+    formData.get("blogDescription") ||
+    (descriptionInput ? descriptionInput.value : "");
+  const category =
+    formData.get("blogCategory") || (categoryInput ? categoryInput.value : "");
+  const author =
+    formData.get("blogAuthor") || (authorInput ? authorInput.value : "");
+  const publishDate =
+    formData.get("blogPublishDate") || (dateInput ? dateInput.value : "");
+  const content =
+    formData.get("blogContent") || (contentInput ? contentInput.value : "");
+
+  console.log("=== FORM VALUES DEBUG ===");
+  console.log("Title:", title);
+  console.log("Description:", description);
+  console.log("Category:", category);
+  console.log("Author:", author);
+  console.log("Publish Date:", publishDate);
+  console.log("Content:", content);
+  console.log("=== END FORM VALUES DEBUG ===");
+
+  // Validate required fields
+  if (!title || title.trim() === "") {
+    console.error("Blog title is required");
+    alert("Blog title is required");
+    return;
+  }
+
+  if (!description || description.trim() === "") {
+    console.error("Blog description is required");
+    alert("Blog description is required");
+    return;
+  }
+
+  if (!content || content.trim() === "") {
+    console.error("Blog content is required");
+    alert("Blog content is required");
+    return;
+  }
+
   const blogData = {
-    title: formData.get("blogTitle").trim(),
-    description: formData.get("blogDescription").trim(),
-    category: formData.get("blogCategory").trim(),
-    author: formData.get("blogAuthor").trim(),
-    publish_date: formData.get("blogPublishDate"),
-    content: formData.get("blogContent").trim(),
+    title: title.trim(),
+    description: description.trim(),
+    category: category.trim(),
+    author: author.trim(),
+    publish_date: publishDate,
+    content: content.trim(),
   };
+
+  console.log("=== FINAL BLOG DATA ===");
+  console.log("Final data object:", blogData);
+  console.log("=== END FINAL DATA ===");
 
   // Handle image upload
   const imageFile = formData.get("blogImage");
@@ -2115,14 +2232,13 @@ AdminPanel.prototype.saveBlog = async function () {
       if (uploadResponse.success) {
         blogData.image_path = uploadResponse.file_path;
       } else {
-        this.showNotification("Failed to upload image", "error");
+        console.error("Failed to upload image");
+        alert("Failed to upload image");
         return;
       }
     } catch (error) {
-      this.showNotification(
-        "Failed to upload image: " + error.message,
-        "error"
-      );
+      console.error("Failed to upload image: " + error.message);
+      alert("Failed to upload image: " + error.message);
       return;
     }
   }
@@ -2131,19 +2247,21 @@ AdminPanel.prototype.saveBlog = async function () {
     if (this.currentEditingBlog) {
       // Update existing blog
       blogData.id = this.currentEditingBlog.id;
-      await this.apiRequest("update_blog", blogData);
-      this.showNotification("Blog updated successfully", "success");
+      await this.apiRequest("update_blog", blogData, "POST");
+      console.log("Blog updated successfully");
+      alert("Blog updated successfully");
     } else {
       // Add new blog
-      await this.apiRequest("add_blog", blogData);
-      this.showNotification("Blog added successfully", "success");
+      await this.apiRequest("add_blog", blogData, "POST");
+      console.log("Blog added successfully");
+      alert("Blog added successfully");
     }
 
     this.hideBlogModal();
     this.generateBlogsGrid();
   } catch (error) {
-    this.showNotification("Failed to save blog", "error");
-    console.error("Error saving blog:", error);
+    console.error("Failed to save blog:", error);
+    alert("Failed to save blog: " + error.message);
   }
 };
 
