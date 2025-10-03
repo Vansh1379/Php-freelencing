@@ -34,7 +34,7 @@
                         <div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s;">
                             <?php if (!empty($project['image_path'])): ?>
                                 <div style="height: 250px; overflow: hidden;">
-                                    <img src="<?php echo htmlspecialchars($project['image_path']); ?>" 
+                                    <img src="<?php echo BASE_URL .$project['image_path']; ?>" 
                                          alt="<?php echo htmlspecialchars($project['title']); ?>" 
                                          style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
