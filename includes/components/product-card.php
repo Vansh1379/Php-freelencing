@@ -58,7 +58,7 @@ function renderProductCard($config = []) {
             // Always show placeholder first, then try to load image
             $imageSrc = '';
             if (!empty($card['image_url'])) {
-                $imageSrc = (string) $card['image_url'];
+                $imageSrc = $card['image_url'];
                 // Always prefix with a forward slash if it's not a full URL
                 /*if (!filter_var($imageSrc, FILTER_VALIDATE_URL)) {
                     // Ensure a single leading slash
@@ -75,9 +75,9 @@ function renderProductCard($config = []) {
             
             <?php if (!empty($imageSrc)): ?>
                 <!-- Debug: Show image URL -->
-                <div style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; font-size: 10px; z-index: 10;">
-                    <?php echo htmlspecialchars($imageSrc); ?>
-                </div>
+                <!-- <div style="position: absolute; top: 5px; left: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; font-size: 10px; z-index: 10;">
+                    <?php // echo htmlspecialchars($imageSrc); ?>
+                </div> -->
                 <img
                     src="<?php echo htmlspecialchars($imageSrc); ?>"
                     alt="<?php echo htmlspecialchars($card['title']); ?>"

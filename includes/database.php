@@ -10,7 +10,7 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 define('DB_NAME', 'mena');
 define('DB_SOCKET', '/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock');
-
+define('BASE_URL', 'http://localhost/mena/');
 // Database Connection Class
 class Database {
     private static $instance = null;

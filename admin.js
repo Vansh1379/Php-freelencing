@@ -211,6 +211,9 @@ class AdminPanel {
       if (saveAllBtn) {
         saveAllBtn.style.display = "inline-flex";
       }
+
+      // Load hero section and statistics data when clicking on Main Page
+      this.loadMainPageData();
     } else if (section === "about") {
       // Show Save All button in about section
       const saveAllBtn = document.getElementById("saveAllBtn");
@@ -1003,6 +1006,76 @@ class AdminPanel {
   }
 
   collectAllFormData() {
+    // Collect statistics data from the main page form
+    const statistics = [];
+
+    // Get the first 3 statistics from the form
+    const stat1Value =
+      document.querySelector('input[name="stat1Value"]')?.value || "";
+    const stat1Label =
+      document.querySelector('input[name="stat1Label"]')?.value || "";
+    const stat2Value =
+      document.querySelector('input[name="stat2Value"]')?.value || "";
+    const stat2Label =
+      document.querySelector('input[name="stat2Label"]')?.value || "";
+    const stat3Value =
+      document.querySelector('input[name="stat3Value"]')?.value || "";
+    const stat3Label =
+      document.querySelector('input[name="stat3Label"]')?.value || "";
+
+    // Get the stored statistics data from when we loaded the page
+    const storedStats = this.loadedStatistics || [];
+
+    // Add statistics if they have values
+    if (stat1Value && stat1Label) {
+      const existingStat = storedStats.find(
+        (stat) => stat.stat_key === "years_experience"
+      );
+      statistics.push({
+        id: existingStat?.id || null,
+        stat_key: "years_experience",
+        stat_value: stat1Value,
+        stat_label: stat1Label,
+        icon: "🏆",
+        sort_order: 1,
+        is_active: 1,
+      });
+    }
+
+    if (stat2Value && stat2Label) {
+      const existingStat = storedStats.find(
+        (stat) =>
+          stat.stat_key === "total_projects" ||
+          stat.stat_key === "projects_completed"
+      );
+      statistics.push({
+        id: existingStat?.id || null,
+        stat_key: "total_projects",
+        stat_value: stat2Value,
+        stat_label: stat2Label,
+        icon: "📈",
+        sort_order: 2,
+        is_active: 1,
+      });
+    }
+
+    if (stat3Value && stat3Label) {
+      const existingStat = storedStats.find(
+        (stat) =>
+          stat.stat_key === "quality_certification" ||
+          stat.stat_key === "iso_certification"
+      );
+      statistics.push({
+        id: existingStat?.id || null,
+        stat_key: "quality_certification",
+        stat_value: stat3Value,
+        stat_label: stat3Label,
+        icon: "🛡️",
+        sort_order: 3,
+        is_active: 1,
+      });
+    }
+
     return {
       hero: {
         title: document.getElementById("heroTitle").value,
@@ -1024,6 +1097,7 @@ class AdminPanel {
         contactEmail: document.getElementById("contactEmail").value,
         contactPhone: document.getElementById("contactPhone").value,
       },
+      statistics: statistics,
     };
   }
 
@@ -1184,6 +1258,250 @@ class AdminPanel {
       clearTimeout(timeout);
       timeout = setTimeout(later, wait);
     };
+  }
+
+  // Load main page data (hero section and statistics)
+  async loadMainPageData() {
+    console.log("🔄 Loading Main Page Data...");
+    console.log("⏰ Timestamp:", new Date().toISOString());
+
+    try {
+      // Load hero section data
+      console.log("📡 Fetching hero section data from API...");
+      console.log("🌐 API Endpoint: admin-api.php?action=get_hero");
+
+      const heroResponse = await this.apiRequest("get_hero");
+      console.log("✅ Hero Section API Response:", heroResponse);
+
+      if (heroResponse && heroResponse.data) {
+        console.log("📊 Hero Section Database Rows:", heroResponse.data);
+        console.log("📝 Hero Section Details:");
+        console.log("   - Title:", heroResponse.data.title);
+        console.log("   - Description:", heroResponse.data.description);
+        console.log("   - Button 1 Text:", heroResponse.data.button1_text);
+        console.log("   - Button 1 Link:", heroResponse.data.button1_link);
+        console.log("   - Button 2 Text:", heroResponse.data.button2_text);
+        console.log("   - Button 2 Link:", heroResponse.data.button2_link);
+        console.log(
+          "   - Background Image:",
+          heroResponse.data.background_image
+        );
+        console.log("   - Is Active:", heroResponse.data.is_active);
+        console.log("   - Created At:", heroResponse.data.created_at);
+        console.log("   - Updated At:", heroResponse.data.updated_at);
+
+        // Populate the form fields with the API data
+        console.log("🔄 Populating form fields with hero section data...");
+
+        // Populate hero title
+        const heroTitleField = document.getElementById("heroTitle");
+        if (heroTitleField) {
+          heroTitleField.value = heroResponse.data.title || "";
+          console.log(
+            "✅ Hero title field populated:",
+            heroResponse.data.title
+          );
+        }
+
+        // Populate hero description
+        const heroDescriptionField = document.getElementById("heroDescription");
+        if (heroDescriptionField) {
+          heroDescriptionField.value = heroResponse.data.description || "";
+          console.log(
+            "✅ Hero description field populated:",
+            heroResponse.data.description
+          );
+        }
+
+        // Populate hero button 1 text
+        const heroButton1Field = document.getElementById("heroButton1");
+        if (heroButton1Field) {
+          heroButton1Field.value = heroResponse.data.button1_text || "";
+          console.log(
+            "✅ Hero button 1 field populated:",
+            heroResponse.data.button1_text
+          );
+        }
+
+        // Populate hero button 2 text
+        const heroButton2Field = document.getElementById("heroButton2");
+        if (heroButton2Field) {
+          heroButton2Field.value = heroResponse.data.button2_text || "";
+          console.log(
+            "✅ Hero button 2 field populated:",
+            heroResponse.data.button2_text
+          );
+        }
+
+        // Populate hero background image (if there's a field for it)
+        const heroImageField = document.getElementById("heroImage");
+        if (heroImageField && heroResponse.data.background_image) {
+          // Note: For file inputs, we can't set the value directly
+          // We can show the current image path in the placeholder or a separate display
+          console.log(
+            "ℹ️ Background image available:",
+            heroResponse.data.background_image
+          );
+          console.log(
+            "ℹ️ Note: File input fields cannot be populated programmatically for security reasons"
+          );
+        }
+
+        console.log("✅ All hero section form fields have been populated!");
+      } else {
+        console.warn("⚠️ No hero section data found in response");
+      }
+
+      // Load statistics data
+      console.log("📡 Fetching statistics data from API...");
+      console.log("🌐 API Endpoint: admin-api.php?action=get_statistics");
+
+      const statsResponse = await this.apiRequest("get_statistics");
+      console.log("✅ Statistics API Response:", statsResponse);
+
+      if (statsResponse && statsResponse.data) {
+        console.log("📊 Statistics Database Rows:", statsResponse.data);
+        console.log(
+          "📈 Total Number of Statistics:",
+          statsResponse.data.length
+        );
+
+        // Log each statistic row with detailed information
+        console.log("📋 Statistics Details:");
+        statsResponse.data.forEach((stat, index) => {
+          console.log(`   Stat ${index + 1}:`, {
+            id: stat.id,
+            key: stat.stat_key,
+            value: stat.stat_value,
+            label: stat.stat_label,
+            icon: stat.icon,
+            sort_order: stat.sort_order,
+            is_active: stat.is_active,
+            created_at: stat.created_at,
+            updated_at: stat.updated_at,
+          });
+        });
+
+        // Summary of statistics
+        console.log("📊 Statistics Summary:");
+        console.log(
+          "   - Active Statistics:",
+          statsResponse.data.filter((s) => s.is_active).length
+        );
+        console.log(
+          "   - Inactive Statistics:",
+          statsResponse.data.filter((s) => !s.is_active).length
+        );
+        console.log(
+          "   - Statistics with Icons:",
+          statsResponse.data.filter((s) => s.icon).length
+        );
+
+        // Populate the statistics form fields with the API data
+        console.log("🔄 Populating statistics form fields with API data...");
+
+        // Get the statistics form fields
+        const stat1ValueField = document.querySelector(
+          'input[name="stat1Value"]'
+        );
+        const stat1LabelField = document.querySelector(
+          'input[name="stat1Label"]'
+        );
+        const stat2ValueField = document.querySelector(
+          'input[name="stat2Value"]'
+        );
+        const stat2LabelField = document.querySelector(
+          'input[name="stat2Label"]'
+        );
+        const stat3ValueField = document.querySelector(
+          'input[name="stat3Value"]'
+        );
+        const stat3LabelField = document.querySelector(
+          'input[name="stat3Label"]'
+        );
+
+        // Find specific statistics by their keys
+        const yearsExperience = statsResponse.data.find(
+          (stat) => stat.stat_key === "years_experience"
+        );
+        const projectsCompleted = statsResponse.data.find(
+          (stat) =>
+            stat.stat_key === "total_projects" ||
+            stat.stat_key === "projects_completed"
+        );
+        const qualityCertification = statsResponse.data.find(
+          (stat) =>
+            stat.stat_key === "quality_certification" ||
+            stat.stat_key === "iso_certification"
+        );
+
+        console.log("🔍 Found specific statistics:");
+        console.log("   - Years Experience:", yearsExperience);
+        console.log("   - Projects Completed:", projectsCompleted);
+        console.log("   - Quality Certification:", qualityCertification);
+
+        // Populate Stat 1: Years of Experience
+        if (yearsExperience && stat1ValueField && stat1LabelField) {
+          stat1ValueField.value = yearsExperience.stat_value || "";
+          stat1LabelField.value = yearsExperience.stat_label || "";
+          console.log("✅ Stat 1 (Years Experience) populated:", {
+            value: yearsExperience.stat_value,
+            label: yearsExperience.stat_label,
+          });
+        }
+
+        // Populate Stat 2: Projects Completed
+        if (projectsCompleted && stat2ValueField && stat2LabelField) {
+          stat2ValueField.value = projectsCompleted.stat_value || "";
+          stat2LabelField.value = projectsCompleted.stat_label || "";
+          console.log("✅ Stat 2 (Projects Completed) populated:", {
+            value: projectsCompleted.stat_value,
+            label: projectsCompleted.stat_label,
+          });
+        }
+
+        // Populate Stat 3: Quality Certification
+        if (qualityCertification && stat3ValueField && stat3LabelField) {
+          stat3ValueField.value = qualityCertification.stat_value || "";
+          stat3LabelField.value = qualityCertification.stat_label || "";
+          console.log("✅ Stat 3 (Quality Certification) populated:", {
+            value: qualityCertification.stat_value,
+            label: qualityCertification.stat_label,
+          });
+        }
+
+        console.log(
+          "✅ All statistics form fields have been populated with specific data!"
+        );
+
+        // Store the loaded statistics data for later use when saving
+        this.loadedStatistics = statsResponse.data;
+        console.log(
+          "💾 Statistics data stored for saving:",
+          this.loadedStatistics
+        );
+      } else {
+        console.warn("⚠️ No statistics data found in response");
+      }
+
+      // Show success toast
+      this.showToast(
+        "Main page data loaded and form fields populated successfully!",
+        "success"
+      );
+      console.log("✅ Main page data loading completed successfully!");
+    } catch (error) {
+      console.error("❌ Failed to load main page data:", error);
+      console.error("🔍 Error Details:", {
+        message: error.message,
+        stack: error.stack,
+        timestamp: new Date().toISOString(),
+      });
+      this.showToast(
+        "Failed to load main page data: " + error.message,
+        "error"
+      );
+    }
   }
 }
 
@@ -1423,6 +1741,19 @@ AdminPanel.prototype.saveToBackend = async function (data) {
         },
         "POST"
       );
+    }
+
+    // Save statistics data
+    if (data.statistics) {
+      console.log("🔄 Saving statistics data to backend...");
+      await this.apiRequest(
+        "save_statistics",
+        {
+          statistics: data.statistics,
+        },
+        "POST"
+      );
+      console.log("✅ Statistics data saved successfully!");
     }
 
     return true;
