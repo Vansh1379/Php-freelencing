@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - JK Enterprise</title>
+    <title>Products - Mena Play World</title>
     <link rel="stylesheet" href="product.css" />
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -79,7 +79,7 @@
     <!-- Why Choose Us Section -->
     <section class="why-choose">
       <div class="container">
-        <h2>Why Choose JK Enterprise?</h2>
+        <h2>Why Choose Mena Play World?</h2>
         <div class="benefits-grid">
           <div class="benefit-item">
             <div class="benefit-icon">🏆</div>
