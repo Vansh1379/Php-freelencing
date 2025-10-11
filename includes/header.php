@@ -55,10 +55,6 @@ $show_header_top = shouldShowHeaderTop();
     <nav>
         <div class="brand">
             <img src="<?php echo LOGO_PATH; ?>" alt="logo" class="logo" />
-            <div class="title">
-                <div class="main"><?php echo SITE_NAME; ?></div>
-                <div class="sub"><?php echo SITE_TAGLINE; ?></div>
-            </div>
         </div>
         <ul class="nav-links">
             <?php
