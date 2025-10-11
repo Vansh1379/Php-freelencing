@@ -77,8 +77,8 @@ try {
             'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India',
             '+91 9773698785',
             '+91 9560243588',
-            'contact.jkenterprise@gmail.com',
-            'jkenterprise1999@gmail.com'
+            'contact.Mena@gmail.com',
+            'mena@gmail.com'
         ]
     );
     echo "<div class='success'>Company information updated</div></div>\n";
@@ -90,8 +90,8 @@ try {
         ['site_name', 'Mena Play World', 'text'],
         ['site_tagline', 'Creating Dreams, Building Playgrounds', 'text'],
         ['site_description', 'Leading manufacturer of premium playground equipment in India. We specialize in creating safe, fun, and engaging play spaces for children with ISO-certified quality standards.', 'textarea'],
-        ['company_name', 'JK Enterprise', 'text'],
-        ['contact_email', 'contact.jkenterprise@gmail.com', 'email'],
+        ['company_name', 'Mena Play World', 'text'],
+        ['contact_email', 'contact.mena@gmail.com', 'email'],
         ['contact_phone', '+91 9773698785', 'phone'],
         ['contact_phone_alt', '+91 9560243588', 'phone'],
         ['business_hours', 'Monday - Saturday: 9:00 AM - 6:00 PM, Sunday: Closed', 'text'],

@@ -386,7 +386,7 @@ function handleGetCompany() {
                 'address' => '',
                 'phone' => '+91 9773698785',
                 'phone_alt' => '+91 9560243588',
-                'email' => 'contact.jkenterprise@gmail.com',
+                'email' => 'contact.mena@gmail.com',
                 'email_alt' => ''
             ];
         }

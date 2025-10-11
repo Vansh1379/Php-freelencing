@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JK Enterprise - Premium Playground Equipment</title>
+    <title>Mena Play World</title>
     <link rel="stylesheet" href="product.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -333,7 +333,7 @@
               <div>
                 <strong>Email</strong><br />
                 <?php 
-                $email = !empty($companyInfo["email"]) ? $companyInfo["email"] : "contact.jkenterprise@gmail.com";
+                $email = !empty($companyInfo["email"]) ? $companyInfo["email"] : "contact.Mena@gmail.com";
                 echo htmlspecialchars($email);
                 ?><br />
                 <?php 

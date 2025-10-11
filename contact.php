@@ -83,8 +83,8 @@
                                 <div class="contact-info-content">
                                     <h4>Email Address</h4>
                                     <p>
-                                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>">
-                                            <?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>
+                                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.mena@gmail.com'); ?>">
+                                            <?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.mena@gmail.com'); ?>
                                         </a>
                                         <?php if (!empty($companyInfo['email_alt'])): ?>
                                         <br />
@@ -333,7 +333,7 @@
                         <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['phone'] ?? '+91 9773698785'); ?>" class="btn-primary">
                             Call Now
                         </a>
-                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.jkenterprise@gmail.com'); ?>" class="btn-secondary">
+                        <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'contact.mena@gmail.com'); ?>" class="btn-secondary">
                             Email Us
                         </a>
                     </div>

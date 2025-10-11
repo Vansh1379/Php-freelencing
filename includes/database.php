@@ -320,8 +320,8 @@ function insertDefaultData() {
     $defaultSettings = [
         ['site_name', 'Mena Play World', 'text'],
         ['site_tagline', 'Solution Equipment', 'text'],
-        ['company_name', 'JK Enterprise', 'text'],
-        ['contact_email', 'contact.jkenterprise@gmail.com', 'email'],
+        ['company_name', 'Mena', 'text'],
+        ['contact_email', 'contact.Mena@gmail.com', 'email'],
         ['contact_phone', '+91 9773698785', 'phone'],
         ['contact_phone_alt', '+91 9560243588', 'phone'],
         ['company_address', 'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India', 'textarea'],
@@ -359,7 +359,7 @@ function insertDefaultData() {
         'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India',
         '+91 9773698785',
         '+91 9560243588',
-        'contact.jkenterprise@gmail.com'
+        'contact.Mena@gmail.com'
     ]);
 
     // Default navigation menu

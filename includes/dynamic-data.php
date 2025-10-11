@@ -226,7 +226,7 @@ function getCompanyInfo() {
                 'address' => 'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India',
                 'phone' => '+91 9773698785',
                 'phone_alt' => '+91 9560243588',
-                'email' => 'contact.jkenterprise@gmail.com',
+                'email' => 'contact.Mena@gmail.com',
                 'email_alt' => ''
             ];
         }
@@ -240,7 +240,7 @@ function getCompanyInfo() {
             'address' => 'Shop no.68/4, Gali no.6, 4/6-Ambedkar Colony, Lal Bagh, Sec 7, Guj Ghaziabad, U.P - 201008, India',
             'phone' => '+91 9773698785',
             'phone_alt' => '+91 9560243588',
-            'email' => 'contact.jkenterprise@gmail.com'
+            'email' => 'contact.Mena@gmail.com'
         ];
     }
 }

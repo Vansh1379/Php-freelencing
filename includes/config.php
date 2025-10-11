@@ -7,10 +7,10 @@
 // Website Information
 define('SITE_NAME', 'Mena Play World');
 define('SITE_TAGLINE', 'Solution Equipment');
-define('COMPANY_NAME', 'JK Enterprise');
+define('COMPANY_NAME', 'Mena Play World');
 
 // Contact Information
-define('CONTACT_EMAIL', 'contact.jkenterprise@gmail.com');
+define('CONTACT_EMAIL', 'contact.Mena@gmail.com');
 define('CONTACT_PHONE', '+91 9773698785');
 define('CONTACT_PHONE_ALT', '+91 9560243588');
 
@@ -35,7 +35,7 @@ $navigation_menu = [
 $page_settings = [
     'index' => [
         'show_header_top' => true,
-        'page_title' => 'JK Enterprise - Premium Playground Equipment',
+        'page_title' => 'Mena Play World',
         'meta_description' => 'Premium playground equipment manufacturer in India. Creating safe, fun, and engaging play spaces for children.'
     ],
     'about' => [
@@ -45,7 +45,7 @@ $page_settings = [
     ],
     'products' => [
         'show_header_top' => true,
-        'page_title' => 'Products - JK Enterprise',
+        'page_title' => 'Products - Mena Play World',
         'meta_description' => 'Discover our comprehensive range of playground and fitness equipment designed for all ages.'
     ],
     'certification' => [
