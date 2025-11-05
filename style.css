@@ -140,6 +140,16 @@ nav {
   position: relative;
 }
 
+.nav-dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+  background: transparent;
+}
+
 .nav-dropdown > a {
   display: flex;
   align-items: center;
@@ -164,10 +174,13 @@ nav {
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   padding: 0.75rem 0;
   min-width: 220px;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   list-style: none;
   z-index: 1001;
   animation: dropdownFadeIn 0.3s ease-out;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
 @keyframes dropdownFadeIn {
@@ -181,8 +194,13 @@ nav {
   }
 }
 
-.nav-dropdown:hover .dropdown-menu {
+.nav-dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
   display: block;
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s linear 0s;
 }
 
 .dropdown-menu li {
