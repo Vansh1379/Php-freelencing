@@ -21,20 +21,20 @@
             for all ages.
           </p>
 
-          <!-- Filter Buttons -->
+          <!-- Filter Buttons / Category Links -->
           <div class="filter-buttons">
             <button class="filter-btn active" data-category="all">
               All Products
             </button>
-            <button class="filter-btn" data-category="playground">
+            <a href="playground-equipment.php" class="filter-btn" style="display: inline-flex; align-items: center; text-decoration: none;">
               Playground Equipment
-            </button>
-            <button class="filter-btn" data-category="outdoor">
+            </a>
+            <a href="outdoor-gym.php" class="filter-btn" style="display: inline-flex; align-items: center; text-decoration: none;">
               Outdoor Gym
-            </button>
-            <button class="filter-btn" data-category="indoor">
+            </a>
+            <a href="indoor-gym.php" class="filter-btn" style="display: inline-flex; align-items: center; text-decoration: none;">
               Indoor Solutions
-            </button>
+            </a>
           </div>
         </div>
 
