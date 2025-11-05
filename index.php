@@ -306,32 +306,78 @@
       </div>
     </section>
 
-    <!-- Products Section -->
+    <!-- Products Section - Modern Design -->
     <section class="products-main" id="products">
-      <div class="products-container">
-        <div class="products-header">
-          <h1>Our Product Range</h1>
-          <p>
+      <div class="products-container-modern">
+        <!-- Section Header -->
+        <div class="products-header-modern">
+          <div class="section-badge">Our Products</div>
+          <h2>Explore Our <span class="highlight">Product Range</span></h2>
+          <p class="products-subtitle">
             Discover our comprehensive range of playground and fitness equipment,
             designed to create safe, fun, and engaging environments for all ages.
           </p>
         </div>
 
-        <div class="product-grid">
+        <!-- Products Grid -->
+        <div class="product-grid-modern">
           <?php
           // Include the product card component
           include "includes/components/product-card.php";
 
           if (!empty($homeProducts)) {
               // Use dynamic products from database
-              foreach ($homeProducts as $product) {
+              foreach ($homeProducts as $index => $product) {
                   $productCard = convertProductToCard($product);
                   // Modify for index page - change button to redirect to products page
-                  $productCard['button_text'] = 'View More Products';
+                  $productCard['button_text'] = 'View Details';
                   $productCard['button_action'] = 'link';
                   $productCard['button_link'] = 'products.php';
                   $productCard['show_price'] = false; // Remove price display
-                  echo renderProductCard($productCard);
+                  ?>
+                  <div class="modern-product-card" data-index="<?php echo $index; ?>">
+                    <div class="product-image-wrapper">
+                      <?php if (!empty($productCard['badge'])): ?>
+                        <div class="product-badge"><?php echo htmlspecialchars($productCard['badge']); ?></div>
+                      <?php endif; ?>
+                      <div class="product-image" style="background-image: url('<?php echo htmlspecialchars($productCard['image_url']); ?>');">
+                        <div class="product-overlay">
+                          <a href="<?php echo htmlspecialchars($productCard['button_link']); ?>" class="product-quick-view">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <span>View Details</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="product-content">
+                      <div class="product-category"><?php echo htmlspecialchars(ucfirst($productCard['category'])); ?></div>
+                      <h3 class="product-title"><?php echo htmlspecialchars($productCard['title']); ?></h3>
+                      <p class="product-description"><?php echo htmlspecialchars($productCard['description']); ?></p>
+                      <?php if (!empty($productCard['features'])): ?>
+                        <div class="product-features">
+                          <?php foreach (array_slice($productCard['features'], 0, 3) as $feature): ?>
+                            <span class="feature-tag">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                              </svg>
+                              <?php echo htmlspecialchars($feature); ?>
+                            </span>
+                          <?php endforeach; ?>
+                        </div>
+                      <?php endif; ?>
+                      <a href="<?php echo htmlspecialchars($productCard['button_link']); ?>" class="product-cta">
+                        <span>Learn More</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                          <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                  <?php
               }
           } else {
               // Fallback to static products if database is empty
@@ -339,23 +385,62 @@
               include "includes/products-config.php";
               // Check if static products exist and render them
               if (!empty($homePageProducts)) {
-                  foreach (array_slice($homePageProducts, 0, 3) as $product) {
-                      // Modify for index page - change button to redirect to products page
-                      $product['button_text'] = 'View More Products';
-                      $product['button_action'] = 'link';
-                      $product['button_link'] = 'products.php';
-                      echo renderProductCard($product);
+                  foreach (array_slice($homePageProducts, 0, 3) as $index => $product) {
+                      ?>
+                      <div class="modern-product-card" data-index="<?php echo $index; ?>">
+                        <div class="product-image-wrapper">
+                          <?php if (!empty($product['badge'])): ?>
+                            <div class="product-badge"><?php echo htmlspecialchars($product['badge']); ?></div>
+                          <?php endif; ?>
+                          <div class="product-image" style="background-image: url('<?php echo htmlspecialchars($product['image_url']); ?>');">
+                            <div class="product-overlay">
+                              <a href="products.php" class="product-quick-view">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                  <circle cx="11" cy="11" r="8"></circle>
+                                  <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                                <span>View Details</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="product-content">
+                          <div class="product-category"><?php echo htmlspecialchars(ucfirst($product['category'])); ?></div>
+                          <h3 class="product-title"><?php echo htmlspecialchars($product['title']); ?></h3>
+                          <p class="product-description"><?php echo htmlspecialchars($product['description']); ?></p>
+                          <a href="products.php" class="product-cta">
+                            <span>Learn More</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                              <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                      <?php
                   }
               } else {
                   // Ultimate fallback - display message
-                  echo '<div class="no-products-message" style="text-align: center; padding: 40px;">';
+                  echo '<div class="no-products-message">';
+                  echo '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
                   echo "<h3>Products Coming Soon</h3>";
                   echo "<p>We are currently updating our product catalog. Please check back soon or contact us for more information.</p>";
-                  echo '<a href="contact.php" class="btn-primary">Contact Us</a>';
+                  echo '<a href="contact.php" class="btn-primary-modern">Contact Us</a>';
                   echo "</div>";
               }
           }
           ?>
+        </div>
+
+        <!-- View All Products Button -->
+        <div class="products-footer">
+          <a href="products.php" class="view-all-products-btn">
+            <span>View All Products</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
