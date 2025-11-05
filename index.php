@@ -21,6 +21,63 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+      <!-- Hero Background Carousel -->
+      <div class="hero-carousel">
+        <?php
+        // Get dynamic image from backend (first image)
+        $dynamicImage = $heroData['background_image'] ?? '';
+        if (empty($dynamicImage)) {
+            // Try to get from background_images array
+            $heroImages = $heroData['background_images'] ?? [];
+            $dynamicImage = !empty($heroImages) ? $heroImages[0] : 'https://preview--play-gear-revamp.lovable.app/assets/hero-playground-COBMZKoG.jpg';
+        } else {
+            // If it's a JSON array, decode it
+            $decoded = json_decode($dynamicImage, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded) && !empty($decoded)) {
+                $dynamicImage = $decoded[0];
+            }
+        }
+        
+        // Static images (from assets folder)
+        // Add your images to the assets folder and update these paths
+        // Currently using placeholder URLs - replace with 'assets/your-image-1.jpg' etc.
+        $staticImages = [
+            'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', // Static image 1 - replace with 'assets/hero-image-2.jpg'
+            'https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'  // Static image 2 - replace with 'assets/hero-image-3.jpg'
+        ];
+        
+        // Combine: dynamic first, then static images
+        $allImages = array_merge([$dynamicImage], $staticImages);
+        
+        foreach ($allImages as $index => $image): ?>
+          <div class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>" 
+               style="background-image: url('<?php echo htmlspecialchars($image); ?>');">
+          </div>
+        <?php endforeach; ?>
+        
+        <!-- Carousel Navigation Buttons -->
+        <button class="carousel-btn carousel-btn-prev" aria-label="Previous slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="carousel-btn carousel-btn-next" aria-label="Next slide">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+        
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+          <?php foreach ($allImages as $index => $image): ?>
+            <button class="carousel-indicator <?php echo $index === 0 ? 'active' : ''; ?>" 
+                    data-slide="<?php echo $index; ?>"
+                    aria-label="Go to slide <?php echo $index + 1; ?>">
+            </button>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      
       <div class="hero-content">
         <div class="hero-text">
           <h1 class="hero-title">
@@ -410,5 +467,143 @@
     <?php include "includes/footer.php"; ?>
 
     <script src="script.js"></script>
+    
+    <!-- Hero Carousel Script -->
+    <script>
+      // Standalone carousel initialization to ensure it works
+      (function() {
+        console.log("🎬 Hero Carousel: Initializing...");
+        
+        function initCarousel() {
+          const carousel = document.querySelector(".hero-carousel");
+          if (!carousel) {
+            console.warn("⚠️ Hero carousel element not found");
+            return;
+          }
+          
+          const slides = carousel.querySelectorAll(".hero-slide");
+          const indicators = document.querySelectorAll(".carousel-indicator");
+          const prevBtn = document.querySelector(".carousel-btn-prev");
+          const nextBtn = document.querySelector(".carousel-btn-next");
+          
+          console.log("📸 Found", slides.length, "slides");
+          
+          if (slides.length < 2) {
+            console.log("ℹ️ Need at least 2 slides for carousel");
+            return;
+          }
+          
+          let currentIndex = 0;
+          const totalSlides = slides.length;
+          let autoRotateInterval = null;
+          
+          function showSlide(index) {
+            // Update slides
+            slides.forEach((slide, i) => {
+              if (i === index) {
+                slide.classList.add("active");
+              } else {
+                slide.classList.remove("active");
+              }
+            });
+            
+            // Update indicators
+            indicators.forEach((indicator, i) => {
+              if (i === index) {
+                indicator.classList.add("active");
+              } else {
+                indicator.classList.remove("active");
+              }
+            });
+            
+            console.log("✅ Showing slide", index + 1, "of", totalSlides);
+          }
+          
+          function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+          }
+          
+          function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentIndex);
+          }
+          
+          function goToSlide(index) {
+            currentIndex = index;
+            showSlide(currentIndex);
+          }
+          
+          function startAutoRotate() {
+            if (autoRotateInterval) {
+              clearInterval(autoRotateInterval);
+            }
+            autoRotateInterval = setInterval(nextSlide, 5000);
+            console.log("🔄 Auto-rotation started");
+          }
+          
+          function stopAutoRotate() {
+            if (autoRotateInterval) {
+              clearInterval(autoRotateInterval);
+              autoRotateInterval = null;
+              console.log("⏸️ Auto-rotation paused");
+            }
+          }
+          
+          function resetAutoRotate() {
+            stopAutoRotate();
+            setTimeout(startAutoRotate, 10000); // Resume after 10 seconds of inactivity
+          }
+          
+          // Show first slide
+          showSlide(0);
+          
+          // Navigation button events
+          if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+              prevSlide();
+              resetAutoRotate();
+            });
+          }
+          
+          if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+              nextSlide();
+              resetAutoRotate();
+            });
+          }
+          
+          // Indicator button events
+          indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+              goToSlide(index);
+              resetAutoRotate();
+            });
+          });
+          
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+              prevSlide();
+              resetAutoRotate();
+            } else if (e.key === 'ArrowRight') {
+              nextSlide();
+              resetAutoRotate();
+            }
+          });
+          
+          // Start auto-rotation
+          startAutoRotate();
+          console.log("🔄 Carousel initialized with navigation controls");
+        }
+        
+        // Run when page loads
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCarousel);
+        } else {
+          initCarousel();
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeInteractiveEffects();
   initializeParallax();
   initializeLoadingEffects();
+  initializeHeroCarousel();
 });
 
 // ===== SMOOTH SCROLLING =====
@@ -481,6 +482,77 @@ function initializeLoadingEffects() {
 
   // Set initial opacity for smooth load
   document.body.style.opacity = "0";
+}
+
+// ===== HERO CAROUSEL =====
+function initializeHeroCarousel() {
+  const heroCarousel = document.querySelector(".hero-carousel");
+  if (!heroCarousel) {
+    console.warn("Hero carousel not found");
+    return;
+  }
+
+  const slides = heroCarousel.querySelectorAll(".hero-slide");
+  console.log("Hero carousel slides found:", slides.length);
+  
+  if (slides.length <= 1) {
+    console.warn("Not enough slides for carousel:", slides.length);
+    return; // Only run if there are multiple slides
+  }
+
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+  const intervalTime = 5000; // 5 seconds
+  let carouselInterval = null;
+
+  function showSlide(index) {
+    // Remove active class from all slides
+    slides.forEach((slide) => {
+      slide.classList.remove("active");
+    });
+
+    // Add active class to current slide
+    if (slides[index]) {
+      slides[index].classList.add("active");
+      console.log("Showing slide:", index + 1, "of", totalSlides);
+    }
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+  }
+
+  function startCarousel() {
+    if (carouselInterval) {
+      clearInterval(carouselInterval);
+    }
+    carouselInterval = setInterval(nextSlide, intervalTime);
+    console.log("Carousel started - rotating every", intervalTime / 1000, "seconds");
+  }
+
+  function stopCarousel() {
+    if (carouselInterval) {
+      clearInterval(carouselInterval);
+      carouselInterval = null;
+      console.log("Carousel paused");
+    }
+  }
+
+  // Initialize: show first slide
+  showSlide(0);
+
+  // Start auto-rotation - wait a bit for images to load
+  setTimeout(() => {
+    startCarousel();
+  }, 1000);
+
+  // Optional: Pause on hover (commented out to avoid interference)
+  // Uncomment if you want pause on hover functionality
+  /*
+  heroCarousel.addEventListener("mouseenter", stopCarousel);
+  heroCarousel.addEventListener("mouseleave", startCarousel);
+  */
 }
 
 // ===== UTILITY FUNCTIONS =====

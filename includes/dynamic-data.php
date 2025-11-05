@@ -196,6 +196,28 @@ function getHeroData() {
             ];
         }
         
+        // Handle background images - support both single image and JSON array
+        $backgroundImages = [];
+        if (!empty($hero['background_image'])) {
+            // Try to decode as JSON array
+            $decoded = json_decode($hero['background_image'], true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                // It's a JSON array
+                $backgroundImages = $decoded;
+            } else {
+                // It's a single image string
+                $backgroundImages = [$hero['background_image']];
+            }
+        }
+        
+        // If no images, add default fallback
+        if (empty($backgroundImages)) {
+            $backgroundImages = ['https://preview--play-gear-revamp.lovable.app/assets/hero-playground-COBMZKoG.jpg'];
+        }
+        
+        // Add background_images array to hero data
+        $hero['background_images'] = $backgroundImages;
+        
         return $hero;
     } catch (Exception $e) {
         error_log("Error loading hero data from database: " . $e->getMessage());
@@ -205,7 +227,8 @@ function getHeroData() {
             'button1_text' => 'Explore Products',
             'button1_link' => '#products',
             'button2_text' => 'Watch Demo',
-            'button2_link' => '#contact'
+            'button2_link' => '#contact',
+            'background_images' => ['https://preview--play-gear-revamp.lovable.app/assets/hero-playground-COBMZKoG.jpg']
         ];
     }
 }
