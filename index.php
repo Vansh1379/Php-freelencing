@@ -173,70 +173,37 @@
       </div>
     </section>
 
-    <!-- About Section -->
+    <!-- About Section - Modern Design -->
     <section class="about" id="about">
-      <h2>About <span class="highlight"><?php echo htmlspecialchars(
-          $companyInfo["company_name"] ?? "Mena Play World",
-      ); ?></span></h2>
-      <div class="about-content">
-        <div class="about-text">
-          <?php
-          $aboutContent = getAboutContent();
-          if (!empty($aboutContent)) {
-              foreach ($aboutContent as $content) {
-                  if (
-                      $content["content_type"] === "main_intro" ||
-                      $content["content_type"] === "paragraph"
-                  ) {
-                      echo "<p>" .
-                          nl2br(htmlspecialchars($content["content_text"])) .
-                          "</p>";
-                  }
-              }
-          } else {
-              // Fallback content
-              echo "<p>As " .
-                  htmlspecialchars(
-                      $companyInfo["company_name"] ?? "Mena Play World",
-                  ) .
-                  ", we believe that play is an essential part of childhood development. Our mission is to design and manufacture playground equipment that fosters creativity, encourages physical activity, and provides hours of fun for children while ensuring their safety and well-being.</p>";
-              echo "<p>Established over a decade ago, we have been designing and manufacturing quality playground equipment for parks, schools, and other installations. Our skilled team of designers and engineers is dedicated to creating innovative and durable equipment that meets the highest safety standards.</p>";
-          }
-          ?>
-
-          <div class="features">
-            <div class="feature">
-              <h4>Quality Assurance</h4>
-              <p>
-                We implement the highest quality standards for all our equipment
-                using premium materials.
-              </p>
-            </div>
-            <div class="feature">
-              <h4>Innovation</h4>
-              <p>
-                Our team continuously works to bring cutting-edge designs and
-                innovative solutions.
-              </p>
-            </div>
-            <div class="feature">
-              <h4>Customer Focus</h4>
-              <p>
-                We prioritize customer satisfaction with personalized service
-                and competitive pricing.
-              </p>
-            </div>
-            <div class="feature">
-              <h4>Safety First</h4>
-              <p>
-                All equipment meets international safety standards and undergoes
-                rigorous testing.
-              </p>
-            </div>
+      <div class="about-container">
+        <!-- Section Header -->
+        <div class="about-header">
+          <div class="section-badge">Who We Are</div>
+          <h2>About <span class="highlight"><?php echo htmlspecialchars(
+              $companyInfo["company_name"] ?? "Mena Play World",
+          ); ?></span></h2>
+          <div class="about-intro">
+            <?php
+            $aboutContent = getAboutContent();
+            if (!empty($aboutContent)) {
+                foreach ($aboutContent as $content) {
+                    if ($content["content_type"] === "main_intro") {
+                        echo "<p class='intro-text'>" .
+                            nl2br(htmlspecialchars($content["content_text"])) .
+                            "</p>";
+                        break;
+                    }
+                }
+            } else {
+                // Fallback content
+                echo "<p class='intro-text'>We believe that play is an essential part of childhood development. Our mission is to design and manufacture playground equipment that fosters creativity, encourages physical activity, and provides hours of fun for children while ensuring their safety and well-being.</p>";
+            }
+            ?>
           </div>
         </div>
 
-        <div class="about-stats">
+        <!-- Stats Cards -->
+        <div class="about-stats-grid">
           <?php
           $aboutStats = array_slice($siteStats, 0, 4); // Get first 4 stats for about section
           if (empty($aboutStats)) {
@@ -249,15 +216,92 @@
               ];
           }
 
-          foreach ($aboutStats as $stat): ?>
-          <div class="about-stat">
-            <span class="about-stat-number"><?php echo htmlspecialchars(
-                $stat["stat_value"],
-            ); ?></span>
-            <div><?php echo htmlspecialchars($stat["stat_label"]); ?></div>
+          foreach ($aboutStats as $index => $stat): ?>
+          <div class="stat-card" data-index="<?php echo $index; ?>">
+            <div class="stat-card-inner">
+              <div class="stat-icon">
+                <?php
+                // Dynamic icons based on label
+                $label = strtolower($stat["stat_label"]);
+                if (
+                    strpos($label, "customer") !== false ||
+                    strpos($label, "client") !== false
+                ) {
+                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>';
+                } elseif (
+                    strpos($label, "project") !== false ||
+                    strpos($label, "work") !== false
+                ) {
+                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>';
+                } elseif (
+                    strpos($label, "year") !== false ||
+                    strpos($label, "experience") !== false
+                ) {
+                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>';
+                } else {
+                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>';
+                }
+                ?>
+              </div>
+              <div class="stat-number"><?php echo htmlspecialchars(
+                  $stat["stat_value"],
+              ); ?></div>
+              <div class="stat-label"><?php echo htmlspecialchars(
+                  $stat["stat_label"],
+              ); ?></div>
+            </div>
           </div>
           <?php endforeach;
           ?>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="about-content-modern">
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+              </div>
+              <h4>Quality Assurance</h4>
+              <p>We implement the highest quality standards for all our equipment using premium materials.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+              </div>
+              <h4>Customer Focus</h4>
+              <p>We prioritize customer satisfaction with personalized service and competitive pricing.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <h4>Innovation</h4>
+              <p>Our team continuously works to bring cutting-edge designs and innovative solutions.</p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h4>Safety First</h4>
+              <p>All equipment meets international safety standards and undergoes rigorous testing.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
