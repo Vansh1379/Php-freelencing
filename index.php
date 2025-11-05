@@ -445,64 +445,108 @@
       </div>
     </section>
 
-    <!-- Values Section -->
-    <section class="values">
-      <div class="values-grid">
-        <div class="value-item">
-          <div class="value-icon">☢️</div>
-          <h3>Safety First</h3>
-          <p>
-            All equipment meets the highest safety standards with regular
-            quality inspections.
+    <!-- Values Section - Modern Design -->
+    <section class="values-modern">
+      <div class="values-container-modern">
+        <div class="values-header">
+          <div class="section-badge">Why Choose Us</div>
+          <h2>Our <span class="highlight">Core Values</span></h2>
+          <p class="values-subtitle">
+            We're committed to delivering excellence in every aspect of our service
           </p>
         </div>
-        <div class="value-item">
-          <div class="value-icon">🎨</div>
-          <h3>Innovative Design</h3>
-          <p>
-            Modern, engaging designs that captivate children and encourage
-            active play.
-          </p>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">💎</div>
-          <h3>Quality Materials</h3>
-          <p>
-            Weather-resistant, durable materials that are designed to last for
-            decades.
-          </p>
+        
+        <div class="values-grid-modern">
+          <div class="value-card-modern">
+            <div class="value-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+            <h3>Safety First</h3>
+            <p>
+              All equipment meets the highest safety standards with regular
+              quality inspections and certifications.
+            </p>
+          </div>
+          
+          <div class="value-card-modern">
+            <div class="value-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <h3>Innovative Design</h3>
+            <p>
+              Modern, engaging designs that captivate children and encourage
+              active play and creative exploration.
+            </p>
+          </div>
+          
+          <div class="value-card-modern">
+            <div class="value-icon-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+            </div>
+            <h3>Quality Materials</h3>
+            <p>
+              Weather-resistant, durable materials that are designed to last for
+              decades with minimal maintenance.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-      <div class="contact-container">
-        <h2>Get In Touch</h2>
-        <p>
-          Ready to create an amazing play space? Contact us today for a
-          consultation and let's bring your vision to life.
-        </p>
+    <!-- Contact Section - Modern Design -->
+    <section class="contact-modern" id="contact">
+      <div class="contact-container-modern">
+        <!-- Contact Header -->
+        <div class="contact-header-modern">
+          <div class="section-badge">Contact Us</div>
+          <h2>Let's Create Something <span class="highlight">Amazing Together</span></h2>
+          <p class="contact-subtitle">
+            Ready to create an amazing play space? Contact us today for a
+            consultation and let's bring your vision to life.
+          </p>
+        </div>
 
-        <div class="contact-content">
-          <div class="contact-info">
-            <h3>Contact Information</h3>
-
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div>
-                <strong>Address</strong><br />
+        <div class="contact-content-modern">
+          <!-- Contact Info Cards -->
+          <div class="contact-info-modern">
+            <div class="contact-card-modern">
+              <div class="contact-icon-modern">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <h4>Our Location</h4>
+              <p>
                 <?php 
                 $address = !empty($companyInfo["address"]) ? $companyInfo["address"] : "Shop no.68/4, Gali no.6, Sec 7, Guj Ghaziabad U.P - 201008, India";
                 echo nl2br(htmlspecialchars($address));
                 ?>
-              </div>
+              </p>
             </div>
 
-            <div class="contact-item">
-              <div class="contact-icon">📞</div>
-              <div>
-                <strong>Phone</strong><br />
+            <div class="contact-card-modern">
+              <div class="contact-icon-modern">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <h4>Phone Number</h4>
+              <p>
                 <?php 
                 $phone = !empty($companyInfo["phone"]) ? $companyInfo["phone"] : "+91 9773698785";
                 echo htmlspecialchars($phone);
@@ -511,82 +555,106 @@
                 $phoneAlt = !empty($companyInfo["phone_alt"]) ? $companyInfo["phone_alt"] : "+91 9560243588";
                 echo htmlspecialchars($phoneAlt);
                 ?>
-              </div>
+              </p>
             </div>
 
-            <div class="contact-item">
-              <div class="contact-icon">✉️</div>
-              <div>
-                <strong>Email</strong><br />
+            <div class="contact-card-modern">
+              <div class="contact-icon-modern">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </div>
+              <h4>Email Address</h4>
+              <p>
                 <?php 
                 $email = !empty($companyInfo["email"]) ? $companyInfo["email"] : "contact.Mena@gmail.com";
                 echo htmlspecialchars($email);
-                ?><br />
+                ?>
                 <?php 
                 $emailAlt = !empty($companyInfo["email_alt"]) ? $companyInfo["email_alt"] : "";
                 if (!empty($emailAlt)) {
-                    echo htmlspecialchars($emailAlt);
+                    echo "<br>" . htmlspecialchars($emailAlt);
                 }
                 ?>
-              </div>
+              </p>
             </div>
 
-            <div class="contact-item">
-              <div class="contact-icon">🕒</div>
-              <div>
-                <strong>Business Hours</strong><br />
-                Mon - Sat: 9:00 AM - 6:00 PM<br />
-                Sun / Holiday: Closed
+            <div class="contact-card-modern">
+              <div class="contact-icon-modern">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
               </div>
+              <h4>Business Hours</h4>
+              <p>
+                Mon - Sat: 9:00 AM - 6:00 PM<br />
+                Sunday: Closed
+              </p>
             </div>
           </div>
 
-          <div class="contact-form">
-            <h3>Send us a Message</h3>
-            <form>
-              <div class="form-group">
-                <label for="name">Your Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Enter your name"
-                  required
-                />
+          <!-- Contact Form -->
+          <div class="contact-form-modern">
+            <div class="form-header">
+              <h3>Send us a Message</h3>
+              <p>Fill out the form below and we'll get back to you shortly</p>
+            </div>
+            
+            <form class="modern-form">
+              <div class="form-row">
+                <div class="form-group-modern">
+                  <label for="name">Your Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="John Doe"
+                    required
+                  />
+                </div>
+
+                <div class="form-group-modern">
+                  <label for="email">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="john@example.com"
+                    required
+                  />
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  required
-                />
-              </div>
-
-              <div class="form-group">
+              <div class="form-group-modern">
                 <label for="phone">Phone Number</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
-                  placeholder="Enter phone number"
+                  placeholder="+91 XXXXX XXXXX"
                 />
               </div>
 
-              <div class="form-group">
-                <label for="message">Message</label>
+              <div class="form-group-modern">
+                <label for="message">Your Message</label>
                 <textarea
                   id="message"
                   name="message"
-                  placeholder="Tell us about your project..."
+                  placeholder="Tell us about your project requirements..."
+                  rows="5"
                   required
                 ></textarea>
               </div>
 
-              <button type="submit" class="form-submit">Send Message</button>
+              <button type="submit" class="form-submit-modern">
+                <span>Send Message</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
             </form>
           </div>
         </div>
