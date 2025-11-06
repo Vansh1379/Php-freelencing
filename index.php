@@ -507,6 +507,75 @@
       </div>
     </section>
 
+    <!-- Clients Section - Logo Carousel -->
+    <section class="clients-section">
+      <div class="clients-container">
+        <div class="clients-header">
+          <div class="section-badge">Our Partners</div>
+          <h2>Trusted by <span class="highlight">Leading Organizations</span></h2>
+          <p class="clients-subtitle">
+            We're proud to work with some of the most respected organizations worldwide
+          </p>
+        </div>
+
+        <div class="clients-carousel-wrapper">
+          <div class="clients-carousel">
+            <!-- First set of logos -->
+            <div class="client-logo">
+              <img src="uploads/client-logo-1.png" alt="Client 1" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-2.png" alt="Client 2" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-3.png" alt="Client 3" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-4.png" alt="Client 4" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-5.png" alt="Client 5" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-6.png" alt="Client 6" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-7.png" alt="Client 7" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-8.png" alt="Client 8" />
+            </div>
+            
+            <!-- Duplicate set for seamless loop -->
+            <div class="client-logo">
+              <img src="uploads/client-logo-1.png" alt="Client 1" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-2.png" alt="Client 2" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-3.png" alt="Client 3" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-4.png" alt="Client 4" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-5.png" alt="Client 5" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-6.png" alt="Client 6" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-7.png" alt="Client 7" />
+            </div>
+            <div class="client-logo">
+              <img src="uploads/client-logo-8.png" alt="Client 8" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Section - Modern Design -->
     <section class="contact-modern" id="contact">
       <div class="contact-container-modern">
