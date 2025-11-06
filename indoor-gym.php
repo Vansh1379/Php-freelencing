@@ -90,13 +90,22 @@
                           <?php endforeach; ?>
                         </div>
                       <?php endif; ?>
-                      <button class="product-cta" onclick="openQuoteModal('<?php echo htmlspecialchars($product['title']); ?>')">
-                        <span>Request Quote</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </button>
+                      <div class="product-actions">
+                        <button class="product-cta product-cta-primary" onclick="openQuoteModal('<?php echo htmlspecialchars($product['title']); ?>')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                          </svg>
+                          <span>Request Quote</span>
+                        </button>
+                        <button class="product-cta product-cta-secondary" onclick="downloadBrochure('<?php echo htmlspecialchars($product['title']); ?>')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                          </svg>
+                          <span>Download Brochure</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <?php
@@ -171,6 +180,12 @@
         closeQuoteModal();
         e.target.reset();
         return false;
+      }
+
+      function downloadBrochure(productName) {
+        // In a real implementation, this would download a PDF brochure
+        alert('Downloading brochure for ' + productName + '\n\nThis feature will be available soon with actual PDF files.');
+        // window.open('/brochures/' + productName.toLowerCase().replace(/\s+/g, '-') + '.pdf', '_blank');
       }
 
       // Close modal on outside click
